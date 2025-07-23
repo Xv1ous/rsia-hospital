@@ -1,0 +1,90 @@
+<!-- News/Berita Section -->
+<section
+  th:fragment="news"
+  class="py-16 bg-white flex flex-col items-center px-4"
+>
+  <h2 class="text-3xl md:text-4xl font-bold text-[#FB9E3A] mb-2">
+    Berita & Informasi
+  </h2>
+  <p class="text-lg text-[#E6521F] mb-8 font-medium">
+    Update Terbaru dari Rumah Sakit Kami
+  </p>
+  <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- News Card 1 -->
+    <div class="bg-[#FCEF91] rounded-xl shadow overflow-hidden flex flex-col">
+      <img
+        src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd23?auto=format&fit=crop&w=600&q=80"
+        alt="Berita 1"
+        class="w-full h-48 object-cover"
+      />
+      <div class="p-6 flex flex-col flex-1">
+        <span class="text-sm text-[#EA2F14] font-semibold mb-2"
+          >12 Mei 2024</span
+        >
+        <h3 class="font-bold text-xl text-[#FB9E3A] mb-2">
+          Pemeriksaan Kesehatan Gratis untuk Lansia
+        </h3>
+        <p class="text-gray-700 mb-4 flex-1">
+          Rumah Sakit kami mengadakan program pemeriksaan kesehatan gratis
+          khusus untuk lansia sebagai bentuk kepedulian kami.
+        </p>
+        <a href="#" class="text-[#EA2F14] font-semibold hover:underline mt-auto"
+          >Baca Selengkapnya &rarr;</a
+        >
+      </div>
+    </div>
+    <!-- News Card 2 -->
+    <div class="bg-[#FCEF91] rounded-xl shadow overflow-hidden flex flex-col">
+      <img
+        src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80"
+        alt="Berita 2"
+        class="w-full h-48 object-cover"
+      />
+      <div class="p-6 flex flex-col flex-1">
+        <span class="text-sm text-[#EA2F14] font-semibold mb-2"
+          >2 Mei 2024</span
+        >
+        <h3 class="font-bold text-xl text-[#FB9E3A] mb-2">
+          Layanan MRI Baru Telah Tersedia
+        </h3>
+        <p class="text-gray-700 mb-4 flex-1">
+          Kini tersedia layanan MRI dengan teknologi terbaru untuk diagnosa yang
+          lebih akurat dan cepat.
+        </p>
+        <a href="#" class="text-[#EA2F14] font-semibold hover:underline mt-auto"
+          >Baca Selengkapnya &rarr;</a
+        >
+      </div>
+    </div>
+    <!-- News Card 3 -->
+    <div class="bg-[#FCEF91] rounded-xl shadow overflow-hidden flex flex-col">
+      <img
+        src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?auto=format&fit=crop&w=600&q=80"
+        alt="Berita 3"
+        class="w-full h-48 object-cover"
+      />
+      <div class="p-6 flex flex-col flex-1">
+        <span class="text-sm text-[#EA2F14] font-semibold mb-2"
+          >20 April 2024</span
+        >
+        <h3 class="font-bold text-xl text-[#FB9E3A] mb-2">
+          Edukasi Kesehatan: Pentingnya Vaksinasi
+        </h3>
+        <p class="text-gray-700 mb-4 flex-1">
+          Tim dokter kami memberikan edukasi tentang pentingnya vaksinasi untuk
+          mencegah penyakit menular.
+        </p>
+        <a href="#" class="text-[#EA2F14] font-semibold hover:underline mt-auto"
+          >Baca Selengkapnya &rarr;</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="mt-8 flex justify-center">
+    <a
+      href="/news"
+      class="px-6 py-2 rounded bg-orange-500 text-white font-semibold shadow hover:bg-orange-700 transition"
+      >Lihat Selengkapnya</a
+    >
+  </div>
+</section>

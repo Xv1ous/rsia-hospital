@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:fragment="head">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${title} ?: 'RSIA Buah Hati Pamulang'">
+      RSIA Buah Hati Pamulang
+    </title>
+    <link href="/main.css" rel="stylesheet" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/asset hospital/RSIA_BHP_LOGO5.png"
+    />
+    <!-- Google Fonts: Inter -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-orange: #ff6000;
+        --primary-orange-light: #ffefe3;
+        --primary-orange-dark: #c94d00;
+      }
+      .text-primary-orange {
+        color: var(--primary-orange) !important;
+      }
+      .bg-primary-orange {
+        background-color: var(--primary-orange) !important;
+      }
+      .border-primary-orange {
+        border-color: var(--primary-orange) !important;
+      }
+      .hover\:bg-primary-orange:hover {
+        background-color: var(--primary-orange) !important;
+      }
+      .hover\:text-primary-orange:hover {
+        color: var(--primary-orange) !important;
+      }
+      .focus\:ring-primary-orange:focus {
+        box-shadow: 0 0 0 2px var(--primary-orange) !important;
+      }
+      .bg-primary-orange-light {
+        background-color: var(--primary-orange-light) !important;
+      }
+      .bg-primary-orange-dark {
+        background-color: var(--primary-orange-dark) !important;
+      }
+      .border-primary-orange-dark {
+        border-color: var(--primary-orange-dark) !important;
+      }
+      .text-primary-orange-dark {
+        color: var(--primary-orange-dark) !important;
+      }
+      .bg-gradient-orange {
+        background: linear-gradient(90deg, #ffefe3 0%, #ff6000 100%);
+      }
+      .carousel-dot.bg-primary-orange {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px #ff6000;
+      }
+      .fade-in {
+        animation: fadeIn 1.2s ease-in;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      body,
+      .font-sans {
+        font-family: "Inter", "Segoe UI", "Roboto", "Helvetica Neue", Arial,
+          "sans-serif";
+      }
+    </style>
+  </head>
+</html>

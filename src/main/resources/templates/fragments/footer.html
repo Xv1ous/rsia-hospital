@@ -1,0 +1,110 @@
+<!-- Footer Section -->
+<footer
+  th:fragment="footer"
+  class="bg-orange-500 text-white mt-16 border-t-4 border-[#17695B]"
+>
+  <div
+    class="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center md:items-start justify-between gap-8"
+  >
+    <!-- Logo and Name -->
+    <div class="flex flex-col items-center md:items-start gap-2">
+      <span class="flex items-center gap-2">
+        <svg
+          class="h-10 w-10 text-[#17695B]"
+          fill="none"
+          viewBox="0 0 40 40"
+          stroke="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="8"
+            y="8"
+            width="24"
+            height="24"
+            rx="6"
+            fill="white"
+            fill-opacity=".15"
+          />
+          <rect x="18" y="13" width="4" height="14" fill="white" />
+          <rect x="13" y="18" width="14" height="4" fill="white" />
+        </svg>
+        <span class="text-2xl font-bold tracking-wide">RSIA Buah Hati</span>
+      </span>
+      <span class="text-sm text-white/70"
+        >Pelayanan Kesehatan Modern & Terpercaya</span
+      >
+    </div>
+    <!-- Navigation Links -->
+    <nav class="flex flex-col md:flex-row gap-4 md:gap-8 items-center">
+      <a href="#about" class="hover:underline">Tentang</a>
+      <a href="#services" class="hover:underline">Layanan</a>
+      <a href="#doctors" class="hover:underline">Dokter</a>
+      <a href="#contact" class="hover:underline">Kontak</a>
+    </nav>
+    <!-- Social Media -->
+    <div class="flex gap-4 items-center">
+      <a
+        href="https://instagram.com"
+        target="_blank"
+        rel="noopener"
+        aria-label="Instagram"
+        class="hover:text-[#ffb347]"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <rect x="2" y="2" width="20" height="20" rx="5" />
+          <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+          <circle cx="17.5" cy="6.5" r="1.5" />
+        </svg>
+      </a>
+      <a
+        href="https://facebook.com"
+        target="_blank"
+        rel="noopener"
+        aria-label="Facebook"
+        class="hover:text-[#ffb347]"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M18 2h-3a4 4 0 00-4 4v3H7v4h4v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3z"
+          />
+        </svg>
+      </a>
+      <a
+        href="https://wa.me/6281234567890"
+        target="_blank"
+        rel="noopener"
+        aria-label="WhatsApp"
+        class="hover:text-[#ffb347]"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M16.862 14.387c-.246-.123-1.453-.719-1.678-.801-.225-.082-.389-.123-.553.123-.164.246-.633.801-.776.967-.143.164-.287.184-.533.062-.246-.123-1.037-.382-1.976-1.217-.73-.652-1.223-1.457-1.367-1.703-.143-.246-.015-.379.108-.501.111-.11.246-.287.369-.43.123-.143.164-.246.246-.41.082-.164.041-.308-.02-.43-.062-.123-.553-1.336-.757-1.832-.2-.48-.404-.415-.553-.423-.143-.008-.308-.01-.473-.01-.164 0-.43.062-.656.308-.225.246-.86.84-.86 2.048 0 1.208.88 2.377 1.002 2.541.123.164 1.73 2.64 4.19 3.597.586.202 1.043.322 1.4.412.588.15 1.124.129 1.548.078.472-.055 1.453-.594 1.658-1.168.205-.574.205-1.066.143-1.168-.062-.102-.225-.164-.47-.287z"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="border-t border-white/20 mt-8">
+    <div class="max-w-6xl mx-auto px-4 py-4 text-center text-sm text-white/70">
+      &copy; 2024 RSIA Buah Hati. Hak cipta dilindungi.
+    </div>
+  </div>
+</footer>

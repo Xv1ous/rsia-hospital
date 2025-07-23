@@ -1,0 +1,251 @@
+<!-- Doctor Schedule Section Fragment -->
+<section
+  th:fragment="schedule"
+  x-data="{ selectedSpec: 'semua' }"
+  class="w-full py-8 flex flex-col items-center px-4 fade-in max-w-6xl mx-auto mb-12"
+>
+  <h2 class="text-3xl md:text-4xl font-bold text-[#FB9E3A] mb-2">
+    Jadwal Dokter
+  </h2>
+  <p class="text-lg text-[#E6521F] mb-8 font-medium text-center">
+    Temukan Jadwal Praktik Dokter di Rumah Sakit Kami. Gunakan filter di bawah
+    untuk mencari dokter atau spesialisasi.
+  </p>
+  <div class="w-full mb-4">
+    <div class="flex flex-wrap gap-2 justify-center">
+      <button
+        type="button"
+        class="specialty-tab px-4 py-2 rounded-lg font-medium text-[#E6521F] bg-white shadow"
+        :class="selectedSpec === 'semua' ? 'ring-2 ring-[#FB9E3A]' : ''"
+        @click="selectedSpec = 'semua'"
+      >
+        Semua
+      </button>
+      <button
+        th:each="spec : ${specializations}"
+        type="button"
+        class="specialty-tab px-4 py-2 rounded-lg font-medium text-[#E6521F] bg-white shadow"
+        th:attr="data-spec=${spec}"
+        th:text="${spec}"
+        :class="selectedSpec === $el.dataset.spec ? 'ring-2 ring-[#FB9E3A]' : ''"
+        @click="selectedSpec = $el.dataset.spec"
+      ></button>
+    </div>
+  </div>
+  <div class="sticky-bar w-full mb-6 flex gap-2 items-center">
+    <input
+      id="doctor-search"
+      type="text"
+      placeholder="Cari nama dokter, spesialisasi, atau hari..."
+      class="flex-1 px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#FB9E3A] focus:outline-none text-lg shadow"
+    />
+    <button
+      id="clear-filters"
+      type="button"
+      class="px-4 py-3 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition text-sm"
+    >
+      Reset Filter
+    </button>
+  </div>
+  <div
+    class="w-full max-w-6xl mx-auto overflow-visible rounded-2xl shadow-lg bg-white p-6"
+  >
+    <table
+      class="min-w-full rounded-xl overflow-visible border border-gray-200 text-base"
+      id="doctor-schedule-table"
+    >
+      <thead class="sticky top-0 z-10">
+        <tr class="bg-[#FB9E3A] text-white text-base">
+          <th class="py-4 px-4 text-left">Nama Dokter</th>
+          <th class="py-4 px-4 text-left">Spesialisasi</th>
+          <th class="py-4 px-4 text-left">Jadwal Praktik</th>
+          <th class="py-4 px-4 text-left">Profil</th>
+        </tr>
+      </thead>
+      <tbody class="overflow-visible">
+        <tr
+          th:each="doctor : ${doctors}"
+          class="group border-b hover:bg-[#FFF6E9] transition"
+          th:attr="data-spec=${doctor.specialization}"
+        >
+          <td
+            class="py-4 px-4 font-extrabold text-lg text-[#FB9E3A]"
+            th:text="${doctor.name}"
+          ></td>
+          <td class="py-4 px-4">
+            <span th:text="${doctor.specialization}"></span>
+          </td>
+          <td class="relative py-4 px-4 overflow-visible">
+            <div class="inline-block overflow-visible">
+              <button
+                class="popover-btn px-4 py-1 rounded-full bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-xs"
+              >
+                Lihat Jadwal
+              </button>
+              <div
+                class="popover-content hidden absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 bg-white border border-[#FB9E3A] rounded-xl shadow-xl p-4 w-72 min-w-[220px] max-w-xs"
+                style="min-width: 220px; max-width: 320px"
+              >
+                <div
+                  class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-[#FB9E3A] rotate-45"
+                ></div>
+                <button
+                  class="absolute top-2 right-2 text-gray-400 hover:text-[#E6521F] text-lg font-bold close-popover"
+                >
+                  &times;
+                </button>
+                <h3
+                  class="text-base font-bold text-[#FB9E3A] mb-3 text-center"
+                  th:text="${doctor.name}"
+                ></h3>
+                <ul class="space-y-2">
+                  <li
+                    th:each="jadwal : ${scheduleMap[doctor.name]}"
+                    class="flex items-center gap-2"
+                  >
+                    <span
+                      class="font-semibold text-[#E6521F]"
+                      th:text="${jadwal.day}"
+                    ></span
+                    >:
+                    <span class="text-gray-700" th:text="${jadwal.time}"></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </td>
+          <td class="py-4 px-4 text-center">
+            <a
+              th:href="@{'/doctor-profile/' + ${doctor.id}}"
+              class="inline-block px-2 py-1 rounded-full bg-[#E6521F] text-white font-semibold hover:bg-[#FB9E3A] hover:text-[#E6521F] transition text-xs min-w-[70px] text-center whitespace-nowrap"
+            >
+              Profil
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="pagination-controls"></div>
+  </div>
+  <script>
+    // Copy-paste JS pagination & filter logic dari user/schedule.html
+    document.addEventListener("DOMContentLoaded", function () {
+      const specialtyTabs = document.querySelectorAll(".specialty-tab");
+      const searchInput = document.getElementById("doctor-search");
+      const clearBtn = document.getElementById("clear-filters");
+      const table = document.getElementById("doctor-schedule-table");
+      let selectedSpecialty = "semua";
+      const MAX_ROWS_TO_SHOW = 5;
+      let currentPage = 1;
+      const rowsPerPage = MAX_ROWS_TO_SHOW;
+
+      // Filter spesialisasi
+      specialtyTabs.forEach((tab) => {
+        tab.addEventListener("click", function () {
+          specialtyTabs.forEach((t) =>
+            t.classList.remove("ring-2", "ring-[#FB9E3A]")
+          );
+          this.classList.add("ring-2", "ring-[#FB9E3A]");
+          selectedSpecialty = this.getAttribute("data-spec") || "semua";
+          currentPage = 1;
+          filterRows();
+        });
+      });
+
+      let searchTimeout;
+      searchInput.addEventListener("input", function () {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          currentPage = 1;
+          filterRows();
+        }, 300);
+      });
+      clearBtn.addEventListener("click", function () {
+        searchInput.value = "";
+        selectedSpecialty = "semua";
+        currentPage = 1;
+        specialtyTabs.forEach((t) =>
+          t.classList.remove("ring-2", "ring-[#FB9E3A]")
+        );
+        document
+          .querySelector('[data-spec="semua"]')
+          .classList.add("ring-2", "ring-[#FB9E3A]");
+        filterRows();
+      });
+      function filterRows() {
+        const rows = table.querySelectorAll("tbody tr");
+        const searchTerm = searchInput.value.toLowerCase();
+        let visibleRows = [];
+        rows.forEach((row) => {
+          const spec = row.getAttribute("data-spec");
+          const text = row.textContent.toLowerCase();
+          const specMatch =
+            selectedSpecialty === "semua" || spec === selectedSpecialty;
+          const searchMatch = text.includes(searchTerm);
+          if (specMatch && searchMatch) visibleRows.push(row);
+        });
+        rows.forEach((row) => {
+          row.style.display = "none";
+        });
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const rowsToShow = visibleRows.slice(startIndex, endIndex);
+        rowsToShow.forEach((row) => {
+          row.style.display = "";
+        });
+        updatePaginationInfo(visibleRows.length);
+      }
+      function updatePaginationInfo(totalVisibleRows) {
+        const totalPages = Math.ceil(totalVisibleRows / rowsPerPage);
+        const paginationContainer = document.getElementById(
+          "pagination-controls"
+        );
+        paginationContainer.innerHTML = "";
+        if (totalPages <= 1) return;
+        const paginationDiv = document.createElement("div");
+        paginationDiv.className = "flex justify-center items-center gap-4 mt-4";
+        paginationDiv.innerHTML = `
+          <button id="prev-page" class="px-4 py-2 rounded-lg bg-orange-500 text-white font-semibold hover:bg-orange-700 transition disabled:opacity-50 disabled:cursor-not-allowed">Sebelumnya</button>
+          <span id="page-info" class="text-[#E6521F] font-medium">Halaman ${currentPage} dari ${totalPages}</span>
+          <button id="next-page" class="px-4 py-2 rounded-lg bg-orange-500 text-white font-semibold hover:bg-orange-700 transition disabled:opacity-50 disabled:cursor-not-allowed">Selanjutnya</button>
+        `;
+        paginationContainer.appendChild(paginationDiv);
+        document.getElementById("prev-page").addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            filterRows();
+          }
+        });
+        document.getElementById("next-page").addEventListener("click", () => {
+          if (currentPage < totalPages) {
+            currentPage++;
+            filterRows();
+          }
+        });
+      }
+      filterRows();
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll(".popover-btn").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          document.querySelectorAll(".popover-content").forEach(function (pop) {
+            if (pop !== btn.nextElementSibling) pop.classList.add("hidden");
+          });
+          btn.nextElementSibling.classList.toggle("hidden");
+        });
+      });
+      document.querySelectorAll(".close-popover").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          btn.closest(".popover-content").classList.add("hidden");
+        });
+      });
+      document.addEventListener("click", function () {
+        document.querySelectorAll(".popover-content").forEach(function (pop) {
+          pop.classList.add("hidden");
+        });
+      });
+    });
+  </script>
+</section>

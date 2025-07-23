@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <!-- Head Fragment -->
+  <head th:replace="~{fragments/head :: head}"></head>
+  <body class="bg-gray-50 text-gray-900 font-sans">
+    <script th:inline="javascript">
+      document.title = "Jadwal Dokter - RSIA Buah Hati Pamulang";
+    </script>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <nav class="max-w-4xl mx-auto px-4 pt-6" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-sm text-gray-500">
+        <li><a href="/" class="hover:underline">Beranda</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-[#FB9E3A] font-semibold">Jadwal Dokter</li>
+      </ol>
+    </nav>
+    <div
+      class="max-w-4xl mx-auto px-4 flex justify-between items-center mt-2 mb-4"
+    >
+      <h1
+        class="text-3xl md:text-4xl font-bold text-[#FB9E3A] flex items-center gap-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-8 w-8 text-[#FB9E3A]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 15a4 4 0 108 0V7m-4 8v2a2 2 0 104 0v-2"
+          />
+        </svg>
+        Jadwal Dokter
+      </h1>
+      <a
+        href="/"
+        class="px-4 py-2 rounded bg-[#FFEDD5] text-[#FB9E3A] font-semibold shadow hover:bg-[#FB9E3A] hover:text-white transition text-sm"
+        >Kembali ke Beranda</a
+      >
+    </div>
+    <section
+      x-data="{ selectedSpec: 'semua' }"
+      class="py-8 flex flex-col items-center px-4 fade-in max-w-4xl mx-auto mb-12"
+    >
+      <p class="text-lg text-[#E6521F] mb-8 font-medium text-center">
+        Temukan Jadwal Praktik Dokter di Rumah Sakit Kami. Gunakan filter di
+        bawah untuk mencari dokter atau spesialisasi.
+      </p>
+      <div class="w-full mb-4">
+        <div class="flex flex-wrap gap-2 justify-center">
+          <button
+            type="button"
+            class="specialty-tab px-4 py-2 rounded-lg font-medium text-[#E6521F] bg-white shadow"
+            data-spec="semua"
+          >
+            Semua
+          </button>
+          <button
+            th:each="spec : ${specializations}"
+            type="button"
+            class="specialty-tab px-4 py-2 rounded-lg font-medium text-[#E6521F] bg-white shadow"
+            th:attr="data-spec=${spec}"
+            th:text="${spec}"
+          ></button>
+        </div>
+      </div>
+      <div class="sticky-bar w-full mb-6 flex gap-2 items-center">
+        <input
+          id="doctor-search"
+          type="text"
+          placeholder="Cari nama dokter, spesialisasi, atau hari..."
+          class="flex-1 px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#FB9E3A] focus:outline-none text-lg shadow"
+        />
+        <button
+          id="clear-filters"
+          type="button"
+          class="px-4 py-3 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition text-sm"
+        >
+          Reset Filter
+        </button>
+      </div>
+      <div class="w-full overflow-visible rounded-2xl shadow-lg bg-white p-4">
+        <table
+          class="min-w-full rounded-xl overflow-visible border border-gray-200"
+        >
+          <thead class="sticky top-0 z-10">
+            <tr class="bg-[#FB9E3A] text-white text-base">
+              <th class="py-4 px-4 text-left">Nama Dokter</th>
+              <th class="py-4 px-4 text-left">Spesialisasi</th>
+              <th class="py-4 px-4 text-left">Jadwal Praktik</th>
+              <th class="py-4 px-4 text-left">Profil</th>
+            </tr>
+          </thead>
+          <tbody class="overflow-visible">
+            <tr
+              th:each="doctor : ${doctors}"
+              class="group border-b hover:bg-[#FFF6E9] transition"
+              th:attr="data-spec=${doctor.specialization}"
+            >
+              <td
+                class="py-4 px-4 font-extrabold text-lg text-[#FB9E3A]"
+                th:text="${doctor.name}"
+              ></td>
+              <td class="py-4 px-4">
+                <span th:text="${doctor.specialization}"></span>
+              </td>
+              <td class="relative py-4 px-4 overflow-visible">
+                <div class="inline-block overflow-visible">
+                  <button
+                    class="popover-btn px-4 py-1 rounded-full bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-xs"
+                  >
+                    Lihat Jadwal
+                  </button>
+                  <div
+                    class="popover-content hidden absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 bg-white border border-[#FB9E3A] rounded-xl shadow-xl p-4 w-72 min-w-[220px] max-w-xs"
+                    style="min-width: 220px; max-width: 320px"
+                  >
+                    <div
+                      class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-[#FB9E3A] rotate-45"
+                    ></div>
+                    <button
+                      class="absolute top-2 right-2 text-gray-400 hover:text-[#E6521F] text-lg font-bold close-popover"
+                    >
+                      &times;
+                    </button>
+                    <h3
+                      class="text-base font-bold text-[#FB9E3A] mb-3 text-center"
+                      th:text="${doctor.name}"
+                    ></h3>
+                    <ul class="space-y-2">
+                      <li
+                        th:each="jadwal : ${scheduleMap[doctor.name]}"
+                        class="flex items-center gap-2"
+                      >
+                        <span
+                          class="font-semibold text-[#E6521F]"
+                          th:text="${jadwal.day}"
+                        ></span
+                        >:
+                        <span
+                          class="text-gray-700"
+                          th:text="${jadwal.time}"
+                        ></span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </td>
+              <td class="py-4 px-4 text-center">
+                <a
+                  th:href="@{'/doctor-profile/' + ${doctor.id}}"
+                  class="px-4 py-1 rounded-full bg-[#E6521F] text-white font-semibold shadow hover:bg-[#FB9E3A] hover:text-[#E6521F] transition text-xs"
+                >
+                  Profil
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <footer class="bg-[#FB9E3A] text-white mt-16">
+      <div
+        class="max-w-6xl mx-auto px-4 py-10 text-center text-sm text-white/70"
+      >
+        &copy; 2024 RSIA Buah Hati. Hak cipta dilindungi.
+      </div>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Popover logic (sudah ada)
+        document.querySelectorAll(".popover-btn").forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            document
+              .querySelectorAll(".popover-content")
+              .forEach(function (pop) {
+                if (pop !== btn.nextElementSibling) pop.classList.add("hidden");
+              });
+            btn.nextElementSibling.classList.toggle("hidden");
+          });
+        });
+        document.querySelectorAll(".close-popover").forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            btn.closest(".popover-content").classList.add("hidden");
+          });
+        });
+        document.addEventListener("click", function () {
+          document.querySelectorAll(".popover-content").forEach(function (pop) {
+            pop.classList.add("hidden");
+          });
+        });
+
+        // FILTER LOGIC
+        const specialtyTabs = document.querySelectorAll(".specialty-tab");
+        const searchInput = document.getElementById("doctor-search");
+        const clearBtn = document.getElementById("clear-filters");
+        const table = document.querySelector("table");
+        let selectedSpecialty = "semua";
+
+        specialtyTabs.forEach((tab) => {
+          tab.addEventListener("click", function () {
+            specialtyTabs.forEach((t) =>
+              t.classList.remove("ring-2", "ring-[#FB9E3A]")
+            );
+            this.classList.add("ring-2", "ring-[#FB9E3A]");
+            selectedSpecialty = this.getAttribute("data-spec") || "semua";
+            filterRows();
+          });
+        });
+
+        let searchTimeout;
+        searchInput.addEventListener("input", function () {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            filterRows();
+          }, 300);
+        });
+        clearBtn.addEventListener("click", function () {
+          searchInput.value = "";
+          selectedSpecialty = "semua";
+          specialtyTabs.forEach((t) =>
+            t.classList.remove("ring-2", "ring-[#FB9E3A]")
+          );
+          document
+            .querySelector('.specialty-tab[data-spec="semua"]')
+            .classList.add("ring-2", "ring-[#FB9E3A]");
+          filterRows();
+        });
+        function filterRows() {
+          const rows = table.querySelectorAll("tbody tr");
+          const searchTerm = searchInput.value.toLowerCase();
+          rows.forEach((row) => {
+            const spec = row.getAttribute("data-spec");
+            const text = row.textContent.toLowerCase();
+            const specMatch =
+              selectedSpecialty === "semua" || spec === selectedSpecialty;
+            const searchMatch = text.includes(searchTerm);
+            if (specMatch && searchMatch) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

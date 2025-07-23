@@ -1,0 +1,122 @@
+<nav th:fragment="navbar" class="bg-white shadow-sm sticky top-0 z-50">
+  <div
+    class="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-3"
+  >
+    <a href="/" class="flex items-center space-x-2 h-12">
+      <img
+        src="/asset hospital/RSIA_BHP_LOGO5.png"
+        alt="RSIA Buah Hati Pamulang"
+        class="h-10 w-10"
+      />
+      <span
+        class="self-center text-2xl font-bold whitespace-nowrap text-orange-500"
+        >RSIA Buah Hati Pamulang</span
+      >
+    </a>
+    <ul
+      class="hidden md:flex flex-1 justify-center space-x-8 font-medium text-orange-500"
+    >
+      <li><a href="/" class="hover:text-orange-700 transition">Beranda</a></li>
+      <li>
+        <a href="/about" class="hover:text-orange-700 transition">Tentang</a>
+      </li>
+      <li>
+        <a href="/services" class="hover:text-orange-700 transition">Layanan</a>
+      </li>
+      <li>
+        <a href="/fasilitas" class="hover:text-orange-700 transition"
+          >Fasilitas</a
+        >
+      </li>
+      <li>
+        <a href="/schedule" class="hover:text-orange-700 transition">Dokter</a>
+      </li>
+      <li>
+        <a href="#contact" class="hover:text-orange-700 transition">Kontak</a>
+      </li>
+    </ul>
+    <div class="flex items-center space-x-2">
+      <a
+        href="/janji-temu"
+        class="px-5 py-2 rounded bg-orange-500 text-white font-semibold shadow hover:bg-orange-700 transition"
+        >Buat Janji Temu</a
+      >
+      <a
+        href="/schedule"
+        class="px-5 py-2 rounded bg-orange-500 text-white font-semibold shadow hover:bg-orange-700 transition"
+        >Cari Dokter</a
+      >
+      <button
+        data-collapse-toggle="navbar-default"
+        type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-orange-500 rounded-lg md:hidden hover:bg-orange-50 focus:outline-none focus:ring-2 focus:ring-orange-200 transition"
+        aria-controls="navbar-default"
+        aria-expanded="false"
+        id="navbar-toggle"
+      >
+        <span class="sr-only">Buka menu utama</span>
+        <svg
+          class="w-6 h-6"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          ></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div
+    class="md:hidden hidden w-full transition-all duration-300 bg-white border-t border-gray-100"
+    id="navbar-default"
+  >
+    <ul class="flex flex-col p-4 space-y-2 font-medium text-orange-500">
+      <li>
+        <a
+          href="/janji-temu"
+          class="block w-full text-left py-2 px-4 rounded hover:bg-orange-500 hover:text-white transition"
+          >Buat Janji Temu</a
+        >
+      </li>
+      <li>
+        <a
+          href="/"
+          class="block w-full text-left py-2 px-4 rounded hover:bg-orange-50 transition"
+          >Beranda</a
+        >
+      </li>
+      <li>
+        <a href="/about" class="block py-2 px-4 rounded hover:bg-orange-50"
+          >Tentang</a
+        >
+      </li>
+      <li>
+        <a href="/services" class="block py-2 px-4 rounded hover:bg-orange-50"
+          >Layanan</a
+        >
+      </li>
+      <li>
+        <a href="/fasilitas" class="block py-2 px-4 rounded hover:bg-orange-50"
+          >Fasilitas</a
+        >
+      </li>
+      <li>
+        <a href="#doctors" class="block py-2 px-4 rounded hover:bg-orange-50"
+          >Dokter</a
+        >
+      </li>
+      <li>
+        <a href="#contact" class="block py-2 px-4 rounded hover:bg-orange-50"
+          >Kontak</a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>

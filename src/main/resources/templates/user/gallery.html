@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <!-- Head Fragment -->
+  <head th:replace="~{fragments/head :: head}"></head>
+  <body class="bg-gray-50 text-gray-900 font-sans">
+    <script th:inline="javascript">
+      document.title = "Galeri - RSIA Buah Hati Pamulang";
+    </script>
+    <style>
+      .gallery-img:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s;
+      }
+    </style>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <nav class="max-w-6xl mx-auto px-4 pt-6" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-sm text-gray-500">
+        <li><a href="/" class="hover:underline">Beranda</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-[#FB9E3A] font-semibold">Galeri</li>
+      </ol>
+    </nav>
+    <div
+      class="max-w-6xl mx-auto px-4 flex justify-between items-center mt-2 mb-4"
+    >
+      <h1 class="text-3xl md:text-4xl font-bold text-[#FB9E3A] mb-4">Galeri</h1>
+      <a
+        href="/"
+        class="px-4 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-sm"
+        >Kembali ke Beranda</a
+      >
+    </div>
+    <section
+      class="py-8 bg-white flex flex-col items-center px-4 fade-in rounded-xl shadow max-w-6xl mx-auto mb-12"
+    >
+      <p class="text-lg text-[#E6521F] mb-8 font-medium text-center">
+        Suasana & Fasilitas Rumah Sakit Kami. Lihat galeri foto di bawah ini.
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <img
+          th:each="img : ${images}"
+          th:src="@{'/asset hospital/' + ${img}}"
+          alt="Galeri"
+          class="rounded-xl shadow border-2 border-[#FB9E3A] object-cover w-full h-40 md:h-56"
+        />
+      </div>
+    </section>
+    <!-- Lightbox Modal -->
+    <div
+      id="lightbox-modal"
+      class="fixed inset-0 z-50 items-center justify-center bg-black/80 hidden"
+    >
+      <button
+        id="lightbox-close"
+        class="absolute top-6 right-8 text-white text-3xl font-bold focus:outline-none"
+        aria-label="Tutup"
+      >
+        &times;
+      </button>
+      <img
+        id="lightbox-img"
+        src=""
+        alt="Preview"
+        class="max-h-[80vh] max-w-[90vw] rounded-xl shadow-2xl border-4 border-white"
+      />
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const images = document.querySelectorAll(".gallery-img");
+        console.log("Found images:", images.length);
+        const modal = document.getElementById("lightbox-modal");
+        const modalImg = document.getElementById("lightbox-img");
+        const closeBtn = document.getElementById("lightbox-close");
+        images.forEach((img) => {
+          console.log("Attaching click to:", img.src);
+          img.addEventListener("click", function () {
+            console.log("Image clicked:", img.src);
+            modalImg.src = img.getAttribute("data-img") || img.src;
+            modal.classList.remove("hidden");
+            console.log("Modal classes after click:", modal.className);
+          });
+        });
+        closeBtn.addEventListener("click", function () {
+          modal.classList.add("hidden");
+          modalImg.src = "";
+        });
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            modal.classList.add("hidden");
+            modalImg.src = "";
+          }
+        });
+        document.addEventListener("keydown", function (e) {
+          if (
+            !modal.classList.contains("hidden") &&
+            (e.key === "Escape" || e.key === "Esc")
+          ) {
+            modal.classList.add("hidden");
+            modalImg.src = "";
+          }
+        });
+      });
+    </script>
+    <footer class="bg-[#E6521F] text-white mt-16">
+      <div
+        class="max-w-6xl mx-auto px-4 py-10 text-center text-sm text-white/70"
+      >
+        &copy; 2024 RSIA Buah Hati. Hak cipta dilindungi.
+      </div>
+    </footer>
+  </body>
+</html>

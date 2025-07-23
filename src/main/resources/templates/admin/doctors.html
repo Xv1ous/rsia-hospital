@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Admin - Dokter</title>
+    <link href="/main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container mx-auto py-8">
+      <h1 class="text-2xl font-bold mb-4">Daftar Dokter</h1>
+      <table class="min-w-full bg-white rounded shadow">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="py-2 px-4">Nama</th>
+            <th class="py-2 px-4">Spesialisasi</th>
+            <th class="py-2 px-4">Hari</th>
+            <th class="py-2 px-4">Jam</th>
+            <th class="py-2 px-4">Rumah Sakit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="doctor : ${doctorSchedules}">
+            <td class="py-2 px-4" th:text="${doctor.name}"></td>
+            <td class="py-2 px-4" th:text="${doctor.specialization}"></td>
+            <td class="py-2 px-4" th:text="${doctor.day}"></td>
+            <td class="py-2 px-4" th:text="${doctor.time}"></td>
+            <td class="py-2 px-4" th:text="${doctor.hospital}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <!-- Head Fragment -->
+  <head th:replace="~{fragments/head :: head}"></head>
+
+  <body class="bg-gray-50 text-gray-900 font-sans">
+    <!-- Main Content for Pamulang (default) -->
+    <div id="hospital-pamulang">
+      <!-- Flowbite Responsive Navbar -->
+      <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+      <!-- Hero Section -->
+      <div th:replace="~{fragments/hero :: hero}"></div>
+
+      <!-- Search/Help Bar Section -->
+      <div th:replace="~{fragments/search-bar :: search-bar}"></div>
+
+      <!-- About/Values Section -->
+      <div th:replace="~{fragments/about :: about}"></div>
+
+      <!-- Specializations Slider Section -->
+      <div th:replace="~{fragments/specializations :: specializations}"></div>
+
+      <!-- News/Berita Section -->
+      <div th:replace="~{fragments/news :: news}"></div>
+
+      <!-- Doctor Schedule Section -->
+      <div th:replace="~{fragments/schedule :: schedule}"></div>
+
+      <!-- Testimonial Section -->
+      <div th:replace="~{fragments/testimonial :: testimonial}"></div>
+
+      <!-- Partners Section -->
+      <div th:replace="~{fragments/partners :: partners}"></div>
+
+      <!-- Location/Contact Section -->
+      <div th:replace="~{fragments/contact :: contact}"></div>
+    </div>
+
+    <!-- Footer Section -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+  </body>
+</html>

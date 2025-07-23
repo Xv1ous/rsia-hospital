@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <!-- Head Fragment -->
+  <head th:replace="~{fragments/head :: head}"></head>
+  <body class="bg-gray-50 text-gray-900 font-sans">
+    <script th:inline="javascript">
+      document.title = "Visi & Misi - RSIA Buah Hati Pamulang";
+    </script>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <nav class="max-w-4xl mx-auto px-4 pt-6" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-sm text-gray-500">
+        <li><a href="/" class="hover:underline">Beranda</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-[#FB9E3A] font-semibold">Visi & Misi</li>
+      </ol>
+    </nav>
+    <div
+      class="max-w-4xl mx-auto px-4 flex justify-between items-center mt-2 mb-4"
+    >
+      <h1 class="text-3xl md:text-4xl font-bold text-[#FB9E3A] mb-4">
+        Visi & Misi
+      </h1>
+      <a
+        href="/"
+        class="px-4 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-sm"
+        >Kembali ke Beranda</a
+      >
+    </div>
+    <section class="bg-[#FFEDD5] rounded-xl shadow p-6 mb-8">
+      <h2 class="text-xl font-bold text-[#E6521F] mb-2">Visi</h2>
+      <p class="text-gray-700 mb-4" th:text="${visi}"></p>
+      <h2 class="text-xl font-bold text-[#E6521F] mb-2">Misi</h2>
+      <ul class="list-disc pl-6 text-gray-700" th:each="misi : ${misiList}">
+        <li th:text="${misi}"></li>
+      </ul>
+    </section>
+    <footer class="bg-[#E6521F] text-white mt-16">
+      <div
+        class="max-w-6xl mx-auto px-4 py-10 text-center text-sm text-white/70"
+      >
+        &copy; 2024 RSIA Buah Hati. Hak cipta dilindungi.
+      </div>
+    </footer>
+  </body>
+</html>

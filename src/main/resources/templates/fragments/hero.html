@@ -1,0 +1,44 @@
+<!-- Hero Section -->
+<section
+  th:fragment="hero"
+  class="relative bg-gradient-to-b from-[#FCEF91] to-white py-24 md:py-36 flex items-center justify-center text-center overflow-hidden"
+>
+  <!-- Centered Background Placeholder Image -->
+  <img
+    src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+    alt="Hospital Placeholder"
+    class="absolute inset-0 w-full h-full object-cover object-center opacity-40 pointer-events-none select-none"
+  />
+  <img
+    src="/asset hospital/maskot1.png"
+    alt="Maskot"
+    class="maskot-anim fixed bottom-8 right-8 z-40"
+    style="width: 140px; pointer-events: none"
+  />
+  <div
+    class="relative z-10 max-w-2xl mx-auto bg-white/80 rounded-xl px-8 py-10 shadow-lg backdrop-blur-sm"
+  >
+    <h1
+      class="text-4xl md:text-5xl font-extrabold text-[#FB9E3A] mb-6 drop-shadow-md"
+    >
+      Pelayanan Kesehatan Modern & Terpercaya untuk Keluarga Anda
+    </h1>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+      <a
+        href="/janji-temu"
+        class="px-6 py-3 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-lg"
+        >Buat Janji Temu</a
+      >
+      <a
+        href="#doctors"
+        class="px-6 py-3 rounded bg-[#FCEF91] text-[#E6521F] font-semibold shadow hover:bg-[#FB9E3A] hover:text-white transition text-lg border border-[#FB9E3A]"
+        >Lihat Dokter Kami</a
+      >
+      <a
+        href="#contact"
+        class="px-6 py-3 rounded bg-white text-[#EA2F14] font-semibold shadow hover:bg-[#FCEF91] hover:text-[#E6521F] transition text-lg border border-[#FCEF91]"
+        >Hubungi Kami</a
+      >
+    </div>
+  </div>
+</section>

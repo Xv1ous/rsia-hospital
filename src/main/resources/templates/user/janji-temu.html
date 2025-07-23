@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+  <!-- Head Fragment -->
+  <head th:replace="~{fragments/head :: head}"></head>
+  <body class="bg-gray-50 text-gray-900 font-sans">
+    <script th:inline="javascript">
+      document.title = "Buat Janji Temu Online - RSIA Buah Hati Pamulang";
+    </script>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Breadcrumb -->
+    <nav class="max-w-lg mx-auto px-4 pt-6" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-sm text-gray-500">
+        <li><a href="/" class="hover:underline">Beranda</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-primary-orange font-semibold">Janji Temu</li>
+      </ol>
+    </nav>
+    <section
+      class="min-h-screen flex flex-col items-center justify-center py-16 px-4 bg-white"
+    >
+      <div class="w-full max-w-4xl bg-[#eaf7f3] rounded-2xl shadow-xl p-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-[#FB9E3A] mb-4">
+          Buat Janji Temu
+        </h1>
+        <div
+          th:if="${success}"
+          class="mb-4 p-4 rounded bg-green-100 text-green-800 border border-green-300 text-center font-semibold"
+        >
+          Permintaan janji temu berhasil dikirim! Kami akan segera menghubungi
+          Anda.
+        </div>
+        <form
+          th:action="@{/janji-temu}"
+          method="post"
+          th:object="${appointment}"
+          class="bg-[#FFEDD5] rounded-xl shadow p-6 max-w-lg mx-auto mb-8"
+        >
+          <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"
+          />
+          <div class="mb-4">
+            <label class="block text-[#E6521F] font-semibold mb-1"
+              >Nama Lengkap</label
+            >
+            <input
+              type="text"
+              name="patientName"
+              th:field="*{patientName}"
+              class="w-full px-4 py-2 rounded border border-[#FB9E3A] focus:ring-2 focus:ring-[#FB9E3A] focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-[#E6521F] font-semibold mb-1"
+              >Nomor Telepon</label
+            >
+            <input
+              type="text"
+              name="patientPhone"
+              th:field="*{patientPhone}"
+              class="w-full px-4 py-2 rounded border border-[#FB9E3A] focus:ring-2 focus:ring-[#FB9E3A] focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-[#E6521F] font-semibold mb-1"
+              >Dokter</label
+            >
+            <select
+              name="doctorId"
+              th:field="*{doctorId}"
+              class="w-full px-4 py-2 rounded border border-[#FB9E3A] focus:ring-2 focus:ring-[#FB9E3A] focus:outline-none"
+              required
+            >
+              <option value="">Pilih Dokter</option>
+              <option
+                th:each="doc : ${doctors}"
+                th:value="${doc.id}"
+                th:text="${doc.name + ' (' + doc.specialization + ')'}"
+              ></option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-[#E6521F] font-semibold mb-1"
+              >Spesialisasi</label
+            >
+            <select
+              name="department"
+              th:field="*{department}"
+              class="w-full px-4 py-2 rounded border border-[#FB9E3A] focus:ring-2 focus:ring-[#FB9E3A] focus:outline-none"
+              required
+            >
+              <option value="">Pilih Spesialisasi</option>
+              <option
+                th:each="spec : ${specializations}"
+                th:value="${spec}"
+                th:text="${spec}"
+              ></option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-[#E6521F] font-semibold mb-1"
+              >Tanggal</label
+            >
+            <input
+              type="date"
+              name="appointmentDate"
+              th:field="*{appointmentDate}"
+              class="w-full px-4 py-2 rounded border border-[#FB9E3A] focus:ring-2 focus:ring-[#FB9E3A] focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-[#E6521F] font-semibold mb-1">Jam</label>
+            <input
+              type="time"
+              name="appointmentTime"
+              th:field="*{appointmentTime}"
+              class="w-full px-4 py-2 rounded border border-[#FB9E3A] focus:ring-2 focus:ring-[#FB9E3A] focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-[#E6521F] font-semibold mb-1"
+              >Catatan</label
+            >
+            <input
+              type="text"
+              name="notes"
+              th:field="*{notes}"
+              class="w-full px-4 py-2 rounded border border-[#FB9E3A] focus:ring-2 focus:ring-[#FB9E3A] focus:outline-none"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full px-4 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition"
+          >
+            Kirim Permintaan
+          </button>
+        </form>
+        <a
+          href="/"
+          class="px-4 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-sm"
+          >Kembali ke Beranda</a
+        >
+      </div>
+      <script>
+        // Filter dokter sesuai departemen
+        document.addEventListener("DOMContentLoaded", function () {
+          const departemen = document.getElementById("departemen");
+          const dokter = document.getElementById("dokter");
+          departemen.addEventListener("change", function () {
+            const value = this.value;
+            Array.from(dokter.options).forEach((opt) => {
+              if (!opt.value || !opt.dataset.departemen) {
+                opt.style.display = "";
+              } else {
+                opt.style.display =
+                  opt.dataset.departemen === value ? "" : "none";
+              }
+            });
+            dokter.value = "";
+          });
+          // Form submit dummy
+          document.getElementById("form-janji").onsubmit = function (e) {
+            e.preventDefault();
+            this.classList.add("hidden");
+            document.getElementById("sukses-janji").classList.remove("hidden");
+          };
+        });
+      </script>
+    </section>
+  </body>
+</html>

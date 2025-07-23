@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <!-- Head Fragment -->
+  <head th:replace="~{fragments/head :: head}"></head>
+  <body class="bg-gray-50 text-gray-900 font-sans">
+    <script th:inline="javascript">
+      document.title = "Layanan Kami - RSIA Buah Hati Pamulang";
+    </script>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <nav class="max-w-6xl mx-auto px-4 pt-6" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-sm text-gray-500">
+        <li><a href="/" class="hover:underline">Beranda</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-[#FB9E3A] font-semibold">Layanan Kami</li>
+      </ol>
+    </nav>
+    <div
+      class="max-w-6xl mx-auto px-4 flex justify-between items-center mt-2 mb-4"
+    >
+      <h1
+        class="text-3xl md:text-4xl font-bold text-[#FB9E3A] mb-4 flex items-center gap-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-8 w-8 text-[#FB9E3A]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
+        Layanan Kami
+      </h1>
+      <a
+        href="/"
+        class="px-4 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-sm"
+        >Kembali ke Beranda</a
+      >
+    </div>
+    <section
+      class="py-8 bg-white flex flex-col items-center px-4 fade-in rounded-xl shadow max-w-6xl mx-auto mb-12"
+    >
+      <p class="text-lg text-[#17695b] mb-8 font-medium text-center">
+        Solusi Kesehatan Lengkap untuk Keluarga Anda. Berikut layanan unggulan
+        kami.
+      </p>
+      <!-- Search Bar -->
+      <div class="w-full max-w-md mb-8">
+        <input
+          id="service-search"
+          type="text"
+          placeholder="Cari layanan..."
+          class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#17695b] focus:outline-none text-lg shadow"
+        />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div
+          class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
+        >
+          <svg
+            class="h-10 w-10 text-[#FB9E3A] mb-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+          <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">IGD 24 Jam</h3>
+          <span
+            class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
+            >Darurat</span
+          >
+          <p class="text-gray-700 text-sm">
+            Layanan gawat darurat siap 24 jam untuk kebutuhan mendesak.
+          </p>
+        </div>
+        <div
+          class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
+        >
+          <svg
+            class="h-10 w-10 text-[#E6521F] mb-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <rect x="3" y="10" width="18" height="7" rx="2" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 17V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10"
+            />
+          </svg>
+          <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">Rawat Inap</h3>
+          <span
+            class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
+            >Inap</span
+          >
+          <p class="text-gray-700 text-sm">
+            Fasilitas kamar nyaman untuk perawatan intensif dan pemulihan.
+          </p>
+        </div>
+        <div
+          class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
+        >
+          <svg
+            class="h-10 w-10 text-[#FB9E3A] mb-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 15a4 4 0 108 0V7m-4 8v2a2 2 0 104 0v-2"
+            />
+          </svg>
+          <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">Rawat Jalan</h3>
+          <span
+            class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
+            >Jalan</span
+          >
+          <p class="text-gray-700 text-sm">
+            Konsultasi dan perawatan tanpa harus menginap di rumah sakit.
+          </p>
+        </div>
+        <div
+          class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
+        >
+          <svg
+            class="h-10 w-10 text-[#E6521F] mb-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 2v6a6 6 0 006 6 6 6 0 006-6V2"
+            />
+          </svg>
+          <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
+            Laboratorium
+          </h3>
+          <span
+            class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
+            >Lab</span
+          >
+          <p class="text-gray-700 text-sm">
+            Pemeriksaan laboratorium lengkap dan akurat.
+          </p>
+        </div>
+        <div
+          class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
+        >
+          <svg
+            class="h-10 w-10 text-[#FB9E3A] mb-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <rect x="4" y="4" width="16" height="16" rx="2" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 8h8v8H8z"
+            />
+          </svg>
+          <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
+            USG & Radiologi
+          </h3>
+          <span
+            class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
+            >Radiologi</span
+          >
+          <p class="text-gray-700 text-sm">
+            Layanan USG, rontgen, dan radiologi modern.
+          </p>
+        </div>
+        <div
+          class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
+        >
+          <svg
+            class="h-10 w-10 text-[#E6521F] mb-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <rect x="7" y="7" width="10" height="10" rx="5" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 17l10-10"
+            />
+          </svg>
+          <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">Apotek</h3>
+          <span
+            class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
+            >Apotek</span
+          >
+          <p class="text-gray-700 text-sm">
+            Apotek lengkap dengan obat-obatan berkualitas.
+          </p>
+        </div>
+        <div
+          class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
+        >
+          <svg
+            class="h-10 w-10 text-[#FB9E3A] mb-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 7l-7 7-4-4m0 0V3m0 4h4"
+            />
+          </svg>
+          <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">Vaksinasi</h3>
+          <span
+            class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
+            >Vaksin</span
+          >
+          <p class="text-gray-700 text-sm">
+            Layanan vaksinasi untuk anak dan dewasa.
+          </p>
+        </div>
+        <div
+          class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
+        >
+          <svg
+            class="h-10 w-10 text-[#E6521F] mb-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 8h2a2 2 0 012 2v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8a2 2 0 012-2h2m4-4v4m0 0l-2-2m2 2l2-2"
+            />
+          </svg>
+          <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
+            Konsultasi Online
+          </h3>
+          <span
+            class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
+            >Online</span
+          >
+          <p class="text-gray-700 text-sm">
+            Konsultasi dokter secara online, mudah dan praktis.
+          </p>
+        </div>
+      </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const searchInput = document.getElementById("service-search");
+          const cards = document.querySelectorAll("#services-grid > div");
+          searchInput.addEventListener("input", function () {
+            const query = this.value.toLowerCase();
+            cards.forEach((card) => {
+              const text = card.textContent.toLowerCase();
+              card.style.display = text.includes(query) ? "" : "none";
+            });
+          });
+        });
+      </script>
+    </section>
+    <footer class="bg-[#17695b] text-white mt-16">
+      <div
+        class="max-w-6xl mx-auto px-4 py-10 text-center text-sm text-white/70"
+      >
+        &copy; 2024 RSIA Buah Hati. Hak cipta dilindungi.
+      </div>
+    </footer>
+  </body>
+</html>

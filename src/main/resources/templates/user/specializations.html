@@ -11,18 +11,18 @@
       <ol class="flex items-center space-x-2 text-sm text-gray-500">
         <li><a href="/" class="hover:underline">Beranda</a></li>
         <li><span class="mx-2">/</span></li>
-        <li class="text-[#FB9E3A] font-semibold">Spesialisasi Unggulan</li>
+        <li class="text-[#FF8000] font-semibold">Spesialisasi Unggulan</li>
       </ol>
     </nav>
     <div
       class="max-w-6xl mx-auto px-4 flex justify-between items-center mt-2 mb-4"
     >
-      <h1 class="text-3xl md:text-4xl font-bold text-[#FB9E3A] mb-4">
+      <h1 class="text-3xl md:text-4xl font-bold text-[#FF8000] mb-4">
         Spesialisasi
       </h1>
       <a
         href="/"
-        class="px-4 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-sm"
+        class="px-4 py-2 rounded bg-[#E6521F] text-white font-semibold shadow hover:bg-[#FF8000] transition text-sm"
         >Kembali ke Beranda</a
       >
     </div>
@@ -36,10 +36,10 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div
           th:each="spec : ${specializations}"
-          class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
+          class="bg-[#ffede6] rounded-xl shadow p-6 flex flex-col items-center text-center"
         >
           <svg
-            class="h-10 w-10 text-[#FB9E3A] mb-3"
+            class="h-10 w-10 text-[#FF8000] mb-3"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -52,7 +52,7 @@
             />
           </svg>
           <h3
-            class="font-semibold text-xl text-[#FB9E3A] mb-1"
+            class="font-semibold text-xl text-[#FF8000] mb-1"
             th:text="${spec}"
           ></h3>
           <span
@@ -256,7 +256,7 @@
         </div>
       </div>
     </section>
-    <footer class="bg-[#E6521F] text-white mt-16">
+    <footer class="bg-[#FF6600] text-white mt-16">
       <div
         class="max-w-6xl mx-auto px-4 py-10 text-center text-sm text-white/70"
       >

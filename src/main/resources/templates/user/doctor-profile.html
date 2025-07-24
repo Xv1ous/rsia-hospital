@@ -38,16 +38,16 @@
 
             <!-- Doctor Info -->
             <div class="flex-1 text-center md:text-left">
-              <h1 class="text-3xl md:text-4xl font-bold text-[#FB9E3A] mb-4">
+              <h1 class="text-3xl md:text-4xl font-bold text-[#E6521F] mb-4">
                 Profil Dokter
               </h1>
               <div
-                class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col md:flex-row gap-8 items-center mb-8"
+                class="bg-[#ffede6] rounded-xl shadow p-6 flex flex-col md:flex-row gap-8 items-center mb-8"
               >
                 <img
                   th:src="@{/asset hospital/RSIA_BHP_LOGO5.png}"
                   alt="Foto Dokter"
-                  class="w-32 h-32 rounded-full object-cover border-4 border-[#FB9E3A] shadow-md mb-4 md:mb-0"
+                  class="w-32 h-32 rounded-full object-cover border-4 border-[#E6521F] shadow-md mb-4 md:mb-0"
                 />
                 <div class="flex-1">
                   <h2
@@ -59,7 +59,7 @@
                     th:text="${doctor.specialization}"
                   ></span>
                   <p class="text-gray-700 mb-2">
-                    <span class="font-semibold text-[#FB9E3A]"
+                    <span class="font-semibold text-[#FF8000]"
                       >Jadwal Praktik:</span
                     >
                   </p>
@@ -81,7 +81,7 @@
               </div>
               <a
                 href="/schedule"
-                class="px-4 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-sm"
+                class="px-4 py-2 rounded bg-[#FF8000] text-white font-semibold shadow hover:bg-[#FF6600] transition text-sm"
                 >Kembali ke Jadwal</a
               >
             </div>

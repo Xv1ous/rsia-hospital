@@ -11,9 +11,9 @@
     />
     <style>
       :root {
-        --primary-orange: #ff6000;
-        --primary-orange-light: #ffefe3;
-        --primary-orange-dark: #c94d00;
+        --primary-orange: #e6521f;
+        --primary-orange-light: #ffede6;
+        --primary-orange-dark: #b13a17;
       }
       .text-primary-orange {
         color: var(--primary-orange) !important;
@@ -37,7 +37,7 @@
     <div class="flex min-h-screen">
       <!-- Sidebar -->
       <aside
-        class="w-64 bg-[#FB9E3A] text-white flex-col py-8 px-4 hidden md:flex"
+        class="w-64 bg-[#E6521F] text-white flex-col py-8 px-4 hidden md:flex"
       >
         <div class="text-2xl font-bold mb-8 flex items-center gap-2">
           <img
@@ -48,18 +48,16 @@
           Admin Panel
         </div>
         <nav class="flex flex-col gap-4 mt-4">
-          <a href="#dashboard" class="hover:text-[#E6521F] font-semibold"
+          <a href="#dashboard" class="hover:text-[#FF8000] font-semibold"
             >Dashboard</a
           >
-          <a href="#appointments" class="hover:text-[#E6521F]">Janji Temu</a>
-          <a href="#doctors" class="hover:text-[#E6521F]">Dokter</a>
-          <a href="#news" class="hover:text-[#E6521F]">Berita</a>
-          <a href="#services" class="hover:text-[#E6521F]">Layanan</a>
+          <a href="#appointments" class="hover:text-[#FF8000]">Janji Temu</a>
+          <a href="#doctors" class="hover:text-[#FF8000]">Dokter</a>
         </nav>
         <div class="mt-auto pt-8">
           <a
             href="/"
-            class="block text-center px-4 py-2 rounded bg-white text-[#FB9E3A] font-semibold hover:bg-[#E6521F] hover:text-white transition"
+            class="block text-center px-4 py-2 rounded bg-white text-[#E6521F] font-semibold hover:bg-[#FF8000] hover:text-white transition"
             >Kembali ke Beranda</a
           >
         </div>
@@ -68,7 +66,7 @@
       <div class="flex-1 flex flex-col">
         <!-- Topbar -->
         <header
-          class="bg-[#FB9E3A] shadow px-4 py-4 flex items-center justify-between sticky top-0 z-10"
+          class="bg-[#E6521F] shadow px-4 py-4 flex items-center justify-between sticky top-0 z-10"
         >
           <nav aria-label="Breadcrumb">
             <ol class="flex items-center space-x-2 text-sm text-white">
@@ -87,10 +85,7 @@
           </div>
         </header>
         <!-- Dashboard Overview Cards -->
-        <section
-          id="dashboard"
-          class="p-6 grid grid-cols-1 md:grid-cols-4 gap-6"
-        >
+        <section class="grid grid-cols-2 gap-6 mb-8">
           <div
             class="bg-primary-orange-light rounded-xl shadow p-6 flex flex-col items-center"
           >
@@ -98,7 +93,7 @@
               class="text-3xl font-bold text-primary-orange mb-2"
               th:text="${appointments.size()}"
             ></div>
-            <div class="text-[#17695b] font-semibold">Janji Temu Hari Ini</div>
+            <div class="text-[#E6521F] font-semibold">Janji Temu</div>
           </div>
           <div
             class="bg-primary-orange-light rounded-xl shadow p-6 flex flex-col items-center"
@@ -107,25 +102,7 @@
               class="text-3xl font-bold text-primary-orange mb-2"
               th:text="${doctors.size()}"
             ></div>
-            <div class="text-[#FB9E3A] font-semibold">Dokter Aktif</div>
-          </div>
-          <div
-            class="bg-primary-orange-light rounded-xl shadow p-6 flex flex-col items-center"
-          >
-            <div
-              class="text-3xl font-bold text-primary-orange mb-2"
-              th:text="${news.size()}"
-            ></div>
-            <div class="text-[#17695b] font-semibold">Berita Terbaru</div>
-          </div>
-          <div
-            class="bg-primary-orange-light rounded-xl shadow p-6 flex flex-col items-center"
-          >
-            <div
-              class="text-3xl font-bold text-primary-orange mb-2"
-              th:text="${services.size()}"
-            ></div>
-            <div class="text-[#17695b] font-semibold">Layanan</div>
+            <div class="text-[#17695b] font-semibold">Dokter Aktif</div>
           </div>
         </section>
         <!-- Appointments Table -->
@@ -143,7 +120,7 @@
           </div>
           <div class="overflow-x-auto rounded-xl shadow bg-white">
             <table class="min-w-full">
-              <thead class="bg-[#FB9E3A] text-white">
+              <thead class="bg-[#E6521F] text-white">
                 <tr>
                   <th class="py-3 px-4 text-left">Nama Pasien</th>
                   <th class="py-3 px-4 text-left">Dokter</th>
@@ -198,7 +175,7 @@
                   </td>
                   <td class="py-3 px-4 flex gap-2">
                     <button
-                      class="px-3 py-1 rounded bg-[#FB9E3A] text-white text-xs font-semibold hover:bg-[#E6521F]"
+                      class="px-3 py-1 rounded bg-[#E6521F] text-white text-xs font-semibold hover:bg-[#FF8000]"
                     >
                       Edit
                     </button>
@@ -243,7 +220,7 @@
                   <td class="py-3 px-4" th:text="${doctor.time}"></td>
                   <td class="py-3 px-4 flex gap-2">
                     <button
-                      class="px-3 py-1 rounded bg-[#FB9E3A] text-white text-xs font-semibold hover:bg-[#E6521F]"
+                      class="px-3 py-1 rounded bg-[#E6521F] text-white text-xs font-semibold hover:bg-[#FF8000]"
                       th:attr="id=${'edit-doctor-' + doctor.id},data-id=${doctor.id},data-name=${doctor.name},data-specialization=${doctor.specialization},data-day=${doctor.day},data-time=${doctor.time},data-hospital=${doctor.hospital}"
                     >
                       Edit
@@ -276,137 +253,6 @@
                 >Selanjutnya</a
               >
             </div>
-          </div>
-        </section>
-        <!-- News Management Table -->
-        <section id="news" class="p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-2xl font-bold text-[#17695b]">Manajemen Berita</h2>
-            <button
-              id="open-add-news-modal"
-              class="px-4 py-2 rounded bg-primary-orange text-white font-semibold hover:bg-primary-orange-dark transition"
-            >
-              + Tambah Berita
-            </button>
-          </div>
-          <div class="overflow-x-auto rounded-xl shadow bg-white">
-            <table class="min-w-full">
-              <thead class="bg-[#17695b] text-white">
-                <tr>
-                  <th class="py-3 px-4 text-left">Judul</th>
-                  <th class="py-3 px-4 text-left">Tanggal</th>
-                  <th class="py-3 px-4 text-left">Status</th>
-                  <th class="py-3 px-4 text-left">Gambar</th>
-                  <th class="py-3 px-4 text-left">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr th:each="news : ${news}">
-                  <td class="py-3 px-4" th:text="${news.title}"></td>
-                  <td class="py-3 px-4" th:text="${news.date}"></td>
-                  <td class="py-3 px-4">
-                    <span
-                      th:if="${news.status == 'Publikasi'}"
-                      class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-500 text-white"
-                      >Publikasi</span
-                    >
-                    <span
-                      th:if="${news.status == 'Draft'}"
-                      class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gray-400 text-white"
-                      >Draft</span
-                    >
-                    <span
-                      th:if="${news.status != 'Publikasi' and news.status != 'Draft'}"
-                      class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gray-300 text-gray-700"
-                      th:text="${news.status}"
-                    ></span>
-                  </td>
-                  <td class="py-3 px-4">
-                    <img
-                      th:if="${news.imageUrl != null and !#strings.isEmpty(news.imageUrl)}"
-                      th:src="@{${news.imageUrl}}"
-                      style="max-width: 80px; max-height: 80px"
-                    />
-                    <span
-                      th:if="${news.imageUrl == null or #strings.isEmpty(news.imageUrl)}"
-                      class="text-gray-400 italic"
-                      >Tidak ada gambar</span
-                    >
-                  </td>
-                  <td class="py-3 px-4 flex gap-2">
-                    <button
-                      class="px-3 py-1 rounded bg-primary-orange text-white text-xs font-semibold hover:bg-primary-orange-dark"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      class="px-3 py-1 rounded bg-red-500 text-white text-xs font-semibold hover:bg-red-600"
-                    >
-                      Hapus
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-        <!-- Services Management Table -->
-        <section id="services" class="p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-2xl font-bold text-[#17695b]">Manajemen Layanan</h2>
-            <button
-              id="open-add-service-modal"
-              class="px-4 py-2 rounded bg-primary-orange text-white font-semibold hover:bg-primary-orange-dark transition"
-            >
-              + Tambah Layanan
-            </button>
-          </div>
-          <div class="overflow-x-auto rounded-xl shadow bg-white">
-            <table class="min-w-full">
-              <thead class="bg-[#17695b] text-white">
-                <tr>
-                  <th class="py-3 px-4 text-left">Nama Layanan</th>
-                  <th class="py-3 px-4 text-left">Kategori</th>
-                  <th class="py-3 px-4 text-left">Status</th>
-                  <th class="py-3 px-4 text-left">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr th:each="service : ${services}">
-                  <td class="py-3 px-4" th:text="${service.name}"></td>
-                  <td class="py-3 px-4" th:text="${service.category}"></td>
-                  <td class="py-3 px-4">
-                    <span
-                      th:if="${service.status == 'Aktif'}"
-                      class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-500 text-white"
-                      >Aktif</span
-                    >
-                    <span
-                      th:if="${service.status == 'Nonaktif'}"
-                      class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-500 text-white"
-                      >Nonaktif</span
-                    >
-                    <span
-                      th:if="${service.status != 'Aktif' and service.status != 'Nonaktif'}"
-                      class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gray-300 text-gray-700"
-                      th:text="${service.status}"
-                    ></span>
-                  </td>
-                  <td class="py-3 px-4 flex gap-2">
-                    <button
-                      class="px-3 py-1 rounded bg-primary-orange text-white text-xs font-semibold hover:bg-primary-orange-dark"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      class="px-3 py-1 rounded bg-red-500 text-white text-xs font-semibold hover:bg-red-600"
-                    >
-                      Hapus
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </section>
         <!-- Modal Tambah Janji Temu -->
@@ -733,7 +579,7 @@
                   const time = this.getAttribute("data-time");
                   const hospital = this.getAttribute("data-hospital");
                   openModal(`
-                    <h3 class='text-xl font-bold mb-4 text-[#FB9E3A]'>Edit Dokter</h3>
+                    <h3 class='text-xl font-bold mb-4 text-[#E6521F]'>Edit Dokter</h3>
                     <form id='edit-doctor-form' class='space-y-4'>
                       <input type='hidden' name='id' value='${id}' />
                       <label class='block'>Rumah Sakit
@@ -751,7 +597,7 @@
                       <label class='block'>Jam
                         <input type='text' name='time' value='${time}' class='w-full px-3 py-2 rounded border border-gray-200 mt-1' required />
                       </label>
-                      <button type='submit' class='w-full px-4 py-2 rounded bg-[#FB9E3A] text-white font-semibold hover:bg-[#E6521F] transition'>Simpan</button>
+                      <button type='submit' class='w-full px-4 py-2 rounded bg-[#E6521F] text-white font-semibold hover:bg-[#FF8000] transition'>Simpan</button>
                     </form>
                   `);
                   document.getElementById("edit-doctor-form").onsubmit =

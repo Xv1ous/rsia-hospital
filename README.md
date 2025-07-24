@@ -198,3 +198,41 @@ Project ini dikembangkan untuk RSIA Buah Hati Pamulang. All rights reserved.
 ---
 
 **RSIA Buah Hati Pamulang** - Pelayanan Kesehatan Modern & Terpercaya
+
+# Railway Deployment (Nixpacks)
+
+## Environment Variables
+
+Atur di Railway dashboard (tab Variables):
+
+| Key               | Value (contoh)                       | Keterangan               |
+| ----------------- | ------------------------------------ | ------------------------ |
+| DATABASE_URL      | jdbc:mysql://HOST:PORT/DATABASE_NAME | URL koneksi MySQL        |
+| DATABASE_USERNAME | root                                 | Username MySQL           |
+| DATABASE_PASSWORD | password                             | Password MySQL           |
+| PORT              | 8080                                 | (Opsional, default 8080) |
+
+Jika pakai Railway MySQL plugin, Railway akan otomatis mengisi variabel ini.
+
+## Build & Start Command (Opsional)
+
+Biasanya Railway auto-detect, tapi bisa diatur manual di tab Settings:
+
+- Build Command:
+  ```
+  ./mvnw package -DskipTests
+  ```
+- Start Command:
+  ```
+  java -jar target/*.jar
+  ```
+
+## Deploy Steps
+
+1. Push project ke GitHub.
+2. Connect repo ke Railway.
+3. Tambahkan MySQL plugin di Railway (jika belum).
+4. Set environment variable seperti di atas.
+5. Deploy (Railway akan build otomatis dengan Nixpacks).
+
+Tidak perlu Dockerfile, Railway akan otomatis pakai Nixpacks untuk build project Java/Maven.

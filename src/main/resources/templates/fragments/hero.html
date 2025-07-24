@@ -1,7 +1,7 @@
 <!-- Hero Section -->
 <section
   th:fragment="hero"
-  class="relative bg-gradient-to-b from-[#FCEF91] to-white py-24 md:py-36 flex items-center justify-center text-center overflow-hidden"
+  class="relative bg-gradient-to-b from-[#FCEF91] to-white py-16 sm:py-24 md:py-36 flex items-center justify-center text-center overflow-hidden min-h-screen"
 >
   <!-- Centered Background Placeholder Image -->
   <img
@@ -12,31 +12,43 @@
   <img
     src="/asset hospital/maskot1.png"
     alt="Maskot"
-    class="maskot-anim fixed bottom-8 right-8 z-40"
-    style="width: 140px; pointer-events: none"
+    class="maskot-anim fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-40 hidden sm:block"
+    style="width: 100px; pointer-events: none"
+  />
+  <img
+    src="/asset hospital/maskot1.png"
+    alt="Maskot"
+    class="maskot-anim fixed bottom-2 right-2 z-40 sm:hidden"
+    style="width: 60px; pointer-events: none"
   />
   <div
-    class="relative z-10 max-w-2xl mx-auto bg-white/80 rounded-xl px-8 py-10 shadow-lg backdrop-blur-sm"
+    class="relative z-10 max-w-2xl mx-auto bg-white/90 rounded-xl px-4 sm:px-8 py-6 sm:py-10 shadow-lg backdrop-blur-sm mx-4"
   >
     <h1
-      class="text-4xl md:text-5xl font-extrabold text-[#FB9E3A] mb-6 drop-shadow-md"
+      class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#E6521F] mb-4 sm:mb-6 drop-shadow-md leading-tight"
     >
       Pelayanan Kesehatan Modern & Terpercaya untuk Keluarga Anda
     </h1>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+    <p class="text-sm sm:text-base text-gray-700 mb-6 sm:mb-8">
+      RSIA Buah Hati Pamulang memberikan layanan kesehatan terbaik dengan dokter
+      spesialis berpengalaman
+    </p>
+    <div
+      class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-6 sm:mt-8"
+    >
       <a
         href="/janji-temu"
-        class="px-6 py-3 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-lg"
+        class="px-4 sm:px-6 py-2 sm:py-3 rounded bg-[#E6521F] text-white font-semibold shadow hover:bg-[#FF8000] transition text-sm sm:text-lg"
         >Buat Janji Temu</a
       >
       <a
-        href="#doctors"
-        class="px-6 py-3 rounded bg-[#FCEF91] text-[#E6521F] font-semibold shadow hover:bg-[#FB9E3A] hover:text-white transition text-lg border border-[#FB9E3A]"
+        href="/schedule"
+        class="px-4 sm:px-6 py-2 sm:py-3 rounded bg-[#FCEF91] text-[#E6521F] font-semibold shadow hover:bg-[#FF8000] hover:text-white transition text-sm sm:text-lg border border-[#E6521F]"
         >Lihat Dokter Kami</a
       >
       <a
         href="#contact"
-        class="px-6 py-3 rounded bg-white text-[#EA2F14] font-semibold shadow hover:bg-[#FCEF91] hover:text-[#E6521F] transition text-lg border border-[#FCEF91]"
+        class="px-4 sm:px-6 py-2 sm:py-3 rounded bg-white text-[#EA2F14] font-semibold shadow hover:bg-[#FCEF91] hover:text-[#FF6600] transition text-sm sm:text-lg border border-[#FCEF91]"
         >Hubungi Kami</a
       >
     </div>

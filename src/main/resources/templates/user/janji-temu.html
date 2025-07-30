@@ -16,10 +16,12 @@
       </ol>
     </nav>
     <section
-      class="min-h-screen flex flex-col items-center justify-center py-16 px-4 bg-white"
+              class="min-h-screen flex flex-col items-center justify-center py-8 px-2 sm:px-4 bg-white pt-20"
     >
-      <div class="w-full max-w-4xl bg-[#eaf7f3] rounded-2xl shadow-xl p-8">
-        <h1 class="text-3xl md:text-4xl font-bold text-[#E6521F] mb-4">
+      <div class="w-full max-w-md bg-[#eaf7f3] rounded-xl shadow-xl p-4 sm:p-8">
+        <h1
+          class="text-2xl sm:text-3xl md:text-4xl font-bold text-[#E6521F] mb-4 text-center"
+        >
           Buat Janji Temu
         </h1>
         <div
@@ -33,14 +35,14 @@
           th:action="@{/janji-temu}"
           method="post"
           th:object="${appointment}"
-          class="bg-[#ffede6] rounded-xl shadow p-6 max-w-lg mx-auto mb-8"
+          class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 max-w-md mx-auto mb-8 space-y-4"
         >
           <input
             type="hidden"
             th:name="${_csrf.parameterName}"
             th:value="${_csrf.token}"
           />
-          <div class="mb-4">
+          <div>
             <label class="block text-[#E6521F] font-semibold mb-1"
               >Nama Lengkap</label
             >
@@ -52,7 +54,7 @@
               required
             />
           </div>
-          <div class="mb-4">
+          <div>
             <label class="block text-[#E6521F] font-semibold mb-1"
               >Nomor Telepon</label
             >
@@ -64,7 +66,7 @@
               required
             />
           </div>
-          <div class="mb-4">
+          <div>
             <label class="block text-[#E6521F] font-semibold mb-1"
               >Dokter</label
             >
@@ -82,7 +84,7 @@
               ></option>
             </select>
           </div>
-          <div class="mb-4">
+          <div>
             <label class="block text-[#E6521F] font-semibold mb-1"
               >Tanggal</label
             >
@@ -94,7 +96,7 @@
               required
             />
           </div>
-          <div class="mb-4">
+          <div>
             <label class="block text-[#E6521F] font-semibold mb-1">Jam</label>
             <input
               type="time"
@@ -104,7 +106,7 @@
               required
             />
           </div>
-          <div class="mb-4">
+          <div>
             <label class="block text-[#E6521F] font-semibold mb-1"
               >Catatan</label
             >
@@ -118,7 +120,7 @@
           <button
             type="button"
             onclick="kirimKeWhatsApp()"
-            class="w-full px-4 py-2 rounded bg-green-500 text-white font-semibold shadow hover:bg-green-700 transition mt-2 flex items-center justify-center gap-2"
+            class="w-full px-4 py-3 rounded bg-green-500 text-white font-semibold shadow hover:bg-green-700 transition mt-2 flex items-center justify-center gap-2 text-base"
           >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path
@@ -130,55 +132,42 @@
         </form>
         <a
           href="/"
-          class="px-4 py-2 rounded bg-[#E6521F] text-white font-semibold shadow hover:bg-[#FF8000] transition text-sm"
+          class="block w-full px-4 py-3 rounded bg-[#E6521F] text-white font-semibold shadow hover:bg-[#FF8000] transition text-base text-center mt-2"
           >Kembali ke Beranda</a
         >
       </div>
       <script>
-        // Filter dokter sesuai departemen
-        document.addEventListener("DOMContentLoaded", function () {
-          const departemen = document.getElementById("departemen");
-          const dokter = document.getElementById("dokter");
-          departemen.addEventListener("change", function () {
-            const value = this.value;
-            Array.from(dokter.options).forEach((opt) => {
-              if (!opt.value || !opt.dataset.departemen) {
-                opt.style.display = "";
-              } else {
-                opt.style.display =
-                  opt.dataset.departemen === value ? "" : "none";
-              }
-            });
-            dokter.value = "";
-          });
-          // Form submit dummy
-          document.getElementById("form-janji").onsubmit = function (e) {
-            e.preventDefault();
-            this.classList.add("hidden");
-            document.getElementById("sukses-janji").classList.remove("hidden");
-          };
-        });
         // Kirim ke WhatsApp
         function kirimKeWhatsApp() {
-          var nama = document.querySelector('[name="patientName"]').value;
-          var telp = document.querySelector('[name="patientPhone"]').value;
+          var nama = document
+            .querySelector('[name="patientName"]')
+            .value.trim();
+          var telp = document
+            .querySelector('[name="patientPhone"]')
+            .value.trim();
           var dokter = document.querySelector('[name="doctorId"]');
-          var dokterText = dokter.options[dokter.selectedIndex]
-            ? dokter.options[dokter.selectedIndex].text
-            : "";
-          var spesialis = document.querySelector('[name="department"]').value;
+          var dokterText =
+            dokter && dokter.options[dokter.selectedIndex]
+              ? dokter.options[dokter.selectedIndex].text
+              : "";
           var tanggal = document.querySelector(
             '[name="appointmentDate"]'
           ).value;
           var jam = document.querySelector('[name="appointmentTime"]').value;
           var catatan = document.querySelector('[name="notes"]').value;
           var no_wa = "6287770065455";
+
+          // Validasi sederhana
+          if (!nama || !telp || !dokterText || !tanggal || !jam) {
+            alert("Mohon lengkapi semua data janji temu!");
+            return;
+          }
+
           var pesan =
-            `Halo Admin RSIA BHP, saya ingin membuat janji temu:\n\n` +
+            `Halo Admin RSIA Buah Hati Pamulang, saya ingin membuat janji temu:\n\n` +
             `Nama: ${nama}\n` +
             `No. HP: ${telp}\n` +
             `Dokter: ${dokterText}\n` +
-            `Spesialisasi: ${spesialis}\n` +
             `Tanggal: ${tanggal}\n` +
             `Jam: ${jam}\n` +
             `Catatan: ${catatan}`;
@@ -188,5 +177,6 @@
         }
       </script>
     </section>
+    <div th:replace="~{fragments/footer :: footer}"></div>
   </body>
 </html>

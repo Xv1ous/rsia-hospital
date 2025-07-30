@@ -1,11 +1,11 @@
 <!-- Doctor Schedule Section Fragment -->
 <section
   th:fragment="schedule"
-  x-data="{ selectedSpec: 'semua' }"
+  x-data="{ selectedSpec: 'semua', searchTerm: '' }"
   class="w-full py-8 sm:py-12 flex flex-col items-center px-4 max-w-6xl mx-auto mb-8 sm:mb-12"
 >
   <h2
-    class="text-2xl sm:text-3xl md:text-4xl font-bold text-[#FF8C00] mb-2 text-center"
+    class="text-2xl sm:text-3xl md:text-4xl font-bold text-[#E6521F] mb-2 text-center"
   >
     Jadwal Dokter
   </h2>
@@ -15,32 +15,20 @@
     Temukan Jadwal Praktik Dokter di Rumah Sakit Kami. Gunakan filter di bawah
     untuk mencari dokter atau spesialisasi.
   </p>
-
-  <!-- Filter Tabs - Mobile Optimized -->
+  <!-- Filter Dropdown - Mobile Friendly -->
   <div class="w-full mb-4">
-    <div
-      class="flex gap-2 justify-start md:justify-center px-2 overflow-x-auto pb-2 scrollbar-hide"
+    <select
+      class="w-full sm:w-auto px-4 py-2 rounded-xl border-2 border-[#FF8000] text-[#E6521F] font-semibold shadow focus:ring-2 focus:ring-[#FF8000] transition"
+      x-model="selectedSpec"
     >
-      <button
-        type="button"
-        class="specialty-tab flex-shrink-0 px-4 py-2 rounded-full font-medium text-[#E6521F] bg-white shadow text-sm border-2 transition-all duration-200"
-        :class="selectedSpec === 'semua' ? 'border-[#FF8C00] bg-[#FF8C00] text-white' : 'border-gray-200 hover:border-[#FF8C00]'"
-        @click="selectedSpec = 'semua'"
-      >
-        Semua
-      </button>
-      <button
+      <option value="semua">Semua</option>
+      <option
         th:each="spec : ${specializations}"
-        type="button"
-        class="specialty-tab flex-shrink-0 px-4 py-2 rounded-full font-medium text-[#E6521F] bg-white shadow text-sm border-2 transition-all duration-200"
-        th:attr="data-spec=${spec}"
+        th:value="${#strings.replace(#strings.toLowerCase(spec).trim(), ' ', '-')}"
         th:text="${spec}"
-        :class="selectedSpec === $el.dataset.spec ? 'border-[#FF8C00] bg-[#FF8C00] text-white' : 'border-gray-200 hover:border-[#FF8C00]'"
-        @click="selectedSpec = $el.dataset.spec"
-      ></button>
-    </div>
+      ></option>
+    </select>
   </div>
-
   <!-- Search Bar - Mobile Optimized -->
   <div class="w-full mb-6 flex flex-col sm:flex-row gap-3 items-center">
     <div class="relative w-full">
@@ -60,8 +48,9 @@
       <input
         id="doctor-search"
         type="text"
-        placeholder="Cari dokter, spesialisasi, atau hari..."
-        class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#FF8C00] focus:outline-none text-sm bg-white shadow-sm"
+        placeholder="Cari dokter atau spesialisasi..."
+        class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#FF8000] focus:outline-none text-sm bg-white shadow-sm"
+        x-model="searchTerm"
       />
     </div>
     <button
@@ -82,13 +71,12 @@
           d="M6 18L18 6M6 6l12 12"
         ></path>
       </svg>
-      Reset
     </button>
   </div>
-
   <!-- Desktop Table View -->
   <div
     class="w-full max-w-6xl mx-auto overflow-visible rounded-2xl shadow-lg bg-white p-4 sm:p-6 hidden md:block"
+    style="min-height: 600px"
   >
     <div class="overflow-x-auto">
       <table
@@ -96,7 +84,7 @@
         id="doctor-schedule-table-desktop"
       >
         <thead>
-          <tr class="bg-[#FF8C00] text-white text-sm sm:text-base">
+          <tr class="bg-[#FF8000] text-white text-sm sm:text-base">
             <th class="py-3 sm:py-4 px-2 sm:px-4 text-left">Nama Dokter</th>
             <th class="py-3 sm:py-4 px-2 sm:px-4 text-left">Spesialisasi</th>
             <th class="py-3 sm:py-4 px-2 sm:px-4 text-left">Jadwal Praktik</th>
@@ -106,31 +94,50 @@
         <tbody>
           <tr
             th:each="doctor : ${doctors}"
-            class="group border-b hover:bg-[#FFF6E9] transition"
-            th:attr="data-spec=${doctor.specialization}"
+            th:attr="data-slug=${#strings.replace(#strings.toLowerCase(doctor.specialization).trim(), ' ', '-')}, data-spec=${doctor.specialization}, data-name=${doctor.name}"
+            class="group border-b hover:bg-[#FFF6E9] transition doctor-row"
           >
             <td
-              class="py-3 sm:py-4 px-2 sm:px-4 font-extrabold text-base sm:text-lg text-[#FF8C00]"
+              class="py-3 sm:py-4 px-2 sm:px-4 font-extrabold text-base sm:text-lg text-[#FF8000]"
               th:text="${doctor.name}"
             ></td>
             <td class="py-3 sm:py-4 px-2 sm:px-4">
-              <span
-                th:text="${doctor.specialization}"
-                class="text-sm sm:text-base"
-              ></span>
+              <div class="flex flex-col gap-1">
+                <span
+                  th:text="${doctor.specialization}"
+                  class="text-sm sm:text-base"
+                ></span>
+                <!-- Doctor Leave Status -->
+                <div
+                  th:if="${doctor.isOnLeave != null and doctor.isOnLeave}"
+                  class="flex items-center gap-1"
+                >
+                  <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                    </svg>
+                    Cuti
+                  </span>
+                  <span
+                    th:if="${doctor.leaveReason != null and doctor.leaveReason != ''}"
+                    class="text-xs text-gray-500"
+                    th:text="${'(' + doctor.leaveReason + ')'}"
+                  ></span>
+                </div>
+              </div>
             </td>
             <td class="relative py-3 sm:py-4 px-2 sm:px-4">
               <div class="inline-block">
                 <button
-                  class="popover-btn px-3 sm:px-4 py-1 rounded-full bg-[#FF8C00] text-white font-semibold shadow hover:bg-[#E6521F] transition text-xs"
+                  class="popover-btn px-3 sm:px-4 py-1 rounded-full bg-[#FF8000] text-white font-semibold shadow hover:bg-[#E6521F] transition text-xs"
                 >
                   Lihat Jadwal
                 </button>
                 <div
-                  class="popover-content hidden absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 bg-white border border-[#FF8C00] rounded-xl shadow-xl p-3 sm:p-4 w-64 sm:w-72"
+                  class="popover-content hidden absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 bg-white border border-[#FF8000] rounded-xl shadow-xl p-3 sm:p-4 w-64 sm:w-72"
                 >
                   <div
-                    class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-[#FF8C00] rotate-45"
+                    class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-[#FF8000] rotate-45"
                   ></div>
                   <button
                     class="absolute top-2 right-2 text-gray-400 hover:text-[#E6521F] text-lg font-bold close-popover"
@@ -138,7 +145,7 @@
                     &times;
                   </button>
                   <h3
-                    class="text-sm sm:text-base font-bold text-[#FF8C00] mb-3 text-center"
+                    class="text-sm sm:text-base font-bold text-[#FF8000] mb-3 text-center"
                     th:text="${doctor.name}"
                   ></h3>
                   <ul class="space-y-2">
@@ -185,16 +192,16 @@
       </table>
     </div>
   </div>
-
   <!-- Mobile Card View - Enhanced -->
   <div
     class="w-full max-w-6xl mx-auto space-y-4 md:hidden"
     id="doctor-schedule-cards-mobile"
+    style="min-height: 800px"
   >
     <div
       th:each="doctor : ${doctors}"
+      th:attr="data-slug=${#strings.replace(#strings.toLowerCase(doctor.specialization).trim(), ' ', '-')}, data-spec=${doctor.specialization}, data-name=${doctor.name}"
       class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-xl"
-      th:attr="data-spec=${doctor.specialization}"
     >
       <!-- Doctor Header with Avatar -->
       <div class="p-4 border-b border-gray-50">
@@ -209,6 +216,18 @@
                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800"
                 th:text="${doctor.specialization}"
               ></span>
+              <!-- Doctor Leave Status Mobile -->
+              <div
+                th:if="${doctor.isOnLeave != null and doctor.isOnLeave}"
+                class="flex items-center gap-1"
+              >
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                  </svg>
+                  Cuti
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -219,7 +238,7 @@
         <div class="flex items-center justify-between mb-3">
           <h4 class="font-semibold text-gray-800 flex items-center gap-2">
             <svg
-              class="w-4 h-4 text-[#FF8C00]"
+              class="w-4 h-4 text-[#FF8000]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -253,7 +272,7 @@
             th:each="jadwal, iterStat : ${scheduleMap[doctor.name]}"
             class="flex items-center gap-1.5 px-2 py-1 bg-orange-50 rounded-lg border border-orange-100"
           >
-            <div class="w-2 h-2 bg-[#FF8C00] rounded-full"></div>
+            <div class="w-2 h-2 bg-[#FF8000] rounded-full"></div>
             <span
               class="text-xs font-medium text-[#E6521F]"
               th:text="${#strings.substring(jadwal.day, 0, 3)}"
@@ -386,10 +405,16 @@
     </div>
   </div>
 
-  <!-- Pagination Controls -->
+  <!-- Pagination Controls Desktop -->
   <div
     id="pagination-controls"
-    class="w-full flex justify-center mt-8 mb-4 px-4 pt-4"
+    class="w-full flex justify-center mt-8 mb-4 px-4 pt-4 hidden md:flex sticky bottom-0 bg-white py-2"
+  ></div>
+
+  <!-- Pagination Controls Mobile -->
+  <div
+    id="pagination-controls-mobile"
+    class="w-full flex justify-center mt-8 mb-4 px-4 pt-4 md:hidden sticky bottom-0 bg-white py-2"
   ></div>
 
   <style>
@@ -401,269 +426,4 @@
       display: none;
     }
   </style>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const specialtyTabs = document.querySelectorAll(".specialty-tab");
-      const searchInput = document.getElementById("doctor-search");
-      const clearBtn = document.getElementById("clear-filters");
-      const desktopTable = document.getElementById(
-        "doctor-schedule-table-desktop"
-      );
-      const mobileCards = document.getElementById(
-        "doctor-schedule-cards-mobile"
-      );
-      let selectedSpecialty = "semua";
-      const MAX_ITEMS_TO_SHOW = 5;
-      let currentPage = 1;
-      const itemsPerPage = MAX_ITEMS_TO_SHOW;
-
-      // Filter spesialisasi
-      specialtyTabs.forEach((tab) => {
-        tab.addEventListener("click", function () {
-          specialtyTabs.forEach((t) =>
-            t.classList.remove("border-[#FF8C00]", "bg-[#FF8C00]", "text-white")
-          );
-          specialtyTabs.forEach((t) =>
-            t.classList.add("border-gray-200", "text-[#E6521F]")
-          );
-          this.classList.remove("border-gray-200", "text-[#E6521F]");
-          this.classList.add("border-[#FF8C00]", "bg-[#FF8C00]", "text-white");
-          selectedSpecialty = this.getAttribute("data-spec") || "semua";
-          currentPage = 1;
-          filterItems();
-        });
-      });
-
-      // Search functionality
-      let searchTimeout;
-      searchInput.addEventListener("input", function () {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-          currentPage = 1;
-          filterItems();
-        }, 300);
-      });
-
-      // Clear filters
-      clearBtn.addEventListener("click", function () {
-        searchInput.value = "";
-        selectedSpecialty = "semua";
-        currentPage = 1;
-        specialtyTabs.forEach((t) =>
-          t.classList.remove("border-[#FF8C00]", "bg-[#FF8C00]", "text-white")
-        );
-        specialtyTabs.forEach((t) =>
-          t.classList.add("border-gray-200", "text-[#E6521F]")
-        );
-        document
-          .querySelector('[data-spec="semua"]')
-          .classList.remove("border-gray-200", "text-[#E6521F]");
-        document
-          .querySelector('[data-spec="semua"]')
-          .classList.add("border-[#FF8C00]", "bg-[#FF8C00]", "text-white");
-        filterItems();
-      });
-
-      function filterItems() {
-        const isMobile = window.innerWidth < 768;
-        const container = isMobile ? mobileCards : desktopTable;
-
-        if (isMobile) {
-          const cards = container.querySelectorAll("div[data-spec]");
-          const searchTerm = searchInput.value.toLowerCase();
-          let visibleCards = [];
-
-          cards.forEach((card) => {
-            const spec = card.getAttribute("data-spec");
-            const text = card.textContent.toLowerCase();
-            const specMatch =
-              selectedSpecialty === "semua" || spec === selectedSpecialty;
-            const searchMatch = text.includes(searchTerm);
-            if (specMatch && searchMatch) visibleCards.push(card);
-          });
-
-          cards.forEach((card) => (card.style.display = "none"));
-
-          const startIndex = (currentPage - 1) * itemsPerPage;
-          const endIndex = startIndex + itemsPerPage;
-          const cardsToShow = visibleCards.slice(startIndex, endIndex);
-
-          cardsToShow.forEach((card) => (card.style.display = "block"));
-          updatePaginationInfo(visibleCards.length);
-        } else {
-          const rows = container.querySelectorAll("tbody tr");
-          const searchTerm = searchInput.value.toLowerCase();
-          let visibleRows = [];
-
-          rows.forEach((row) => {
-            const spec = row.getAttribute("data-spec");
-            const text = row.textContent.toLowerCase();
-            const specMatch =
-              selectedSpecialty === "semua" || spec === selectedSpecialty;
-            const searchMatch = text.includes(searchTerm);
-            if (specMatch && searchMatch) visibleRows.push(row);
-          });
-
-          rows.forEach((row) => (row.style.display = "none"));
-
-          const startIndex = (currentPage - 1) * itemsPerPage;
-          const endIndex = startIndex + itemsPerPage;
-          const rowsToShow = visibleRows.slice(startIndex, endIndex);
-
-          rowsToShow.forEach((row) => (row.style.display = ""));
-          updatePaginationInfo(visibleRows.length);
-        }
-      }
-
-      function updatePaginationInfo(totalVisibleRows) {
-        const totalPages = Math.ceil(totalVisibleRows / itemsPerPage);
-        const paginationContainer = document.getElementById(
-          "pagination-controls"
-        );
-
-        paginationContainer.innerHTML = "";
-
-        // Always show pagination container for debugging
-        paginationContainer.style.display = "flex";
-
-        if (totalPages <= 1) {
-          paginationContainer.style.display = "none";
-          return;
-        }
-        const paginationDiv = document.createElement("div");
-        paginationDiv.className =
-          "flex justify-center items-center gap-2 w-full flex-wrap";
-        paginationDiv.innerHTML = `
-          <button id="prev-page" class="px-2 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-xs flex items-center gap-1 min-w-fit">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
-            <span class="hidden sm:inline">Sebelumnya</span>
-          </button>
-          <span id="page-info" class="text-gray-600 font-medium text-xs px-2 py-2 text-center min-w-fit">${currentPage}/${totalPages}</span>
-          <button id="next-page" class="px-2 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-xs flex items-center gap-1 min-w-fit">
-            <span class="hidden sm:inline">Selanjutnya</span>
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </button>
-        `;
-        paginationContainer.appendChild(paginationDiv);
-
-        // Update button states
-        const prevBtn = document.getElementById("prev-page");
-        const nextBtn = document.getElementById("next-page");
-
-        prevBtn.disabled = currentPage <= 1;
-        nextBtn.disabled = currentPage >= totalPages;
-
-        document.getElementById("prev-page").addEventListener("click", () => {
-          if (currentPage > 1) {
-            currentPage--;
-            filterItems();
-          }
-        });
-
-        document.getElementById("next-page").addEventListener("click", () => {
-          if (currentPage < totalPages) {
-            currentPage++;
-            filterItems();
-          }
-        });
-      }
-
-      // Desktop popover functionality
-      document.querySelectorAll(".popover-btn").forEach(function (btn) {
-        btn.addEventListener("click", function (e) {
-          e.stopPropagation();
-          document.querySelectorAll(".popover-content").forEach(function (pop) {
-            if (pop !== btn.nextElementSibling) pop.classList.add("hidden");
-          });
-          btn.nextElementSibling.classList.toggle("hidden");
-        });
-      });
-
-      // Mobile modal functionality
-      document.querySelectorAll(".popover-btn-mobile").forEach(function (btn) {
-        btn.addEventListener("click", function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-
-          const modal = btn.nextElementSibling;
-          const isHidden = modal.classList.contains("hidden");
-
-          // Close all other modals first
-          document
-            .querySelectorAll(".mobile-schedule-modal")
-            .forEach(function (otherModal) {
-              if (otherModal !== modal) {
-                otherModal.classList.add("hidden");
-              }
-            });
-
-          // Close all desktop popovers
-          document
-            .querySelectorAll(".popover-content")
-            .forEach(function (popover) {
-              popover.classList.add("hidden");
-            });
-
-          // Toggle current modal
-          if (isHidden) {
-            modal.classList.remove("hidden");
-            document.body.style.overflow = "hidden";
-          } else {
-            modal.classList.add("hidden");
-            document.body.style.overflow = "auto";
-          }
-        });
-      });
-
-      // Close buttons
-      document.querySelectorAll(".close-popover").forEach(function (btn) {
-        btn.addEventListener("click", function (e) {
-          e.stopPropagation();
-          btn.closest(".popover-content").classList.add("hidden");
-        });
-      });
-
-      document.querySelectorAll(".close-mobile-modal").forEach(function (btn) {
-        btn.addEventListener("click", function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          const modal = btn.closest(".mobile-schedule-modal");
-          modal.classList.add("hidden");
-          document.body.style.overflow = "auto";
-        });
-      });
-
-      // Close all popovers and modals when clicking outside
-      document.addEventListener("click", function (e) {
-        // Close desktop popovers
-        document.querySelectorAll(".popover-content").forEach(function (pop) {
-          pop.classList.add("hidden");
-        });
-
-        // Close mobile modals when clicking on backdrop
-        document
-          .querySelectorAll(".mobile-schedule-modal")
-          .forEach(function (modal) {
-            if (e.target === modal) {
-              modal.classList.add("hidden");
-              document.body.style.overflow = "auto";
-            }
-          });
-      });
-
-      // Initial filter
-      filterItems();
-
-      // Handle window resize
-      window.addEventListener("resize", function () {
-        currentPage = 1; // Reset to first page on resize
-        filterItems();
-      });
-    });
-  </script>
 </section>

@@ -15,20 +15,20 @@
       <!-- About/Values Section -->
       <div th:replace="~{fragments/about :: about}"></div>
 
+      <!-- Doctor Schedule Section -->
+      <div th:replace="~{fragments/schedule :: schedule}"></div>
+
       <!-- Specializations Slider Section -->
-      <div th:replace="~{fragments/specializations :: specializations}"></div>
+      <!-- <div th:replace="~{fragments/specializations :: specializations}"></div>-->
 
       <!-- News/Berita Section -->
       <div th:replace="~{fragments/news :: news}"></div>
-
-      <!-- Doctor Schedule Section -->
-      <div th:replace="~{fragments/schedule :: schedule}"></div>
 
       <!-- Testimonial Section -->
       <div th:replace="~{fragments/testimonial :: testimonial}"></div>
 
       <!-- Partners Section -->
-      <div th:replace="~{fragments/partners :: partners}"></div>
+      <!-- <div th:replace="~{fragments/partners :: partners}"></div> -->
 
       <!-- Location/Contact Section -->
       <div th:replace="~{fragments/contact :: contact}"></div>
@@ -36,5 +36,8 @@
 
     <!-- Footer Section -->
     <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <!-- Modal Fragment -->
+    <div th:replace="~{fragments/modal :: janji-modal}"></div>
   </body>
 </html>

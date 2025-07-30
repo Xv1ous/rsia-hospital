@@ -2,130 +2,95 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head th:fragment="head">
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RSIA Buah Hati Pamulang</title>
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      name="description"
+      content="Rumah Sakit Ibu dan Anak Buah Hati Pamulang - Pelayanan kesehatan terbaik untuk keluarga Anda"
     />
-    <title th:text="${title} ?: 'RSIA Buah Hati Pamulang'">
-      RSIA Buah Hati Pamulang
-    </title>
-    <link href="/main.css" rel="stylesheet" />
+    <meta
+      name="keywords"
+      content="rumah sakit, ibu dan anak, pamulang, kesehatan"
+    />
+    <meta name="author" content="RSIA Buah Hati Pamulang" />
+
+    <!-- Favicon -->
     <link
       rel="icon"
-      type="image/png"
+      type="image/x-icon"
       href="/asset hospital/RSIA_BHP_LOGO5.png"
     />
-    <!-- Google Fonts: Inter -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine.js -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/main.css" />
+
+    <!-- Main JavaScript (includes navbar, modal, services, gallery) -->
+    <script src="/js/main.js"></script>
+
+    <!-- Schedule JavaScript (loads on all pages but only runs if schedule elements exist) -->
+    <script src="/js/schedule.js"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#E6521F",
+              secondary: "#FB9E3A",
+              accent: "#17695B",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Custom Styles -->
     <style>
-      :root {
-        --primary-orange: #e6521f;
-        --primary-orange-light: #ffede6;
-        --primary-orange-dark: #b13a17;
-      }
-      .text-primary-orange {
-        color: var(--primary-orange) !important;
-      }
-      .bg-primary-orange {
-        background-color: var(--primary-orange) !important;
-      }
-      .border-primary-orange {
-        border-color: var(--primary-orange) !important;
-      }
-      .hover\:bg-primary-orange:hover {
-        background-color: var(--primary-orange) !important;
-      }
-      .hover\:text-primary-orange:hover {
-        color: var(--primary-orange) !important;
-      }
-      .focus\:ring-primary-orange:focus {
-        box-shadow: 0 0 0 2px var(--primary-orange) !important;
-      }
-      .bg-primary-orange-light {
-        background-color: var(--primary-orange-light) !important;
-      }
-      .bg-primary-orange-dark {
-        background-color: var(--primary-orange-dark) !important;
-      }
-      .border-primary-orange-dark {
-        border-color: var(--primary-orange-dark) !important;
-      }
-      .text-primary-orange-dark {
-        color: var(--primary-orange-dark) !important;
-      }
-      .bg-gradient-orange {
-        background: linear-gradient(90deg, #ffefe3 0%, #ff6000 100%);
-      }
-      .carousel-dot.bg-primary-orange {
-        box-shadow: 0 0 0 2px #fff, 0 0 0 4px #ff6000;
-      }
       .fade-in {
-        animation: fadeIn 1.2s ease-in;
+        animation: fadeIn 0.5s ease-in;
       }
+
       @keyframes fadeIn {
         from {
           opacity: 0;
-          transform: translateY(30px);
+          transform: translateY(20px);
         }
         to {
           opacity: 1;
-          transform: none;
-        }
-      }
-      body,
-      .font-sans {
-        font-family: "Inter", "Segoe UI", "Roboto", "Helvetica Neue", Arial,
-          "sans-serif";
-      }
-
-      /* Mobile optimizations */
-      @media (max-width: 640px) {
-        .maskot-anim {
-          animation: bounce 2s infinite;
-        }
-
-        /* Improve touch targets */
-        button,
-        a {
-          min-height: 44px;
-          min-width: 44px;
-        }
-
-        /* Better text readability on mobile */
-        p {
-          line-height: 1.6;
-        }
-
-        /* Smooth scrolling */
-        html {
-          scroll-behavior: smooth;
-        }
-      }
-
-      /* Tablet optimizations */
-      @media (min-width: 641px) and (max-width: 1024px) {
-        .maskot-anim {
-          animation: bounce 2.5s infinite;
-        }
-      }
-
-      @keyframes bounce {
-        0%,
-        20%,
-        50%,
-        80%,
-        100% {
           transform: translateY(0);
         }
-        40% {
+      }
+
+      .maskot-anim {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
           transform: translateY(-10px);
         }
-        60% {
-          transform: translateY(-5px);
-        }
+      }
+
+      .hover-scale {
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .hover-scale:hover {
+        transform: scale(1.05);
       }
     </style>
   </head>

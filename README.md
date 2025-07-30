@@ -36,7 +36,7 @@ Website ini dibangun untuk RSIA Buah Hati Pamulang dengan fitur-fitur modern yan
 
 Sebelum menjalankan project, pastikan Anda memiliki:
 
-- **Java 24** atau lebih tinggi
+- **Java 21** atau lebih tinggi
 - **Maven 3.6+**
 - **MySQL 8.0+**
 - **Node.js 18+** (untuk Tailwind CSS)

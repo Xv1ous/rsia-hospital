@@ -1,267 +1,269 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-full">
   <!-- Head Fragment -->
   <head th:replace="~{fragments/head :: head}"></head>
-  <body class="bg-gray-50 text-gray-900 font-sans">
+  <body
+    class="min-h-screen h-full flex flex-col bg-gray-50 text-gray-900 font-sans"
+  >
     <script th:inline="javascript">
       document.title = "Spesialisasi Unggulan - RSIA Buah Hati Pamulang";
     </script>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <nav class="max-w-6xl mx-auto px-4 pt-6" aria-label="Breadcrumb">
-      <ol class="flex items-center space-x-2 text-sm text-gray-500">
-        <li><a href="/" class="hover:underline">Beranda</a></li>
-        <li><span class="mx-2">/</span></li>
-        <li class="text-[#FF8000] font-semibold">Spesialisasi Unggulan</li>
-      </ol>
-    </nav>
-    <div
-      class="max-w-6xl mx-auto px-4 flex justify-between items-center mt-2 mb-4"
-    >
-      <h1 class="text-3xl md:text-4xl font-bold text-[#FF8000] mb-4">
-        Spesialisasi
-      </h1>
-      <a
-        href="/"
-        class="px-4 py-2 rounded bg-[#E6521F] text-white font-semibold shadow hover:bg-[#FF8000] transition text-sm"
-        >Kembali ke Beranda</a
-      >
-    </div>
-    <section
-      class="py-8 bg-white flex flex-col items-center px-4 fade-in rounded-xl shadow max-w-6xl mx-auto mb-12"
-    >
-      <p class="text-lg text-[#E6521F] mb-8 font-medium text-center">
-        Layanan Medis Terbaik untuk Anda. Temukan spesialisasi unggulan kami di
-        bawah ini.
-      </p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div
-          th:each="spec : ${specializations}"
-          class="bg-[#ffede6] rounded-xl shadow p-6 flex flex-col items-center text-center"
-        >
-          <svg
-            class="h-10 w-10 text-[#FF8000] mb-3"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 10c-2.21 0-4-1.79-4-4h8c0 2.21-1.79 4-4 4z"
-            />
-          </svg>
-          <h3
-            class="font-semibold text-xl text-[#FF8000] mb-1"
-            th:text="${spec}"
-          ></h3>
-          <span
-            class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-orange-400 text-white shadow mb-2"
-            th:text="${spec}"
-          ></span>
-        </div>
-      </div>
-      <div class="w-full overflow-x-auto pb-2">
-        <div class="flex gap-6 snap-x snap-mandatory w-max">
-          <!-- Card 1: Penyakit Dalam -->
-          <div
-            class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-10 w-10 text-[#17695b] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 15a4 4 0 108 0V7m-4 8v2a2 2 0 104 0v-2"
-              />
-            </svg>
-            <h3 class="font-semibold text-lg text-[#17695b] mb-1">
-              Penyakit Dalam
-            </h3>
-            <p class="text-gray-700 text-sm">
-              Diagnosis & penanganan penyakit organ dalam dewasa.
-            </p>
-          </div>
-          <!-- Card 2: Anak -->
-          <div
-            class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-10 w-10 text-[#17695b] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 9a3 3 0 11-6 0"
-              />
-            </svg>
-            <h3 class="font-semibold text-lg text-[#17695b] mb-1">Anak</h3>
-            <p class="text-gray-700 text-sm">
-              Perawatan kesehatan anak & tumbuh kembang optimal.
-            </p>
-          </div>
-          <!-- Card 3: Bedah -->
-          <div
-            class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-10 w-10 text-[#17695b] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 7l-7 7-4-4"
-              />
-            </svg>
-            <h3 class="font-semibold text-lg text-[#17695b] mb-1">Bedah</h3>
-            <p class="text-gray-700 text-sm">
-              Tindakan bedah modern & minim risiko untuk berbagai kasus.
-            </p>
-          </div>
-          <!-- Card 4: Kandungan -->
-          <div
-            class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-10 w-10 text-[#17695b] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <circle cx="12" cy="10" r="4" />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 14v6m0 0h-2m2 0h2"
-              />
-            </svg>
-            <h3 class="font-semibold text-lg text-[#17695b] mb-1">Kandungan</h3>
-            <p class="text-gray-700 text-sm">
-              Layanan kehamilan, persalinan, & kesehatan wanita.
-            </p>
-          </div>
-          <!-- Card 5: Jantung -->
-          <div
-            class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-10 w-10 text-[#17695b] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 13h2l2 4 3-8 2 6h6"
-              />
-            </svg>
-            <h3 class="font-semibold text-lg text-[#17695b] mb-1">Jantung</h3>
-            <p class="text-gray-700 text-sm">
-              Pemeriksaan & penanganan penyakit jantung terpadu.
-            </p>
-          </div>
-          <!-- Card 6: Saraf -->
-          <div
-            class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-10 w-10 text-[#17695b] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 15s1.5-2 4-2 4 2 4 2"
-              />
-            </svg>
-            <h3 class="font-semibold text-lg text-[#17695b] mb-1">Saraf</h3>
-            <p class="text-gray-700 text-sm">
-              Layanan neurologi untuk gangguan saraf & otak.
-            </p>
-          </div>
-          <!-- Card 7: Gigi -->
-          <div
-            class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-10 w-10 text-[#17695b] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 21c-4-4-8-7-8-11a8 8 0 1116 0c0 4-4 7-8 11z"
-              />
-            </svg>
-            <h3 class="font-semibold text-lg text-[#17695b] mb-1">Gigi</h3>
-            <p class="text-gray-700 text-sm">
-              Perawatan gigi & mulut untuk semua usia.
-            </p>
-          </div>
-          <!-- Card 8: Mata -->
-          <div
-            class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-10 w-10 text-[#17695b] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <circle cx="12" cy="12" r="4" />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"
-              />
-            </svg>
-            <h3 class="font-semibold text-lg text-[#17695b] mb-1">Mata</h3>
-            <p class="text-gray-700 text-sm">
-              Layanan kesehatan mata & operasi katarak.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <footer class="bg-[#FF6600] text-white mt-16">
+    <main class="flex-1">
+      <nav class="max-w-6xl mx-auto px-4 pt-20" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 text-sm text-gray-500">
+          <li><a href="/" class="hover:underline">Beranda</a></li>
+          <li><span class="mx-2">/</span></li>
+          <li class="text-[#FF8000] font-semibold">Spesialisasi Unggulan</li>
+        </ol>
+      </nav>
       <div
-        class="max-w-6xl mx-auto px-4 py-10 text-center text-sm text-white/70"
+        class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row sm:justify-between sm:items-center mt-2 mb-4 gap-2"
       >
-        &copy; 2024 RSIA Buah Hati. Hak cipta dilindungi.
+        <h1
+          class="text-2xl sm:text-3xl md:text-4xl font-bold text-[#E6521F] mb-2 sm:mb-4"
+        >
+          Spesialisasi
+        </h1>
+        <a
+          href="/"
+          class="w-full sm:w-auto px-4 py-2 rounded bg-[#E6521F] text-white font-semibold shadow hover:bg-[#FF8000] transition text-sm text-center"
+          >Kembali ke Beranda</a
+        >
       </div>
-    </footer>
+      <section
+        class="py-8 bg-white flex flex-col items-center px-4 fade-in rounded-xl shadow max-w-6xl mx-auto mb-12"
+      >
+        <p class="text-lg text-[#E6521F] mb-8 font-medium text-center">
+          Layanan Medis Terbaik untuk Anda. Temukan spesialisasi unggulan kami
+          di bawah ini.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div
+            th:each="spec : ${specializations}"
+            class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
+          >
+            <svg
+              class="h-10 w-10 text-[#FF8000] mb-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 10c-2.21 0-4-1.79-4-4h8c0 2.21-1.79 4-4 4z"
+              />
+            </svg>
+            <h3
+              class="font-semibold text-xl text-[#FF8000] mb-1"
+              th:text="${spec}"
+            ></h3>
+            <span
+              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-orange-400 text-white shadow mb-2"
+              th:text="${spec}"
+            ></span>
+          </div>
+        </div>
+        <div class="w-full overflow-x-auto pb-2">
+          <div class="flex gap-6 snap-x snap-mandatory w-max">
+            <!-- Card 1: Penyakit Dalam -->
+            <div
+              class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-10 w-10 text-[#17695b] mb-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 15a4 4 0 108 0V7m-4 8v2a2 2 0 104 0v-2"
+                />
+              </svg>
+              <h3 class="font-semibold text-lg text-[#17695b] mb-1">
+                Penyakit Dalam
+              </h3>
+              <p class="text-gray-700 text-sm">
+                Diagnosis & penanganan penyakit organ dalam dewasa.
+              </p>
+            </div>
+            <!-- Card 2: Anak -->
+            <div
+              class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-10 w-10 text-[#17695b] mb-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 9a3 3 0 11-6 0"
+                />
+              </svg>
+              <h3 class="font-semibold text-lg text-[#17695b] mb-1">Anak</h3>
+              <p class="text-gray-700 text-sm">
+                Perawatan kesehatan anak & tumbuh kembang optimal.
+              </p>
+            </div>
+            <!-- Card 3: Bedah -->
+            <div
+              class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-10 w-10 text-[#17695b] mb-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 7l-7 7-4-4"
+                />
+              </svg>
+              <h3 class="font-semibold text-lg text-[#17695b] mb-1">Bedah</h3>
+              <p class="text-gray-700 text-sm">
+                Tindakan bedah modern & minim risiko untuk berbagai kasus.
+              </p>
+            </div>
+            <!-- Card 4: Kandungan -->
+            <div
+              class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-10 w-10 text-[#17695b] mb-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <circle cx="12" cy="10" r="4" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 14v6m0 0h-2m2 0h2"
+                />
+              </svg>
+              <h3 class="font-semibold text-lg text-[#17695b] mb-1">
+                Kandungan
+              </h3>
+              <p class="text-gray-700 text-sm">
+                Layanan kehamilan, persalinan, & kesehatan wanita.
+              </p>
+            </div>
+            <!-- Card 5: Jantung -->
+            <div
+              class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-10 w-10 text-[#17695b] mb-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 13h2l2 4 3-8 2 6h6"
+                />
+              </svg>
+              <h3 class="font-semibold text-lg text-[#17695b] mb-1">Jantung</h3>
+              <p class="text-gray-700 text-sm">
+                Pemeriksaan & penanganan penyakit jantung terpadu.
+              </p>
+            </div>
+            <!-- Card 6: Saraf -->
+            <div
+              class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-10 w-10 text-[#17695b] mb-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 15s1.5-2 4-2 4 2 4 2"
+                />
+              </svg>
+              <h3 class="font-semibold text-lg text-[#17695b] mb-1">Saraf</h3>
+              <p class="text-gray-700 text-sm">
+                Layanan neurologi untuk gangguan saraf & otak.
+              </p>
+            </div>
+            <!-- Card 7: Gigi -->
+            <div
+              class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-10 w-10 text-[#17695b] mb-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 21c-4-4-8-7-8-11a8 8 0 1116 0c0 4-4 7-8 11z"
+                />
+              </svg>
+              <h3 class="font-semibold text-lg text-[#17695b] mb-1">Gigi</h3>
+              <p class="text-gray-700 text-sm">
+                Perawatan gigi & mulut untuk semua usia.
+              </p>
+            </div>
+            <!-- Card 8: Mata -->
+            <div
+              class="min-w-[220px] bg-white rounded-xl shadow p-6 flex flex-col items-center text-center snap-start transition-transform hover:scale-105"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-10 w-10 text-[#17695b] mb-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <circle cx="12" cy="12" r="4" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"
+                />
+              </svg>
+              <h3 class="font-semibold text-lg text-[#17695b] mb-1">Mata</h3>
+              <p class="text-gray-700 text-sm">
+                Layanan kesehatan mata & operasi katarak.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div th:replace="~{fragments/footer :: footer}"></div>
   </body>
 </html>

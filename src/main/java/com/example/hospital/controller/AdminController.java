@@ -168,4 +168,10 @@ public class AdminController {
     public void deleteDoctorSchedule(@PathVariable Long id) {
         doctorScheduleRepository.deleteById(id);
     }
+
+    // --- API untuk sistem pembatasan ---
+    @GetMapping("/api/doctors")
+    public List<Doctor> getDoctorsForAPI() {
+        return doctorRepository.findAll();
+    }
 }

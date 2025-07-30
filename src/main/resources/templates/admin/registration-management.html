@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Pendaftaran - RSIA Buah Hati Pamulang</title>
+    <link href="/main.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50">
+    <div class="min-h-screen">
+      <!-- Navbar -->
+      <nav class="bg-[#E6521F] text-white p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+          <h1 class="text-xl font-bold">RSIA Buah Hati Pamulang</h1>
+          <div class="flex items-center space-x-4">
+            <a href="/admin" class="hover:text-orange-200">Dashboard</a>
+            <a href="/admin/doctors" class="hover:text-orange-200">Dokter</a>
+            <a
+              href="/admin/registration-management"
+              class="bg-white text-[#E6521F] px-3 py-1 rounded"
+              >Pendaftaran</a
+            >
+            <a href="/logout" class="hover:text-orange-200">Logout</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="max-w-7xl mx-auto p-6">
+        <h2 class="text-2xl font-bold text-[#E6521F] mb-6">
+          Manajemen Sistem Pendaftaran
+        </h2>
+
+        <!-- Tabs -->
+        <div class="mb-6">
+          <div class="border-b border-gray-200">
+            <nav class="-mb-px flex space-x-8">
+              <button
+                onclick="showTab('doctors')"
+                class="tab-button active py-2 px-1 border-b-2 border-[#E6521F] text-[#E6521F] font-medium"
+              >
+                Status Dokter
+              </button>
+              <button
+                onclick="showTab('registrations')"
+                class="tab-button py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium"
+              >
+                Daftar Pendaftaran
+              </button>
+              <button
+                onclick="showTab('settings')"
+                class="tab-button py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium"
+              >
+                Pengaturan Sistem
+              </button>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="doctors-tab" class="tab-content">
+          <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold mb-4">Status Dokter</h3>
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+              id="doctors-grid"
+            >
+              <!-- Dokter cards akan diisi oleh JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <div id="registrations-tab" class="tab-content hidden">
+          <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold mb-4">Daftar Pendaftaran</h3>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Pilih Dokter:</label
+              >
+              <select
+                id="doctor-select"
+                class="w-full p-2 border border-gray-300 rounded-md"
+              >
+                <option value="">Pilih dokter...</option>
+              </select>
+            </div>
+            <div id="registrations-list" class="overflow-x-auto">
+              <!-- Daftar pendaftaran akan diisi oleh JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <div id="settings-tab" class="tab-content hidden">
+          <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold mb-4">
+              Pengaturan Sistem Pembatasan
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Pengaturan Cuti -->
+              <div class="border border-gray-200 rounded-lg p-4">
+                <h4 class="font-semibold text-[#E6521F] mb-3">
+                  Pengaturan Cuti Dokter
+                </h4>
+                <form id="leave-form" class="space-y-3">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1"
+                      >Dokter:</label
+                    >
+                    <select
+                      id="leave-doctor"
+                      class="w-full p-2 border border-gray-300 rounded-md"
+                      required
+                    >
+                      <option value="">Pilih dokter...</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1"
+                      >Alasan Cuti:</label
+                    >
+                    <input
+                      type="text"
+                      id="leave-reason"
+                      class="w-full p-2 border border-gray-300 rounded-md"
+                      required
+                    />
+                  </div>
+                  <div class="grid grid-cols-2 gap-2">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                        >Mulai:</label
+                      >
+                      <input
+                        type="date"
+                        id="leave-start"
+                        class="w-full p-2 border border-gray-300 rounded-md"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                        >Selesai:</label
+                      >
+                      <input
+                        type="date"
+                        id="leave-end"
+                        class="w-full p-2 border border-gray-300 rounded-md"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    class="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
+                  >
+                    Set Cuti
+                  </button>
+                </form>
+              </div>
+
+              <!-- Pengaturan Kunci -->
+              <div class="border border-gray-200 rounded-lg p-4">
+                <h4 class="font-semibold text-[#E6521F] mb-3">
+                  Pengaturan Kunci Dokter
+                </h4>
+                <form id="lock-form" class="space-y-3">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1"
+                      >Dokter:</label
+                    >
+                    <select
+                      id="lock-doctor"
+                      class="w-full p-2 border border-gray-300 rounded-md"
+                      required
+                    >
+                      <option value="">Pilih dokter...</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1"
+                      >Alasan Kunci:</label
+                    >
+                    <input
+                      type="text"
+                      id="lock-reason"
+                      class="w-full p-2 border border-gray-300 rounded-md"
+                      required
+                    />
+                  </div>
+                  <div class="grid grid-cols-2 gap-2">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                        >Mulai:</label
+                      >
+                      <input
+                        type="date"
+                        id="lock-start"
+                        class="w-full p-2 border border-gray-300 rounded-md"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                        >Selesai:</label
+                      >
+                      <input
+                        type="date"
+                        id="lock-end"
+                        class="w-full p-2 border border-gray-300 rounded-md"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    class="w-full bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600"
+                  >
+                    Kunci Dokter
+                  </button>
+                </form>
+              </div>
+
+              <!-- Pengaturan Kapasitas -->
+              <div class="border border-gray-200 rounded-lg p-4">
+                <h4 class="font-semibold text-[#E6521F] mb-3">
+                  Pengaturan Kapasitas
+                </h4>
+                <form id="capacity-form" class="space-y-3">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1"
+                      >Dokter:</label
+                    >
+                    <select
+                      id="capacity-doctor"
+                      class="w-full p-2 border border-gray-300 rounded-md"
+                      required
+                    >
+                      <option value="">Pilih dokter...</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1"
+                      >Maksimal Pasien per Hari:</label
+                    >
+                    <input
+                      type="number"
+                      id="max-patients"
+                      class="w-full p-2 border border-gray-300 rounded-md"
+                      min="1"
+                      max="100"
+                      value="30"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                  >
+                    Update Kapasitas
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Tab functionality
+      function showTab(tabName) {
+        // Hide all tab contents
+        document.querySelectorAll(".tab-content").forEach((content) => {
+          content.classList.add("hidden");
+        });
+
+        // Remove active class from all tab buttons
+        document.querySelectorAll(".tab-button").forEach((button) => {
+          button.classList.remove("border-[#E6521F]", "text-[#E6521F]");
+          button.classList.add("border-transparent", "text-gray-500");
+        });
+
+        // Show selected tab content
+        document.getElementById(tabName + "-tab").classList.remove("hidden");
+
+        // Add active class to selected tab button
+        event.target.classList.remove("border-transparent", "text-gray-500");
+        event.target.classList.add("border-[#E6521F]", "text-[#E6521F]");
+      }
+
+      // Load doctors data
+      async function loadDoctors() {
+        try {
+          const response = await fetch("/api/doctors");
+          const doctors = await response.json();
+
+          // Populate doctor selects
+          const selects = [
+            "leave-doctor",
+            "lock-doctor",
+            "capacity-doctor",
+            "doctor-select",
+          ];
+          selects.forEach((selectId) => {
+            const select = document.getElementById(selectId);
+            select.innerHTML = '<option value="">Pilih dokter...</option>';
+            doctors.forEach((doctor) => {
+              const option = document.createElement("option");
+              option.value = doctor.id;
+              option.textContent = doctor.name + " - " + doctor.specialization;
+              select.appendChild(option);
+            });
+          });
+
+          // Load doctor status
+          loadDoctorStatus(doctors);
+        } catch (error) {
+          console.error("Error loading doctors:", error);
+        }
+      }
+
+      // Load doctor status
+      async function loadDoctorStatus(doctors) {
+        const grid = document.getElementById("doctors-grid");
+        grid.innerHTML = "";
+
+        const today = new Date().toISOString().split("T")[0];
+
+        for (const doctor of doctors) {
+          try {
+            const response = await fetch(
+              `/api/registration/doctor-status?doctorId=${doctor.id}&date=${today}`
+            );
+            const status = await response.json();
+
+            const card = createDoctorCard(doctor, status);
+            grid.appendChild(card);
+          } catch (error) {
+            console.error("Error loading doctor status:", error);
+          }
+        }
+      }
+
+      // Create doctor card
+      function createDoctorCard(doctor, status) {
+        const card = document.createElement("div");
+        card.className = "border border-gray-200 rounded-lg p-4";
+
+        let statusColor = "bg-green-100 text-green-800";
+        let statusText = "Tersedia";
+
+        if (status.status === "ON_LEAVE") {
+          statusColor = "bg-red-100 text-red-800";
+          statusText = "Cuti";
+        } else if (status.status === "LOCKED") {
+          statusColor = "bg-yellow-100 text-yellow-800";
+          statusText = "Dikunci";
+        } else if (status.status === "FULL") {
+          statusColor = "bg-gray-100 text-gray-800";
+          statusText = "Penuh";
+        }
+
+        card.innerHTML = `
+                <h4 class="font-semibold text-lg">${doctor.name}</h4>
+                <p class="text-gray-600 text-sm mb-2">${
+                  doctor.specialization
+                }</p>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${statusColor}">
+                        ${statusText}
+                    </span>
+                    <span class="text-sm text-gray-500">
+                        ${status.usedSlots || 0}/${status.totalSlots || 30}
+                    </span>
+                </div>
+                <p class="text-xs text-gray-600">${status.message}</p>
+            `;
+
+        return card;
+      }
+
+      // Load registrations
+      async function loadRegistrations() {
+        const doctorId = document.getElementById("doctor-select").value;
+        if (!doctorId) return;
+
+        try {
+          const response = await fetch(
+            `/api/registration/doctor-registrations/${doctorId}`
+          );
+          const data = await response.json();
+
+          if (data.success) {
+            displayRegistrations(data.registrations);
+          }
+        } catch (error) {
+          console.error("Error loading registrations:", error);
+        }
+      }
+
+      // Display registrations
+      function displayRegistrations(registrations) {
+        const container = document.getElementById("registrations-list");
+
+        if (registrations.length === 0) {
+          container.innerHTML =
+            '<p class="text-gray-500 text-center py-4">Tidak ada pendaftaran</p>';
+          return;
+        }
+
+        const table = `
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Pasien</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telepon</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Waktu</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        ${registrations
+                          .map(
+                            (reg) => `
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${reg.appointmentDate}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${reg.patientName}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${reg.patientPhone}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${reg.registrationTime}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        ${reg.status}
+                                    </span>
+                                </td>
+                            </tr>
+                        `
+                          )
+                          .join("")}
+                    </tbody>
+                </table>
+            `;
+
+        container.innerHTML = table;
+      }
+
+      // Form submissions
+      document
+        .getElementById("leave-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          // Implement leave form submission
+          alert("Fitur pengaturan cuti akan diimplementasikan");
+        });
+
+      document
+        .getElementById("lock-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          // Implement lock form submission
+          alert("Fitur pengaturan kunci akan diimplementasikan");
+        });
+
+      document
+        .getElementById("capacity-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          // Implement capacity form submission
+          alert("Fitur pengaturan kapasitas akan diimplementasikan");
+        });
+
+      // Event listeners
+      document
+        .getElementById("doctor-select")
+        .addEventListener("change", loadRegistrations);
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", () => {
+        loadDoctors();
+      });
+    </script>
+  </body>
+</html>

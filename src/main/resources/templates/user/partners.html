@@ -1,137 +1,139 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-full">
   <!-- Head Fragment -->
   <head th:replace="~{fragments/head :: head}"></head>
-  <body class="bg-gray-50 text-gray-900 font-sans">
+  <body
+    class="min-h-screen h-full flex flex-col bg-gray-50 text-gray-900 font-sans"
+  >
     <script th:inline="javascript">
       document.title = "Rekanan Asuransi & Partner - RSIA Buah Hati Pamulang";
     </script>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <nav class="max-w-6xl mx-auto px-4 pt-6" aria-label="Breadcrumb">
-      <ol class="flex items-center space-x-2 text-sm text-gray-500">
-        <li><a href="/" class="hover:underline">Beranda</a></li>
-        <li><span class="mx-2">/</span></li>
-        <li class="text-[#FB9E3A] font-semibold">Rekanan Asuransi & Partner</li>
-      </ol>
-    </nav>
-    <div
-      class="max-w-6xl mx-auto px-4 flex justify-between items-center mt-2 mb-4"
-    >
-      <h1 class="text-3xl md:text-4xl font-bold text-[#FB9E3A] mb-4">
-        Mitra Kami
-      </h1>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <img
-          th:each="partner : ${partners}"
-          th:src="@{'/asset hospital/' + ${partner.logo}}"
-          th:alt="${partner.name}"
-          class="rounded-xl shadow border-2 border-[#FB9E3A] object-cover w-full h-24 md:h-32"
-        />
-      </div>
-      <a
-        href="/"
-        class="px-4 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-sm"
-        >Kembali ke Beranda</a
+    <main class="flex-1">
+      <nav class="max-w-6xl mx-auto px-4 pt-20" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 text-sm text-gray-500">
+          <li><a href="/" class="hover:underline">Beranda</a></li>
+          <li><span class="mx-2">/</span></li>
+          <li class="text-[#FB9E3A] font-semibold">
+            Rekanan Asuransi & Partner
+          </li>
+        </ol>
+      </nav>
+      <div
+        class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row sm:justify-between sm:items-center mt-2 mb-4 gap-2"
       >
-    </div>
-    <section
-      class="py-8 bg-white flex flex-col items-center px-4 fade-in rounded-xl shadow max-w-6xl mx-auto mb-12"
-    >
-      <p class="text-lg text-[#E6521F] mb-8 font-medium text-center">
-        Kami Bekerja Sama dengan Banyak Asuransi & Perusahaan. Berikut daftar
-        rekanan kami.
-      </p>
-      <div class="w-full overflow-x-auto pb-2">
-        <div class="flex gap-6 snap-x snap-mandatory w-max items-center">
-          <!-- Partner 1 -->
-          <div
-            class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=120&q=80"
-              alt="Partner 1"
-              class="h-12 object-contain"
-            />
-          </div>
-          <!-- Partner 2 -->
-          <div
-            class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=facearea&w=120&q=80"
-              alt="Partner 2"
-              class="h-12 object-contain"
-            />
-          </div>
-          <!-- Partner 3 -->
-          <div
-            class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c8b?auto=format&fit=facearea&w=120&q=80"
-              alt="Partner 3"
-              class="h-12 object-contain"
-            />
-          </div>
-          <!-- Partner 4 -->
-          <div
-            class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=facearea&w=120&q=80"
-              alt="Partner 4"
-              class="h-12 object-contain"
-            />
-          </div>
-          <!-- Partner 5 -->
-          <div
-            class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c8b?auto=format&fit=facearea&w=120&q=80"
-              alt="Partner 5"
-              class="h-12 object-contain"
-            />
-          </div>
-          <!-- Partner 6 -->
-          <div
-            class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=120&q=80"
-              alt="Partner 6"
-              class="h-12 object-contain"
-            />
-          </div>
-          <!-- Partner 7 -->
-          <div
-            class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=facearea&w=120&q=80"
-              alt="Partner 7"
-              class="h-12 object-contain"
-            />
-          </div>
-          <!-- Partner 8 -->
-          <div
-            class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c8b?auto=format&fit=facearea&w=120&q=80"
-              alt="Partner 8"
-              class="h-12 object-contain"
-            />
+        <h1
+          class="text-2xl sm:text-3xl md:text-4xl font-bold text-[#E6521F] mb-2 sm:mb-4"
+        >
+          Mitra Kami
+        </h1>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <img
+            th:each="partner : ${partners}"
+            th:src="@{'/asset hospital/' + ${partner.logo}}"
+            th:alt="${partner.name}"
+            class="rounded-xl shadow border-2 border-[#FB9E3A] object-cover w-full h-24 md:h-32"
+          />
+        </div>
+        <a
+          href="/"
+          class="w-full sm:w-auto px-4 py-2 rounded bg-[#E6521F] text-white font-semibold shadow hover:bg-[#FF8000] transition text-sm text-center"
+          >Kembali ke Beranda</a
+        >
+      </div>
+      <section
+        class="py-8 bg-white flex flex-col items-center px-4 fade-in rounded-xl shadow max-w-6xl mx-auto mb-12"
+      >
+        <p class="text-lg text-[#E6521F] mb-8 font-medium text-center">
+          Kami Bekerja Sama dengan Banyak Asuransi & Perusahaan. Berikut daftar
+          rekanan kami.
+        </p>
+        <div class="w-full overflow-x-auto pb-2">
+          <div class="flex gap-6 snap-x snap-mandatory w-max items-center">
+            <!-- Partner 1 -->
+            <div
+              class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=120&q=80"
+                alt="Partner 1"
+                class="h-12 object-contain"
+              />
+            </div>
+            <!-- Partner 2 -->
+            <div
+              class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=facearea&w=120&q=80"
+                alt="Partner 2"
+                class="h-12 object-contain"
+              />
+            </div>
+            <!-- Partner 3 -->
+            <div
+              class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c8b?auto=format&fit=facearea&w=120&q=80"
+                alt="Partner 3"
+                class="h-12 object-contain"
+              />
+            </div>
+            <!-- Partner 4 -->
+            <div
+              class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=facearea&w=120&q=80"
+                alt="Partner 4"
+                class="h-12 object-contain"
+              />
+            </div>
+            <!-- Partner 5 -->
+            <div
+              class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c8b?auto=format&fit=facearea&w=120&q=80"
+                alt="Partner 5"
+                class="h-12 object-contain"
+              />
+            </div>
+            <!-- Partner 6 -->
+            <div
+              class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=120&q=80"
+                alt="Partner 6"
+                class="h-12 object-contain"
+              />
+            </div>
+            <!-- Partner 7 -->
+            <div
+              class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=facearea&w=120&q=80"
+                alt="Partner 7"
+                class="h-12 object-contain"
+              />
+            </div>
+            <!-- Partner 8 -->
+            <div
+              class="min-w-[140px] bg-white rounded-xl shadow p-4 flex items-center justify-center snap-start transition-transform hover:scale-105"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c8b?auto=format&fit=facearea&w=120&q=80"
+                alt="Partner 8"
+                class="h-12 object-contain"
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-    <footer class="bg-[#E6521F] text-white mt-16">
-      <div
-        class="max-w-6xl mx-auto px-4 py-10 text-center text-sm text-white/70"
-      >
-        &copy; 2024 RSIA Buah Hati. Hak cipta dilindungi.
-      </div>
-    </footer>
+      </section>
+    </main>
+    <div th:replace="~{fragments/footer :: footer}"></div>
   </body>
 </html>

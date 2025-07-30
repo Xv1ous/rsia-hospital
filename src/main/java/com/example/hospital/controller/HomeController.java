@@ -1,158 +1,146 @@
 package com.example.hospital.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import com.example.hospital.entity.Appointment;
-import com.example.hospital.entity.Doctor;
-import com.example.hospital.entity.DoctorSchedule;
-import com.example.hospital.repository.AppointmentRepository;
 import com.example.hospital.repository.DoctorRepository;
 import com.example.hospital.repository.DoctorScheduleRepository;
+import com.example.hospital.repository.NewsRepository;
+import com.example.hospital.repository.ServiceRepository;
 
 @Controller
 public class HomeController {
+
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private ServiceRepository serviceRepository;
+
+    @Autowired
+    private NewsRepository newsRepository;
+
     @Autowired
     private DoctorScheduleRepository doctorScheduleRepository;
-    @Autowired
-    private AppointmentRepository appointmentRepository;
 
     @GetMapping("/")
     public String home(Model model) {
-        List<Doctor> doctors = doctorRepository.findAll();
-        List<DoctorSchedule> doctorSchedules = doctorScheduleRepository.findAll();
-        Map<String, List<DoctorSchedule>> scheduleMap =
-                doctorSchedules.stream().collect(Collectors.groupingBy(DoctorSchedule::getName));
-        java.util.Set<String> specializations =
-                doctorSchedules.stream().map(DoctorSchedule::getSpecialization)
-                        .collect(java.util.stream.Collectors.toCollection(java.util.TreeSet::new));
-        model.addAttribute("doctors", doctors);
-        model.addAttribute("scheduleMap", scheduleMap);
-        model.addAttribute("specializations", specializations);
-        return "index";
-    }
-
-    @GetMapping("/fasilitas")
-    public String fasilitas() {
-        return "user/fasilitas";
-    }
-
-    @GetMapping("/janji-temu")
-    public String janjiTemu(Model model) {
-        List<Doctor> doctors = doctorRepository.findAll();
-        List<DoctorSchedule> doctorSchedules = doctorScheduleRepository.findAll();
-        // Ambil semua spesialisasi unik
-        java.util.Set<String> specializations =
-                doctorSchedules.stream().map(DoctorSchedule::getSpecialization)
-                        .collect(java.util.stream.Collectors.toCollection(java.util.TreeSet::new));
-        model.addAttribute("doctors", doctors);
-        model.addAttribute("specializations", specializations);
-        model.addAttribute("appointment", new Appointment());
-        return "user/janji-temu";
-    }
-
-    @PostMapping("/janji-temu")
-    public String submitJanjiTemu(@ModelAttribute Appointment appointment, Model model) {
-        System.out.println("DEBUG: status sebelum set = " + appointment.getStatus());
-        if (appointment.getStatus() == null || appointment.getStatus().isEmpty()) {
-            appointment.setStatus("Menunggu");
+        try {
+            model.addAttribute("doctors", doctorRepository.findAll());
+        } catch (Exception e) {
+            model.addAttribute("doctors", new ArrayList<>());
         }
-        System.out.println("DEBUG: status sesudah set = " + appointment.getStatus());
-        appointmentRepository.save(appointment);
-        // Kirim ulang doctors & specializations agar form tetap bisa diisi
-        List<Doctor> doctors = doctorRepository.findAll();
-        List<DoctorSchedule> doctorSchedules = doctorScheduleRepository.findAll();
-        java.util.Set<String> specializations =
-                doctorSchedules.stream().map(DoctorSchedule::getSpecialization)
-                        .collect(java.util.stream.Collectors.toCollection(java.util.TreeSet::new));
-        model.addAttribute("doctors", doctors);
-        model.addAttribute("specializations", specializations);
-        model.addAttribute("appointment", new Appointment());
-        model.addAttribute("success", true);
-        return "user/janji-temu";
-    }
 
-    @GetMapping("/about")
-    public String about() {
-        return "user/about";
-    }
+        try {
+            model.addAttribute("services", serviceRepository.findAll());
+        } catch (Exception e) {
+            model.addAttribute("services", new ArrayList<>());
+        }
 
-    @GetMapping("/services")
-    public String services() {
-        return "user/services";
-    }
+        try {
+            model.addAttribute("news", newsRepository.findAll());
+        } catch (Exception e) {
+            model.addAttribute("news", new ArrayList<>());
+        }
 
-    @GetMapping("/specializations")
-    public String specializations() {
-        return "user/specializations";
-    }
+        // Add schedule data
+        try {
+            Map<String, List<Object>> scheduleMap = new HashMap<>();
+            model.addAttribute("scheduleMap", scheduleMap);
+        } catch (Exception e) {
+            model.addAttribute("scheduleMap", new HashMap<>());
+        }
 
-    @GetMapping("/news")
-    public String news() {
-        return "user/news";
+        // Add specializations
+        try {
+            List<String> specializations = new ArrayList<>();
+            specializations.add("Dokter Umum");
+            specializations.add("Dokter Gigi");
+            specializations.add("Dokter Anak");
+            specializations.add("Dokter Kandungan");
+            specializations.add("Dokter Bedah");
+            model.addAttribute("specializations", specializations);
+        } catch (Exception e) {
+            model.addAttribute("specializations", new ArrayList<>());
+        }
+
+        return "index";
     }
 
     @GetMapping("/schedule")
     public String schedule(Model model) {
-        List<Doctor> doctors = doctorRepository.findAll();
-        List<DoctorSchedule> doctorSchedules = doctorScheduleRepository.findAll();
-        Map<String, List<DoctorSchedule>> scheduleMap =
-                doctorSchedules.stream().collect(Collectors.groupingBy(DoctorSchedule::getName));
-        java.util.Set<String> specializations =
-                doctorSchedules.stream().map(DoctorSchedule::getSpecialization)
-                        .collect(java.util.stream.Collectors.toCollection(java.util.TreeSet::new));
-        model.addAttribute("doctors", doctors);
-        model.addAttribute("scheduleMap", scheduleMap);
-        model.addAttribute("specializations", specializations);
+        try {
+            model.addAttribute("doctors", doctorRepository.findAll());
+        } catch (Exception e) {
+            model.addAttribute("doctors", new ArrayList<>());
+        }
+
+        // Add schedule data
+        try {
+            Map<String, List<Object>> scheduleMap = new HashMap<>();
+            model.addAttribute("scheduleMap", scheduleMap);
+        } catch (Exception e) {
+            model.addAttribute("scheduleMap", new HashMap<>());
+        }
+
+        // Add specializations
+        try {
+            List<String> specializations = new ArrayList<>();
+            specializations.add("Dokter Umum");
+            specializations.add("Dokter Gigi");
+            specializations.add("Dokter Anak");
+            specializations.add("Dokter Kandungan");
+            specializations.add("Dokter Bedah");
+            model.addAttribute("specializations", specializations);
+        } catch (Exception e) {
+            model.addAttribute("specializations", new ArrayList<>());
+        }
+
         return "user/schedule";
     }
 
     @GetMapping("/testimonials")
-    public String testimonials() {
+    public String testimonials(Model model) {
         return "user/testimonials";
     }
 
-    @GetMapping("/vision-mission")
-    public String visionMission() {
-        return "user/vision-mission";
+    @GetMapping("/about")
+    public String about(Model model) {
+        return "user/about";
     }
 
-    @GetMapping("/gallery")
-    public String gallery() {
-        return "user/gallery";
+    @GetMapping("/services")
+    public String services(Model model) {
+        return "user/services";
     }
 
-    @GetMapping("/partners")
-    public String partners() {
-        return "user/partners";
+    @GetMapping("/fasilitas")
+    public String fasilitas(Model model) {
+        return "user/fasilitas";
     }
 
-    @GetMapping("/doctor-profile/{doctorId}")
-    public String doctorProfile(@PathVariable Long doctorId, Model model) {
-        Doctor doctor = doctorRepository.findById(doctorId).orElse(null);
-        if (doctor == null) {
-            return "redirect:/schedule";
-        }
-        // Ambil jadwal dokter dari doctor_schedule
-        List<DoctorSchedule> schedules = doctorScheduleRepository.findAll().stream()
-                .filter(ds -> ds.getName().equalsIgnoreCase(doctor.getName()))
-                .collect(java.util.stream.Collectors.toList());
-        model.addAttribute("doctor", doctor);
-        model.addAttribute("schedules", schedules);
-        return "user/doctor-profile";
+    @GetMapping("/patients")
+    public String patients(Model model) {
+        return "user/patients";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
+    @GetMapping("/homecare")
+    public String homecare(Model model) {
+        return "user/homecare";
+    }
+
+    @GetMapping("/admin/registration-management")
+    public String registrationManagement(Model model) {
+        return "admin/registration-management";
+    }
+
+    @GetMapping("/registration")
+    public String registration(Model model) {
+        return "user/registration";
     }
 }

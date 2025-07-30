@@ -1,7 +1,11 @@
-<nav th:fragment="navbar" class="bg-[#E6521F] shadow-sm sticky top-0 z-50">
+<nav
+  th:fragment="navbar"
+  class="fixed top-0 left-0 w-full z-50 bg-[#E6521F] bg-opacity-95 backdrop-blur shadow-md"
+>
   <div
     class="max-w-screen-xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3"
   >
+    <!-- Logo -->
     <a href="/" class="flex items-center space-x-2 h-12">
       <img
         src="/asset hospital/RSIA_BHP_LOGO5.png"
@@ -10,13 +14,14 @@
       />
       <span
         class="self-center text-lg sm:text-xl md:text-2xl font-bold whitespace-nowrap text-white hidden sm:block"
-        >RSIA Buah Hati Pamulang</span
+        >RS Buah Hati Pamulang</span
       >
       <span
         class="self-center text-lg font-bold whitespace-nowrap text-white sm:hidden"
-        >RSIA Buah Hati Pamulang</span
+        >RS Buah Hati Pamulang</span
       >
     </a>
+    <!-- Desktop Menu -->
     <ul
       class="hidden md:flex flex-1 justify-center space-x-8 font-medium text-white"
     >
@@ -29,123 +34,128 @@
       </li>
       <li>
         <a href="/fasilitas" class="hover:text-orange-100 transition"
-          >Fasilitas</a
+          >Promosi</a
         >
       </li>
       <li>
-        <a href="/schedule" class="hover:text-orange-100 transition">Dokter</a>
+        <a href="/homecare" class="hover:text-orange-100 transition"
+          >Home Care</a
+        >
       </li>
     </ul>
     <div class="hidden md:flex items-center space-x-2">
-      <a
-        href="/janji-temu"
+      <button
+        id="open-janji-modal"
         class="px-3 sm:px-5 py-2 rounded bg-white text-[#E6521F] font-semibold shadow hover:bg-[#FF8000] transition text-sm sm:text-base"
-        >Buat Janji Temu</a
+        type="button"
       >
+        Buat Janji Temu
+      </button>
+      <a
+        href="/registration"
+        class="px-3 sm:px-5 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#FF8000] transition text-sm sm:text-base"
+      >
+        Daftar Pasien
+      </a>
       <a
         href="/schedule"
         class="px-3 sm:px-5 py-2 rounded bg-white text-[#E6521F] font-semibold shadow hover:bg-[#FF8000] transition text-sm sm:text-base"
         >Cari Dokter</a
       >
     </div>
-      <button
-        data-collapse-toggle="navbar-default"
-        type="button"
-        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-[#FF8000] focus:outline-none focus:ring-2 focus:ring-[#FF8000] transition"
-        aria-controls="navbar-default"
-        aria-expanded="false"
-        id="navbar-toggle"
-        onclick="toggleMobileMenu()"
+    <!-- Burger Button (Mobile Only) -->
+    <button
+      id="navbar-toggle"
+      onclick="toggleMobileMenu()"
+      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg hover:bg-[#FF8000] focus:outline-none focus:ring-2 focus:ring-[#FF8000] transition md:hidden"
+      aria-controls="navbar-default"
+      aria-expanded="false"
+      type="button"
+    >
+      <span class="sr-only">Buka menu utama</span>
+      <svg
+        class="w-6 h-6"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <span class="sr-only">Buka menu utama</span>
-        <svg
-          class="w-6 h-6"
-          aria-hidden="true"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          ></path>
-        </svg>
-      </button>
-    </div>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        ></path>
+      </svg>
+    </button>
   </div>
+  <!-- Dropdown Mobile Menu -->
   <div
-    class="md:hidden hidden w-full transition-all duration-300 bg-[#E6521F] border-t border-[#b13a17]"
+    class="hidden absolute top-full left-0 w-full bg-[#E6521F] z-[9999] transition-all duration-300 md:hidden"
     id="navbar-default"
   >
     <ul class="flex flex-col p-4 space-y-2 font-medium text-white">
       <li>
-        <a
-          href="/janji-temu"
+        <button
+          id="open-janji-modal-mobile"
+          type="button"
           class="block w-full text-left py-2 px-4 rounded hover:bg-[#FF8000] transition"
-          >Buat Janji Temu</a
         >
+          Buat Janji Temu
+        </button>
+      </li>
+      <li>
+        <a
+          href="/registration"
+          class="block w-full text-left py-2 px-4 rounded hover:bg-[#FF8000] transition"
+        >
+          Daftar Pasien
+        </a>
       </li>
       <li>
         <a
           href="/"
           class="block w-full text-left py-2 px-4 rounded hover:bg-[#FF8000] transition"
-          >Beranda</a
         >
+          Beranda
+        </a>
       </li>
       <li>
-        <a href="/about" class="block py-2 px-4 rounded hover:bg-[#FF8000]"
-          >Tentang</a
-        >
+        <a href="/about" class="block py-2 px-4 rounded hover:bg-[#FF8000]">
+          Tentang
+        </a>
       </li>
       <li>
-        <a href="/services" class="block py-2 px-4 rounded hover:bg-[#FF8000]"
-          >Layanan</a
-        >
+        <a href="/services" class="block py-2 px-4 rounded hover:bg-[#FF8000]">
+          Layanan
+        </a>
       </li>
       <li>
-        <a href="/fasilitas" class="block py-2 px-4 rounded hover:bg-[#FF8000]"
-          >Fasilitas</a
-        >
+        <a href="/patients" class="block py-2 px-4 rounded hover:bg-[#FF8000]">
+          Pasien
+        </a>
       </li>
       <li>
-        <a href="#doctors" class="block py-2 px-4 rounded hover:bg-[#FF8000]"
-          >Dokter</a
-        >
+        <a href="/fasilitas" class="block py-2 px-4 rounded hover:bg-[#FF8000]">
+          Promosi
+        </a>
       </li>
       <li>
-        <a href="#contact" class="block py-2 px-4 rounded hover:bg-[#FF8000]"
-          >Kontak</a
-        >
+        <a href="/schedule" class="block py-2 px-4 rounded hover:bg-[#FF8000]">
+          Dokter
+        </a>
+      </li>
+      <li>
+        <a href="/homecare" class="block py-2 px-4 rounded hover:bg-[#FF8000]">
+          Home Care
+        </a>
+      </li>
+      <li>
+        <a href="#contact" class="block py-2 px-4 rounded hover:bg-[#FF8000]">
+          Kontak
+        </a>
       </li>
     </ul>
   </div>
-
-  <script>
-    function toggleMobileMenu() {
-      const menu = document.getElementById('navbar-default');
-      const button = document.getElementById('navbar-toggle');
-
-      if (menu.classList.contains('hidden')) {
-        menu.classList.remove('hidden');
-        button.setAttribute('aria-expanded', 'true');
-      } else {
-        menu.classList.add('hidden');
-        button.setAttribute('aria-expanded', 'false');
-      }
-    }
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(event) {
-      const menu = document.getElementById('navbar-default');
-      const button = document.getElementById('navbar-toggle');
-
-      if (!menu.contains(event.target) && !button.contains(event.target)) {
-        menu.classList.add('hidden');
-        button.setAttribute('aria-expanded', 'false');
-      }
-    });
-  </script>
 </nav>

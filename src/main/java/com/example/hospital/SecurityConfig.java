@@ -54,9 +54,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth.requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/user/**", "/schedule", "/about", "/services", "/fasilitas",
-                        "/news", "/specializations", "/janji-temu", "/", "/css/**", "/js/**",
-                        "/asset hospital/**")
+                .requestMatchers("/user/**", "/schedule", "/about", "/services", "/fasilitas", "/patients", "/homecare",
+                        "/news", "/specializations", "/janji-temu", "/registration", "/", "/css/**", "/js/**",
+                        "/asset hospital/**", "/api/registration/**")
                 .permitAll().anyRequest().permitAll())
                 .formLogin(form -> form.loginPage("/login")
                         .successHandler(customAuthenticationSuccessHandler()).permitAll())
@@ -89,7 +89,6 @@ public class SecurityConfig {
         loginAttemptService.loginFailed(username);
     }
 }
-
 
 @Component
 class LoginAttemptService {

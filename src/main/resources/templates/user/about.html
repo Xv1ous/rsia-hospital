@@ -1,135 +1,133 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-full">
   <!-- Head Fragment -->
   <head th:replace="~{fragments/head :: head}"></head>
-  <body class="bg-gray-50 text-gray-900 font-sans">
-    <script th:inline="javascript">
-      document.title = "Tentang Kami - RSIA Buah Hati Pamulang";
-    </script>
+  <body
+    class="min-h-screen h-full flex flex-col bg-gray-50 text-gray-900 font-sans"
+  >
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <nav class="max-w-5xl mx-auto px-4 pt-6" aria-label="Breadcrumb">
-      <ol class="flex items-center space-x-2 text-sm text-gray-500">
-        <li><a href="/" class="hover:underline">Beranda</a></li>
-        <li><span class="mx-2">/</span></li>
-        <li class="text-[#FB9E3A] font-semibold">Tentang Kami</li>
-      </ol>
-    </nav>
-    <div
-      class="max-w-5xl mx-auto px-4 flex justify-between items-center mt-2 mb-4"
-    >
-      <h1
-        class="text-3xl md:text-4xl font-bold text-[#FB9E3A] flex items-center gap-2 mb-4"
+    <main class="flex-1">
+      <div class="max-w-5xl mx-auto px-4 pt-20" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 text-sm text-gray-500">
+          <li><a href="/" class="hover:underline">Beranda</a></li>
+          <li><span class="mx-2">/</span></li>
+          <li class="text-[#FB9E3A] font-semibold">Tentang Kami</li>
+        </ol>
+      </div>
+      <div
+        class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row sm:justify-between sm:items-center mt-2 mb-4 gap-2"
       >
-        Tentang Kami
-      </h1>
-      <a
-        href="/"
-        class="px-4 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition text-sm"
-        >Kembali ke Beranda</a
+        <h1
+          class="text-2xl sm:text-3xl md:text-4xl font-bold text-[#E6521F] mb-2 sm:mb-4"
+        >
+          Tentang Kami
+        </h1>
+        <a
+          href="/"
+          class="w-full sm:w-auto px-4 py-2 rounded bg-[#E6521F] text-white font-semibold shadow hover:bg-[#FF8000] transition text-sm text-center"
+          >Kembali ke Beranda</a
+        >
+      </div>
+      <section
+        class="py-8 bg-white flex justify-center px-4 fade-in rounded-xl shadow max-w-5xl mx-auto mb-12"
       >
-    </div>
-    <section
-      class="py-8 bg-white flex justify-center px-4 fade-in rounded-xl shadow max-w-5xl mx-auto mb-12"
-    >
-      <div class="w-full flex flex-col items-center">
-        <p class="text-lg text-[#E6521F] mb-8 font-medium text-center">
-          RSIA Buah Hati Pamulang berkomitmen memberikan pelayanan kesehatan
-          terbaik untuk keluarga Anda.
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div
-            class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
-          >
-            <svg
-              class="h-10 w-10 text-[#FB9E3A] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <div class="w-full flex flex-col items-center">
+          <p class="text-lg text-[#E6521F] mb-8 font-medium text-center">
+            RSIA Buah Hati Pamulang berkomitmen memberikan pelayanan kesehatan
+            terbaik untuk keluarga Anda.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div
+              class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1M6 7h12M6 7v10a2 2 0 002 2h8a2 2 0 002-2V7"
-              />
-            </svg>
-            <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
-              Profesional & Berpengalaman
-            </h3>
-            <span
-              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-sky-400 text-white shadow mb-2"
-              >Tim Medis</span
+              <svg
+                class="h-10 w-10 text-[#FB9E3A] mb-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1M6 7h12M6 7v10a2 2 0 002 2h8a2 2 0 002-2V7"
+                />
+              </svg>
+              <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
+                Profesional & Berpengalaman
+              </h3>
+              <span
+                class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-sky-400 text-white shadow mb-2"
+                >Tim Medis</span
+              >
+              <p class="text-gray-700">
+                Dokter dan tenaga kesehatan ahli, ramah, dan berdedikasi.
+              </p>
+            </div>
+            <div
+              class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
             >
-            <p class="text-gray-700">
-              Dokter dan tenaga kesehatan ahli, ramah, dan berdedikasi.
-            </p>
-          </div>
-          <div
-            class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
-          >
-            <svg
-              class="h-10 w-10 text-[#E6521F] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              <svg
+                class="h-10 w-10 text-[#E6521F] mb-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <rect x="4" y="4" width="16" height="16" rx="2" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 9h6v6H9z"
+                />
+              </svg>
+              <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
+                Teknologi Modern
+              </h3>
+              <span
+                class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-purple-400 text-white shadow mb-2"
+                >Fasilitas</span
+              >
+              <p class="text-gray-700">
+                Fasilitas dan peralatan medis terkini untuk diagnosa dan
+                perawatan optimal.
+              </p>
+            </div>
+            <div
+              class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
             >
-              <rect x="4" y="4" width="16" height="16" rx="2" />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 9h6v6H9z"
-              />
-            </svg>
-            <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
-              Teknologi Modern
-            </h3>
-            <span
-              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-purple-400 text-white shadow mb-2"
-              >Fasilitas</span
-            >
-            <p class="text-gray-700">
-              Fasilitas dan peralatan medis terkini untuk diagnosa dan perawatan
-              optimal.
-            </p>
-          </div>
-          <div
-            class="bg-[#FFEDD5] rounded-xl shadow p-6 flex flex-col items-center text-center"
-          >
-            <svg
-              class="h-10 w-10 text-[#E6521F] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z"
-              />
-            </svg>
-            <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
-              Peduli & Ramah
-            </h3>
-            <span
-              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-pink-400 text-white shadow mb-2"
-              >Pelayanan</span
-            >
-            <p class="text-gray-700">
-              Melayani dengan hati, memberikan kenyamanan dan perhatian terbaik
-              untuk pasien.
-            </p>
+              <svg
+                class="h-10 w-10 text-[#E6521F] mb-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z"
+                />
+              </svg>
+              <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
+                Peduli & Ramah
+              </h3>
+              <span
+                class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-pink-400 text-white shadow mb-2"
+                >Pelayanan</span
+              >
+              <p class="text-gray-700">
+                Melayani dengan hati, memberikan kenyamanan dan perhatian
+                terbaik untuk pasien.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-    <footer class="bg-[#E6521F] text-white mt-16">
-      <div
-        class="max-w-6xl mx-auto px-4 py-10 text-center text-sm text-white/70"
-      >
-        &copy; 2024 RSIA Buah Hati. Hak cipta dilindungi.
-      </div>
-    </footer>
+      </section>
+    </main>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <!-- Modal Fragment -->
+    <div th:replace="~{fragments/modal :: janji-modal}"></div>
   </body>
 </html>

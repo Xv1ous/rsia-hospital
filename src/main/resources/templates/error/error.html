@@ -1,25 +1,164 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Terjadi Kesalahan</title>
-    <link href="/main.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error - RSIA Buah Hati Pamulang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/main.css" />
   </head>
-  <body
-    class="bg-orange-50 flex flex-col items-center justify-center min-h-screen"
-  >
-    <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center">
-      <h1 class="text-4xl font-extrabold text-[#FB9E3A] mb-4">
-        Terjadi Kesalahan
-      </h1>
-      <p class="text-xl text-[#E6521F] mb-6">
-        Maaf, terjadi kesalahan yang tidak terduga.
-      </p>
-      <a
-        href="/"
-        class="px-6 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition"
-        >Kembali ke Beranda</a
-      >
+  <body class="bg-gray-50 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <a href="/" class="flex items-center">
+              <img
+                src="/asset hospital/RSIA_BHP_LOGO5.png"
+                alt="RSIA Buah Hati Pamulang"
+                class="h-12 w-auto"
+              />
+              <span class="ml-3 text-xl font-semibold text-[#E6521F]"
+                >RSIA Buah Hati Pamulang</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Error Content -->
+    <div
+      class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+    >
+      <div class="max-w-md w-full space-y-8">
+        <div class="text-center">
+          <!-- Error Icon -->
+          <div
+            class="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-red-100 mb-6"
+          >
+            <svg
+              class="h-12 w-12 text-red-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+              ></path>
+            </svg>
+          </div>
+
+          <!-- Error Code -->
+          <h1
+            class="text-6xl font-bold text-red-600 mb-4"
+            th:text="${errorCode}"
+          >
+            500
+          </h1>
+
+          <!-- Error Title -->
+          <h2
+            class="text-2xl font-semibold text-gray-900 mb-4"
+            th:text="${errorTitle}"
+          >
+            Terjadi Kesalahan
+          </h2>
+
+          <!-- Error Message -->
+          <p class="text-lg text-gray-600 mb-6" th:text="${errorMessage}">
+            Maaf, terjadi kesalahan di server. Silakan coba lagi beberapa saat.
+          </p>
+
+          <!-- Error Details -->
+          <p class="text-sm text-gray-500 mb-8" th:text="${errorDetails}">
+            Tim kami sedang memperbaiki masalah ini.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="space-y-4">
+            <a
+              href="/"
+              class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#E6521F] hover:bg-[#FF8000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#E6521F] transition-colors"
+            >
+              <svg
+                class="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                ></path>
+              </svg>
+              Kembali ke Beranda
+            </a>
+
+            <button
+              onclick="history.back()"
+              class="w-full flex justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#E6521F] transition-colors"
+            >
+              <svg
+                class="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                ></path>
+              </svg>
+              Kembali ke Halaman Sebelumnya
+            </button>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="mt-8 pt-8 border-t border-gray-200">
+            <p class="text-sm text-gray-500">
+              Jika masalah berlanjut, silakan hubungi kami:
+            </p>
+            <div class="mt-2 space-y-1">
+              <p class="text-sm text-gray-600">
+                📞
+                <a
+                  href="tel:+6221-12345678"
+                  class="text-[#E6521F] hover:underline"
+                  >021-12345678</a
+                >
+              </p>
+              <p class="text-sm text-gray-600">
+                📧
+                <a
+                  href="mailto:info@rsia-buahhati.com"
+                  class="text-[#E6521F] hover:underline"
+                  >info@rsia-buahhati.com</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <p class="text-sm">
+            © 2024 RSIA Buah Hati Pamulang. Semua hak dilindungi.
+          </p>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

@@ -8,7 +8,10 @@
   "main": "index.js",
   "scripts": {
     "build": "tailwindcss -i ./main.css -o ../resources/static/main.css",
-    "watch": "tailwindcss -i ./main.css -o ../resources/static/main.css --watch"
+    "build:prod": "tailwindcss -i ./main.css -o ../resources/static/main.css --minify",
+    "watch": "tailwindcss -i ./main.css -o ../resources/static/main.css --watch",
+    "purge": "tailwindcss -i ./main.css -o ../resources/static/main.css --minify --content ../resources/templates/**/*.html,../resources/static/js/**/*.js",
+    "build:full": "npm run build:prod && echo '✅ Production build completed' && echo '📦 CSS optimized and minified' && echo '🎯 Unused classes purged'"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17"

@@ -76,8 +76,27 @@ public class AdminController {
 
     @PutMapping("/doctors/{id}")
     public Doctor updateDoctor(@PathVariable Long id, @RequestBody Doctor d) {
-        d.setId(id);
-        return doctorRepository.save(d);
+        Doctor existingDoctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+
+        // Update basic fields
+        existingDoctor.setName(d.getName());
+        existingDoctor.setSpecialization(d.getSpecialization());
+        existingDoctor.setMaxPatientsPerDay(d.getMaxPatientsPerDay());
+
+        // Update leave status
+        existingDoctor.setIsOnLeave(d.getIsOnLeave());
+        existingDoctor.setLeaveReason(d.getLeaveReason());
+        existingDoctor.setLeaveStartDate(d.getLeaveStartDate());
+        existingDoctor.setLeaveEndDate(d.getLeaveEndDate());
+
+        // Update lock status
+        existingDoctor.setIsLocked(d.getIsLocked());
+        existingDoctor.setLockReason(d.getLockReason());
+        existingDoctor.setLockStartDate(d.getLockStartDate());
+        existingDoctor.setLockEndDate(d.getLockEndDate());
+
+        return doctorRepository.save(existingDoctor);
     }
 
     @DeleteMapping("/doctors/{id}")

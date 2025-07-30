@@ -10,6 +10,7 @@ Website ini dibangun untuk RSIA Buah Hati Pamulang dengan fitur-fitur modern yan
 
 - **Landing Page Modern** dengan desain responsif
 - **Jadwal Dokter** dengan filter berdasarkan spesialisasi
+- **Status Dokter** - informasi cuti dan ketersediaan dokter
 - **Informasi Layanan** rumah sakit
 - **Testimoni Pasien** untuk membangun kepercayaan
 - **Kontak & Lokasi** dengan integrasi Google Maps
@@ -112,6 +113,7 @@ hospital/
 │   │   │   │   ├── admin/           # Admin pages
 │   │   │   │   └── user/            # User pages
 │   │   │   ├── static/              # Static assets
+│   │   │   ├── db/migration/        # Database migrations
 │   │   │   └── application.properties
 │   │   └── frontend/                # Tailwind CSS source
 │   └── test/                        # Unit tests
@@ -155,7 +157,7 @@ npm run watch
 
 ```bash
 # Hibernate akan auto-create tables
-# Atau gunakan Flyway untuk migration yang lebih robust
+# Migration untuk jadwal dokter: V1__init.sql, V2__add_reviews_table.sql
 ```
 
 ## 🚀 Deployment
@@ -166,23 +168,6 @@ npm run watch
 mvn clean package
 java -jar target/hospital-0.0.1-SNAPSHOT.jar
 ```
-
-### Docker (Optional)
-
-```dockerfile
-FROM openjdk:24-jdk-slim
-COPY target/hospital-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
-```
-
-## 🤝 Contributing
-
-1. Fork repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
 
 ## 📞 Support
 
@@ -226,13 +211,3 @@ Biasanya Railway auto-detect, tapi bisa diatur manual di tab Settings:
   ```
   java -jar target/*.jar
   ```
-
-## Deploy Steps
-
-1. Push project ke GitHub.
-2. Connect repo ke Railway.
-3. Tambahkan MySQL plugin di Railway (jika belum).
-4. Set environment variable seperti di atas.
-5. Deploy (Railway akan build otomatis dengan Nixpacks).
-
-Tidak perlu Dockerfile, Railway akan otomatis pakai Nixpacks untuk build project Java/Maven.

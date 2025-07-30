@@ -31,9 +31,36 @@
         font-family: "Inter", "Segoe UI", "Roboto", "Helvetica Neue", Arial,
           "sans-serif";
       }
+
+      /* Modal scrolling improvements */
+      .modal-scroll {
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e0 #f7fafc;
+      }
+
+      .modal-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .modal-scroll::-webkit-scrollbar-track {
+        background: #f7fafc;
+        border-radius: 3px;
+      }
+
+      .modal-scroll::-webkit-scrollbar-thumb {
+        background: #cbd5e0;
+        border-radius: 3px;
+      }
+
+      .modal-scroll::-webkit-scrollbar-thumb:hover {
+        background: #a0aec0;
+      }
     </style>
   </head>
   <body class="bg-gray-50 text-gray-900 font-sans">
+    <!-- CSRF Token -->
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
     <div class="flex min-h-screen">
       <!-- Sidebar -->
       <aside
@@ -209,19 +236,45 @@
                   <th class="py-3 px-4 text-left">Spesialisasi</th>
                   <th class="py-3 px-4 text-left">Hari</th>
                   <th class="py-3 px-4 text-left">Jam</th>
+                  <th class="py-3 px-4 text-left">Status</th>
                   <th class="py-3 px-4 text-left">Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                <tr th:each="doctor : ${doctorSchedules}">
+                <tr
+                  th:each="doctor : ${doctorSchedules}"
+                  th:if="${doctor != null and doctor.name != null and doctor.name != ''}"
+                >
                   <td class="py-3 px-4" th:text="${doctor.name}"></td>
                   <td class="py-3 px-4" th:text="${doctor.specialization}"></td>
-                  <td class="py-3 px-4" th:text="${doctor.day}"></td>
-                  <td class="py-3 px-4" th:text="${doctor.time}"></td>
+                  <td class="py-3 px-4">-</td>
+                  <td class="py-3 px-4">-</td>
+                  <td class="py-3 px-4">
+                    <!-- Status Cuti -->
+                    <span
+                      th:if="${doctor.isOnLeave == true}"
+                      class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-500 text-white"
+                    >
+                      🏖️ Cuti
+                    </span>
+                    <span
+                      th:if="${doctor.isOnLeave == false || doctor.isOnLeave == null}"
+                      class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-500 text-white"
+                    >
+                      ✅ Aktif
+                    </span>
+                    <!-- Status Kunci -->
+                    <span
+                      th:if="${doctor.isLocked == true}"
+                      class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-500 text-white ml-1"
+                    >
+                      🔒 Dikunci
+                    </span>
+                  </td>
                   <td class="py-3 px-4 flex gap-2">
                     <button
                       class="px-3 py-1 rounded bg-[#E6521F] text-white text-xs font-semibold hover:bg-[#FF8000]"
-                      th:attr="id=${'edit-doctor-' + doctor.id},data-id=${doctor.id},data-name=${doctor.name},data-specialization=${doctor.specialization},data-day=${doctor.day},data-time=${doctor.time},data-hospital=${doctor.hospital}"
+                      th:attr="id=${'edit-doctor-' + doctor.id},data-id=${doctor.id},data-name=${doctor.name},data-specialization=${doctor.specialization},data-max-patients-per-day=${doctor.maxPatientsPerDay},data-is-on-leave=${doctor.isOnLeave},data-leave-reason=${doctor.leaveReason},data-leave-start-date=${doctor.leaveStartDate},data-leave-end-date=${doctor.leaveEndDate},data-is-locked=${doctor.isLocked},data-lock-reason=${doctor.lockReason},data-lock-start-date=${doctor.lockStartDate},data-lock-end-date=${doctor.lockEndDate}"
                     >
                       Edit
                     </button>
@@ -258,14 +311,14 @@
         <!-- Modal Tambah Janji Temu -->
         <div
           id="add-appointment-modal"
-          class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 hidden"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 hidden p-4"
         >
           <div
-            class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-left relative"
+            class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-left relative max-h-[90vh] overflow-y-auto modal-scroll"
           >
             <button
               onclick="document.getElementById('add-appointment-modal').classList.add('hidden')"
-              class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold"
+              class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold z-10"
             >
               &times;
             </button>
@@ -328,14 +381,14 @@
         <!-- Modal Tambah Dokter -->
         <div
           id="add-doctor-modal"
-          class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 hidden"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 hidden p-4"
         >
           <div
-            class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-left relative"
+            class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-left relative max-h-[90vh] overflow-y-auto modal-scroll"
           >
             <button
               onclick="document.getElementById('add-doctor-modal').classList.add('hidden')"
-              class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold"
+              class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold z-10"
             >
               &times;
             </button>
@@ -379,14 +432,14 @@
         <!-- Modal Tambah Berita -->
         <div
           id="add-news-modal"
-          class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 hidden"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 hidden p-4"
         >
           <div
-            class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-left relative"
+            class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-left relative max-h-[90vh] overflow-y-auto modal-scroll"
           >
             <button
               onclick="document.getElementById('add-news-modal').classList.add('hidden')"
-              class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold"
+              class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold z-10"
             >
               &times;
             </button>
@@ -455,190 +508,16 @@
         <!-- Modal (reusable for Edit/Hapus) -->
         <div
           id="admin-modal"
-          class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 hidden"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 hidden p-4"
         >
           <div
             id="admin-modal-content"
-            class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-left relative"
+            class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-left relative max-h-[90vh] overflow-y-auto modal-scroll"
           >
-            <button
-              id="admin-modal-close"
-              class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold"
-            >
-              &times;
-            </button>
             <!-- Content will be injected by JS -->
           </div>
         </div>
-        <script>
-          document.addEventListener("DOMContentLoaded", function () {
-            // Fungsi openModal universal
-            function openModal(html) {
-              const modal = document.getElementById("admin-modal");
-              const modalContent = document.getElementById(
-                "admin-modal-content"
-              );
-              modalContent.innerHTML =
-                '<button id="admin-modal-close" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>' +
-                html;
-              modal.classList.remove("hidden");
-              document.getElementById("admin-modal-close").onclick =
-                function () {
-                  modal.classList.add("hidden");
-                };
-            }
-
-            // Debug: pastikan tombol ditemukan
-            const btnAddAppointment = document.getElementById(
-              "open-add-appointment-modal"
-            );
-            const btnAddDoctor = document.getElementById(
-              "open-add-doctor-modal"
-            );
-            const btnAddNews = document.getElementById("open-add-news-modal");
-            const btnAddService = document.getElementById(
-              "open-add-service-modal"
-            );
-            console.log(
-              "Tombol tambah:",
-              btnAddAppointment,
-              btnAddDoctor,
-              btnAddNews,
-              btnAddService
-            );
-
-            if (btnAddAppointment)
-              btnAddAppointment.addEventListener("click", function () {
-                document
-                  .getElementById("add-appointment-modal")
-                  .classList.remove("hidden");
-              });
-            if (btnAddDoctor)
-              btnAddDoctor.addEventListener("click", function () {
-                document
-                  .getElementById("add-doctor-modal")
-                  .classList.remove("hidden");
-              });
-            if (btnAddNews)
-              btnAddNews.addEventListener("click", function () {
-                document
-                  .getElementById("add-news-modal")
-                  .classList.remove("hidden");
-              });
-            if (btnAddService)
-              btnAddService.addEventListener("click", function () {
-                console.log("Tambah Layanan diklik");
-                openModal(`
-            <h3 class='text-xl font-bold mb-4 text-[#17695b]'>Tambah Layanan</h3>
-            <form class='space-y-4'>
-              <label class='block'>Nama Layanan
-                <input type='text' class='w-full px-3 py-2 rounded border border-gray-200 mt-1' />
-              </label>
-              <label class='block'>Kategori
-                <input type='text' class='w-full px-3 py-2 rounded border border-gray-200 mt-1' />
-              </label>
-              <label class='block'>Status
-                <select class='w-full px-3 py-2 rounded border border-gray-200 mt-1'>
-                  <option>Aktif</option>
-                  <option>Nonaktif</option>
-                </select>
-              </label>
-              <button type='submit' class='w-full px-4 py-2 rounded bg-primary-orange text-white font-semibold hover:bg-primary-orange-dark transition'>Simpan</button>
-            </form>
-          `);
-              });
-
-            // Hapus dokter
-            document
-              .querySelectorAll("section#doctors button.bg-red-500")
-              .forEach((btn) => {
-                btn.onclick = function () {
-                  const id = this.getAttribute("data-id");
-                  if (confirm("Yakin ingin menghapus dokter ini?")) {
-                    fetch(`/admin/api/doctors/${id}`, {
-                      method: "DELETE",
-                    }).then((res) => {
-                      if (res.ok) location.reload();
-                      else alert("Gagal menghapus dokter");
-                    });
-                  }
-                };
-              });
-
-            // Edit dokter
-            document
-              .querySelectorAll("section#doctors button[data-id]")
-              .forEach((btn) => {
-                btn.onclick = function () {
-                  const id = this.getAttribute("data-id");
-                  const name = this.getAttribute("data-name");
-                  const specialization = this.getAttribute(
-                    "data-specialization"
-                  );
-                  const day = this.getAttribute("data-day");
-                  const time = this.getAttribute("data-time");
-                  const hospital = this.getAttribute("data-hospital");
-                  openModal(`
-                    <h3 class='text-xl font-bold mb-4 text-[#E6521F]'>Edit Dokter</h3>
-                    <form id='edit-doctor-form' class='space-y-4'>
-                      <input type='hidden' name='id' value='${id}' />
-                      <label class='block'>Rumah Sakit
-                        <input type='text' name='hospital' value='${hospital}' class='w-full px-3 py-2 rounded border border-gray-200 mt-1' required />
-                      </label>
-                      <label class='block'>Nama Dokter
-                        <input type='text' name='name' value='${name}' class='w-full px-3 py-2 rounded border border-gray-200 mt-1' required />
-                      </label>
-                      <label class='block'>Spesialisasi
-                        <input type='text' name='specialization' value='${specialization}' class='w-full px-3 py-2 rounded border border-gray-200 mt-1' required />
-                      </label>
-                      <label class='block'>Hari
-                        <input type='text' name='day' value='${day}' class='w-full px-3 py-2 rounded border border-gray-200 mt-1' required />
-                      </label>
-                      <label class='block'>Jam
-                        <input type='text' name='time' value='${time}' class='w-full px-3 py-2 rounded border border-gray-200 mt-1' required />
-                      </label>
-                      <button type='submit' class='w-full px-4 py-2 rounded bg-[#E6521F] text-white font-semibold hover:bg-[#FF8000] transition'>Simpan</button>
-                    </form>
-                  `);
-                  document.getElementById("edit-doctor-form").onsubmit =
-                    function (e) {
-                      e.preventDefault();
-                      fetch(`/admin/api/doctors/${id}`, {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                          id: id,
-                          hospital: this.hospital.value,
-                          name: this.name.value,
-                          specialization: this.specialization.value,
-                          day: this.day.value,
-                          time: this.time.value,
-                        }),
-                      })
-                        .then((res) => {
-                          if (res.ok) {
-                            location.reload();
-                          } else {
-                            res
-                              .text()
-                              .then((txt) =>
-                                alert(
-                                  "Gagal update dokter. Status: " +
-                                    res.status +
-                                    "\n" +
-                                    txt
-                                )
-                              );
-                          }
-                        })
-                        .catch((err) => {
-                          alert("Fetch error: " + err);
-                        });
-                    };
-                };
-              });
-          });
-        </script>
+        <script src="/js/admin.js"></script>
       </div>
     </div>
   </body>

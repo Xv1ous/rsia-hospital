@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("click", function (e) {
     // Desktop button
     if (e.target && e.target.id === "open-janji-modal") {
-      console.log("[DEBUG] Desktop button clicked");
       var modalBg = document.getElementById("janji-modal-bg");
       if (modalBg) {
         modalBg.classList.remove("hidden");
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Mobile button
     if (e.target && e.target.id === "open-janji-modal-mobile") {
-      console.log("[DEBUG] Mobile button clicked");
       var modalBg = document.getElementById("janji-modal-bg");
       if (modalBg) {
         modalBg.classList.remove("hidden");
@@ -37,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Close modal button
     if (e.target && e.target.id === "close-janji-modal") {
-      console.log("[DEBUG] Close button clicked");
       var modalBg = document.getElementById("janji-modal-bg");
       if (modalBg) {
         modalBg.classList.add("hidden");
@@ -46,14 +43,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Pasien lama button
     if (e.target && e.target.id === "pasien-lama-btn") {
-      console.log("[DEBUG] Pasien lama button clicked");
       alert("Fitur untuk pasien lama belum tersedia.");
     }
 
     // Close modal when clicking outside
     var modalBg = document.getElementById("janji-modal-bg");
     if (modalBg && e.target === modalBg) {
-      console.log("[DEBUG] Modal background clicked");
       modalBg.classList.add("hidden");
     }
   });
@@ -63,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.key === "Escape") {
       var modalBg = document.getElementById("janji-modal-bg");
       if (modalBg && !modalBg.classList.contains("hidden")) {
-        console.log("[DEBUG] Escape key pressed");
         modalBg.classList.add("hidden");
       }
     }
@@ -114,17 +108,4 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   }
-
-  // Debug: check if elements exist
-  setTimeout(function () {
-    console.log("[DEBUG] Elements check after 1s:", {
-      openBtn: !!document.getElementById("open-janji-modal"),
-      modalBg: !!document.getElementById("janji-modal-bg"),
-      closeBtn: !!document.getElementById("close-janji-modal"),
-      pasienLamaBtn: !!document.getElementById("pasien-lama-btn"),
-      openBtnMobile: !!document.getElementById("open-janji-modal-mobile"),
-      serviceSearch: !!document.getElementById("service-search"),
-      galleryImages: document.querySelectorAll(".gallery-img").length,
-    });
-  }, 1000);
 });

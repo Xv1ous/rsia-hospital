@@ -12,6 +12,9 @@ import com.example.hospital.repository.DoctorRepository;
 import com.example.hospital.repository.DoctorScheduleRepository;
 import com.example.hospital.repository.NewsRepository;
 import com.example.hospital.repository.ServiceRepository;
+import com.example.hospital.entity.Appointment;
+import com.example.hospital.entity.DoctorSchedule;
+import com.example.hospital.entity.Doctor;
 
 @Controller
 public class HomeController {
@@ -31,7 +34,24 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         try {
-            model.addAttribute("doctors", doctorRepository.findAll());
+            // Clean up invalid doctor data first
+            List<Doctor> allDoctors = doctorRepository.findAll();
+            List<Doctor> invalidDoctors = allDoctors.stream()
+                    .filter(doctor -> doctor == null || doctor.getName() == null || doctor.getName().trim().isEmpty())
+                    .toList();
+
+            if (!invalidDoctors.isEmpty()) {
+                doctorRepository.deleteAll(invalidDoctors);
+                // Reload the list after cleanup
+                allDoctors = doctorRepository.findAll();
+            }
+
+            // Filter out doctors with null or empty names
+            List<Doctor> validDoctors = allDoctors.stream()
+                    .filter(doctor -> doctor != null && doctor.getName() != null && !doctor.getName().trim().isEmpty())
+                    .toList();
+
+            model.addAttribute("doctors", validDoctors);
         } catch (Exception e) {
             model.addAttribute("doctors", new ArrayList<>());
         }
@@ -50,7 +70,19 @@ public class HomeController {
 
         // Add schedule data
         try {
-            Map<String, List<Object>> scheduleMap = new HashMap<>();
+            Map<String, List<DoctorSchedule>> scheduleMap = new HashMap<>();
+            List<DoctorSchedule> allSchedules = doctorScheduleRepository.findAll();
+
+            for (DoctorSchedule schedule : allSchedules) {
+                String doctorName = schedule.getName();
+                if (doctorName != null && !doctorName.trim().isEmpty()) {
+                    if (!scheduleMap.containsKey(doctorName)) {
+                        scheduleMap.put(doctorName, new ArrayList<>());
+                    }
+                    scheduleMap.get(doctorName).add(schedule);
+                }
+            }
+
             model.addAttribute("scheduleMap", scheduleMap);
         } catch (Exception e) {
             model.addAttribute("scheduleMap", new HashMap<>());
@@ -75,14 +107,31 @@ public class HomeController {
     @GetMapping("/schedule")
     public String schedule(Model model) {
         try {
-            model.addAttribute("doctors", doctorRepository.findAll());
+            List<Doctor> allDoctors = doctorRepository.findAll();
+            // Filter out doctors with null or empty names
+            List<Doctor> validDoctors = allDoctors.stream()
+                    .filter(doctor -> doctor != null && doctor.getName() != null && !doctor.getName().trim().isEmpty())
+                    .toList();
+            model.addAttribute("doctors", validDoctors);
         } catch (Exception e) {
             model.addAttribute("doctors", new ArrayList<>());
         }
 
         // Add schedule data
         try {
-            Map<String, List<Object>> scheduleMap = new HashMap<>();
+            Map<String, List<DoctorSchedule>> scheduleMap = new HashMap<>();
+            List<DoctorSchedule> allSchedules = doctorScheduleRepository.findAll();
+
+            for (DoctorSchedule schedule : allSchedules) {
+                String doctorName = schedule.getName();
+                if (doctorName != null && !doctorName.trim().isEmpty()) {
+                    if (!scheduleMap.containsKey(doctorName)) {
+                        scheduleMap.put(doctorName, new ArrayList<>());
+                    }
+                    scheduleMap.get(doctorName).add(schedule);
+                }
+            }
+
             model.addAttribute("scheduleMap", scheduleMap);
         } catch (Exception e) {
             model.addAttribute("scheduleMap", new HashMap<>());
@@ -134,13 +183,27 @@ public class HomeController {
         return "user/homecare";
     }
 
-    @GetMapping("/admin/registration-management")
-    public String registrationManagement(Model model) {
-        return "admin/registration-management";
+    @GetMapping("/janji-temu")
+    public String janjiTemu(Model model) {
+        try {
+            List<Doctor> allDoctors = doctorRepository.findAll();
+            // Filter out doctors with null or empty names
+            List<Doctor> validDoctors = allDoctors.stream()
+                    .filter(doctor -> doctor != null && doctor.getName() != null && !doctor.getName().trim().isEmpty())
+                    .toList();
+            model.addAttribute("doctors", validDoctors);
+        } catch (Exception e) {
+            model.addAttribute("doctors", new ArrayList<>());
+        }
+
+        // Add appointment object for form binding
+        model.addAttribute("appointment", new Appointment());
+
+        return "user/janji-temu";
     }
 
-    @GetMapping("/registration")
-    public String registration(Model model) {
-        return "user/registration";
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "login";
     }
 }

@@ -55,8 +55,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth.requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/user/**", "/schedule", "/about", "/services", "/fasilitas", "/patients", "/homecare",
-                        "/news", "/specializations", "/janji-temu", "/registration", "/", "/css/**", "/js/**",
-                        "/asset hospital/**", "/api/registration/**")
+                        "/news", "/specializations", "/janji-temu", "/login", "/", "/css/**", "/js/**",
+                        "/asset hospital/**")
                 .permitAll().anyRequest().permitAll())
                 .formLogin(form -> form.loginPage("/login")
                         .successHandler(customAuthenticationSuccessHandler()).permitAll())

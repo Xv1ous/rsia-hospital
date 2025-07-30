@@ -18,6 +18,149 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
+  // Handle popover functionality for desktop
+  if (table) {
+    console.log("[DEBUG] Setting up desktop popovers");
+
+    // Popover functionality
+    const popoverBtns = table.querySelectorAll(".popover-btn");
+    popoverBtns.forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+
+        // Close all other popovers
+        document.querySelectorAll(".popover-content").forEach((popover) => {
+          popover.classList.add("hidden");
+        });
+
+        // Toggle current popover
+        const popover = this.nextElementSibling;
+        if (popover && popover.classList.contains("popover-content")) {
+          popover.classList.toggle("hidden");
+        }
+      });
+    });
+
+    // Close popovers when clicking outside
+    document.addEventListener("click", function (e) {
+      if (
+        !e.target.closest(".popover-btn") &&
+        !e.target.closest(".popover-content")
+      ) {
+        document.querySelectorAll(".popover-content").forEach((popover) => {
+          popover.classList.add("hidden");
+        });
+      }
+    });
+
+    // Close popover buttons
+    document.querySelectorAll(".close-popover").forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        const popover = this.closest(".popover-content");
+        if (popover) {
+          popover.classList.add("hidden");
+        }
+      });
+    });
+  }
+
+  // Handle mobile modal functionality
+  if (mobileCards) {
+    console.log("[DEBUG] Setting up mobile modal");
+
+    const mobileModal = document.querySelector(".mobile-schedule-modal");
+    const mobileContent = document.getElementById("mobile-schedule-content");
+    const mobileProfileLink = document.getElementById(
+      "mobile-doctor-profile-link"
+    );
+    const closeModalBtn = document.querySelector(".close-mobile-modal");
+
+    // Mobile popover buttons
+    const mobilePopoverBtns = mobileCards.querySelectorAll(
+      ".popover-btn-mobile"
+    );
+    mobilePopoverBtns.forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        // Get doctor data from the card
+        const card = this.closest("[data-name]");
+        const doctorName = card.getAttribute("data-name");
+        const doctorId = card.getAttribute("data-id");
+
+        // Get schedule data from the page
+        const scheduleData = window.scheduleData || {};
+        const doctorSchedules = scheduleData[doctorName] || [];
+
+        // Populate modal content
+        if (mobileContent) {
+          if (doctorSchedules.length === 0) {
+            mobileContent.innerHTML = `
+              <div class="text-center py-8">
+                <svg class="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <p class="text-gray-500">Belum ada jadwal tersedia</p>
+              </div>
+            `;
+          } else {
+            let scheduleHTML = "";
+            doctorSchedules.forEach((schedule) => {
+              scheduleHTML += `
+                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-100 hover:shadow-md transition-all duration-200">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-[#E6521F] to-[#FF8000] rounded-lg flex items-center justify-center">
+                      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <span class="font-bold text-[#E6521F] text-base block">${schedule.day}</span>
+                      <span class="text-xs text-gray-500">Jadwal Praktik</span>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-sm font-semibold text-gray-700">${schedule.time}</span>
+                  </div>
+                </div>
+              `;
+            });
+            mobileContent.innerHTML = scheduleHTML;
+          }
+        }
+
+        // Update profile link
+        if (mobileProfileLink && doctorId) {
+          mobileProfileLink.href = `/doctor-profile/${doctorId}`;
+        }
+
+        // Show modal
+        if (mobileModal) {
+          mobileModal.classList.remove("hidden");
+        }
+      });
+    });
+
+    // Close modal
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener("click", function () {
+        if (mobileModal) {
+          mobileModal.classList.add("hidden");
+        }
+      });
+    }
+
+    // Close modal when clicking outside
+    if (mobileModal) {
+      mobileModal.addEventListener("click", function (e) {
+        if (e.target === this) {
+          this.classList.add("hidden");
+        }
+      });
+    }
+  }
+
   // Simple pagination for desktop
   if (table) {
     console.log("[DEBUG] Setting up desktop pagination");

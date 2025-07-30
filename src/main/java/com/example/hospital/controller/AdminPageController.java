@@ -46,17 +46,30 @@ public class AdminPageController {
     @GetMapping("/admin")
     public String adminDashboard(Model model, @RequestParam(defaultValue = "0") int page) {
         int pageSize = 5;
-        Page<DoctorSchedule> doctorSchedulePage =
-                doctorScheduleRepository.findAll(PageRequest.of(page, pageSize));
-        List<Doctor> doctors = doctorRepository.findAll();
+        Page<Doctor> doctorPage = doctorRepository.findAll(PageRequest.of(page, pageSize));
+
+        // Filter out doctors with null or empty names
+        List<Doctor> validDoctors = doctorPage.getContent().stream()
+                .filter(doctor -> doctor != null && doctor.getName() != null && !doctor.getName().trim().isEmpty())
+                .toList();
+
+        List<Doctor> allDoctors = doctorRepository.findAll();
+        // Filter all doctors too
+        List<Doctor> validAllDoctors = allDoctors.stream()
+                .filter(doctor -> doctor != null && doctor.getName() != null && !doctor.getName().trim().isEmpty())
+                .toList();
+
         List<DoctorSchedule> allDoctorSchedules = doctorScheduleRepository.findAll();
-        Set<String> specializations =
-                allDoctorSchedules.stream().map(DoctorSchedule::getSpecialization)
-                        .collect(Collectors.toCollection(TreeSet::new));
-        model.addAttribute("doctorSchedules", doctorSchedulePage.getContent());
-        model.addAttribute("totalPages", doctorSchedulePage.getTotalPages());
+        Set<String> specializations = allDoctorSchedules.stream()
+                .filter(schedule -> schedule.getSpecialization() != null
+                        && !schedule.getSpecialization().trim().isEmpty())
+                .map(DoctorSchedule::getSpecialization)
+                .collect(Collectors.toCollection(TreeSet::new));
+
+        model.addAttribute("doctorSchedules", validDoctors);
+        model.addAttribute("totalPages", doctorPage.getTotalPages());
         model.addAttribute("currentPage", page);
-        model.addAttribute("doctors", doctors);
+        model.addAttribute("doctors", validAllDoctors);
         model.addAttribute("specializations", specializations);
         model.addAttribute("news", newsRepository.findAll());
         model.addAttribute("services", serviceRepository.findAll());
@@ -66,7 +79,12 @@ public class AdminPageController {
 
     @GetMapping("/admin/doctors")
     public String adminDoctors(Model model) {
-        model.addAttribute("doctors", doctorRepository.findAll());
+        List<Doctor> allDoctors = doctorRepository.findAll();
+        // Filter out doctors with null or empty names
+        List<Doctor> validDoctors = allDoctors.stream()
+                .filter(doctor -> doctor != null && doctor.getName() != null && !doctor.getName().trim().isEmpty())
+                .toList();
+        model.addAttribute("doctors", validDoctors);
         return "admin/doctors";
     }
 

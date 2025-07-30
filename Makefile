@@ -1,114 +1,131 @@
-# Makefile untuk RSIA Buah Hati Pamulang
+# RSIA Hospital Makefile
 # Usage: make [target]
 
-.PHONY: help install build run clean test docker-build docker-run dev
-
-# Variables
-APP_NAME = hospital
-JAR_FILE = target/$(APP_NAME)-0.0.1-SNAPSHOT.jar
-DOCKER_IMAGE = rsia-buah-hati-pamulang
+.PHONY: help dev prod test clean jar run install frontend-build
 
 # Default target
 help:
-	@echo "RSIA Buah Hati Pamulang - Development Commands"
-	@echo "=============================================="
-	@echo "install     - Install all dependencies"
-	@echo "build       - Build the application"
-	@echo "run         - Run the application"
-	@echo "dev         - Start development environment"
-	@echo "clean       - Clean build artifacts"
-	@echo "test        - Run tests"
-	@echo "docker-build- Build Docker image"
-	@echo "docker-run  - Run with Docker Compose"
-	@echo "stop        - Stop the application"
+	@echo "RSIA Hospital - Available Commands:"
+	@echo ""
+	@echo "Development:"
+	@echo "  make dev          - Build for development"
+	@echo "  make run          - Run development server"
+	@echo "  make install      - Install all dependencies"
+	@echo ""
+	@echo "Production:"
+	@echo "  make prod         - Build for production"
+	@echo "  make jar          - Create production JAR"
+	@echo ""
+	@echo "Testing:"
+	@echo "  make test         - Run all tests"
+	@echo ""
+	@echo "Maintenance:"
+	@echo "  make clean        - Clean all build artifacts"
+	@echo "  make frontend-build - Build frontend only"
+	@echo ""
 
-# Install dependencies
+# Development
+dev:
+	@echo "🚀 Building for development..."
+	./scripts/build.sh dev
+
+run:
+	@echo "🏃 Running development server..."
+	mvn spring-boot:run -Pdev
+
 install:
-	@echo "Installing dependencies..."
-	mvn dependency:resolve
+	@echo "📦 Installing dependencies..."
 	cd src/main/frontend && npm install
 	@echo "✅ Dependencies installed"
 
-# Build application
-build:
-	@echo "Building application..."
-	mvn clean compile
-	cd src/main/frontend && npm run build
-	@echo "✅ Application built"
+# Production
+prod:
+	@echo "🏭 Building for production..."
+	./scripts/build.sh prod
 
-# Run application
-run:
-	@echo "Starting application..."
-	mvn spring-boot:run
+jar:
+	@echo "📦 Creating production JAR..."
+	./scripts/build.sh jar
 
-# Development environment
-dev:
-	@echo "Starting development environment..."
-	./scripts/dev.sh start
-
-# Stop application
-stop:
-	@echo "Stopping application..."
-	./scripts/dev.sh stop
-
-# Clean project
-clean:
-	@echo "Cleaning project..."
-	mvn clean
-	rm -rf target/
-	rm -f .app.pid
-	@echo "✅ Project cleaned"
-
-# Run tests
+# Testing
 test:
-	@echo "Running tests..."
-	mvn test
-	@echo "✅ Tests completed"
+	@echo "🧪 Running tests..."
+	./scripts/build.sh test
 
-# Build Docker image
+# Maintenance
+clean:
+	@echo "🧹 Cleaning build artifacts..."
+	./scripts/build.sh clean
+
+frontend-build:
+	@echo "🎨 Building frontend..."
+	cd src/main/frontend && npm run build:prod
+
+# Quick commands
+quick-dev:
+	@echo "⚡ Quick development build..."
+	mvn compile -Pdev -q
+
+quick-prod:
+	@echo "⚡ Quick production build..."
+	mvn compile -Pprod -q
+
+# Docker commands (if needed in future)
 docker-build:
-	@echo "Building Docker image..."
-	docker build -t $(DOCKER_IMAGE) .
-	@echo "✅ Docker image built"
+	@echo "🐳 Building Docker image..."
+	docker build -t rsia-hospital .
 
-# Run with Docker Compose
 docker-run:
-	@echo "Starting with Docker Compose..."
-	docker-compose up -d
-	@echo "✅ Application started with Docker"
+	@echo "🐳 Running Docker container..."
+	docker run -p 8080:8080 rsia-hospital
 
-# Stop Docker containers
-docker-stop:
-	@echo "Stopping Docker containers..."
-	docker-compose down
-	@echo "✅ Docker containers stopped"
+# Database commands
+db-migrate:
+	@echo "🗄️ Running database migrations..."
+	mvn flyway:migrate
 
-# Database operations
-db-create:
-	@echo "Creating database..."
-	mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS hospital;"
-	@echo "✅ Database created"
+db-clean:
+	@echo "🗄️ Cleaning database..."
+	mvn flyway:clean
 
-db-reset:
-	@echo "Resetting database..."
-	mysql -u root -p -e "DROP DATABASE IF EXISTS hospital; CREATE DATABASE hospital;"
-	@echo "✅ Database reset"
+# Monitoring
+health-check:
+	@echo "🏥 Checking application health..."
+	curl -f http://localhost:8080/actuator/health || echo "❌ Application not running"
 
-# Frontend operations
-frontend-watch:
-	@echo "Starting frontend watch mode..."
+# Performance testing
+perf-test:
+	@echo "⚡ Running performance tests..."
+	cd src/main/frontend && npm run build:full
+
+# Security check
+security-check:
+	@echo "🔒 Running security checks..."
+	mvn dependency:check
+
+# Documentation
+docs:
+	@echo "📚 Generating documentation..."
+	mvn javadoc:javadoc
+
+# Backup
+backup:
+	@echo "💾 Creating backup..."
+	tar -czf backup-$(shell date +%Y%m%d-%H%M%S).tar.gz \
+		--exclude=target \
+		--exclude=node_modules \
+		--exclude=.git \
+		.
+
+# Development shortcuts
+watch:
+	@echo "👀 Starting watch mode..."
 	cd src/main/frontend && npm run watch
 
-# Production build
-prod-build:
-	@echo "Building for production..."
-	mvn clean package -DskipTests
-	@echo "✅ Production build completed"
+lint:
+	@echo "🔍 Running linter..."
+	cd src/main/frontend && npm run lint
 
-# Check application status
-status:
-	@echo "Checking application status..."
-	./scripts/dev.sh status
-
-# Quick start (install + build + run)
-quick-start: install build run
+format:
+	@echo "✨ Formatting code..."
+	mvn spring-javaformat:apply

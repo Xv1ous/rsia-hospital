@@ -79,4 +79,4 @@ SELECT DISTINCT name, specialization FROM doctor_schedule;
 
 -- Insert default admin user (password: admin123)
 INSERT INTO users (username, password, role) VALUES
-('admin', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDa', 'ADMIN');
+('admin', '$2a$12$lLKRwSUbB7NQOOr6pL.ysO7c1sss.9qpZYIi2Tpigo.Z6GsjNYuL.', 'ADMIN');

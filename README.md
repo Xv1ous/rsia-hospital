@@ -2,26 +2,68 @@
 
 Aplikasi manajemen rumah sakit berbasis Spring Boot dengan interface web yang user-friendly.
 
+## 📋 **Table of Contents**
+
+- [🚀 Quick Start](#-quick-start-super-mudah)
+- [📁 Struktur Project](#-struktur-project)
+- [🎯 Fitur Utama](#-fitur-utama)
+- [🛠️ Teknologi](#️-teknologi)
+- [📋 Prerequisites](#-prerequisites)
+- [🚀 Cara Menjalankan](#-cara-menjalankan)
+- [🛑 Cara Menghentikan](#-cara-menghentikan)
+- [📊 Monitoring](#-monitoring)
+- [⚡ Quick Commands](#-quick-commands)
+- [🔧 Troubleshooting](#-troubleshooting)
+- [📚 Dokumentasi](#-dokumentasi)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [📞 Support](#-support)
+
+---
+
 ## 🚀 **Quick Start (SUPER MUDAH)**
 
-### **Windows:**
+### **🎯 Prerequisites**
+
+1. **Install Docker Desktop** (Windows/Mac) atau **Docker** (Linux)
+2. **Start Docker Desktop** dan tunggu sampai status "Docker Desktop is running"
+
+### **🚀 Start Application**
+
+#### **Windows:**
 
 ```bash
-# Double-click file ini
+# Option 1: Double-click file ini
 scripts/simple/START.bat
+
+# Option 2: Use interactive menu
+QUICK_ACCESS.bat
 ```
 
-### **Linux/Mac:**
+#### **Linux/Mac:**
 
 ```bash
-# Double-click atau jalankan
+# Option 1: Double-click atau jalankan
 ./scripts/simple/start.sh
+
+# Option 2: Use interactive menu
+./quick-access.sh
 ```
 
-### **Akses Aplikasi:**
+### **🌐 Akses Aplikasi**
+
+Setelah aplikasi berhasil dijalankan:
 
 - **URL:** http://localhost:8080
-- **Admin:** admin / admin123
+- **Admin Login:**
+  - Username: `admin`
+  - Password: `admin123`
+
+### **✅ Verifikasi Berhasil**
+
+- Browser akan terbuka otomatis ke http://localhost:8080
+- Halaman utama rumah sakit akan tampil
+- Bisa login sebagai admin
 
 ## 📁 **Struktur Project**
 
@@ -147,6 +189,57 @@ docker-compose -f docker/docker-compose.dev.yml logs -f hospital-app
 docker-compose -f docker/docker-compose.dev.yml logs -f mysql
 ```
 
+## ⚡ **Quick Commands**
+
+### **🚀 Start Application**
+
+```bash
+# Windows
+scripts/simple/START.bat
+
+# Linux/Mac
+./scripts/simple/start.sh
+
+# Advanced (Developer)
+./scripts/advanced/build-and-deploy.sh dev
+```
+
+### **🛑 Stop Application**
+
+```bash
+# Windows
+scripts/simple/STOP.bat
+
+# Linux/Mac
+./scripts/simple/stop.sh
+
+# Manual
+docker-compose -f docker/docker-compose.dev.yml down
+```
+
+### **📊 Check Status**
+
+```bash
+# Container status
+docker-compose -f docker/docker-compose.dev.yml ps
+
+# Application logs
+docker-compose -f docker/docker-compose.dev.yml logs -f hospital-app
+
+# Database logs
+docker-compose -f docker/docker-compose.dev.yml logs -f mysql
+```
+
+### **🔧 Quick Access Menu**
+
+```bash
+# Windows
+QUICK_ACCESS.bat
+
+# Linux/Mac
+./quick-access.sh
+```
+
 ## 🔧 **Troubleshooting**
 
 ### **Docker tidak running:**
@@ -174,19 +267,49 @@ docker-compose -f docker/docker-compose.dev.yml restart mysql
 
 ## 📚 **Dokumentasi**
 
-- **📖 [Panduan Simple](docs/README_SIMPLE.md)** - Untuk user non-teknis
-- **👤 [User Guide](docs/USER_GUIDE.md)** - Panduan lengkap penggunaan
-- **🔧 [API Documentation](docs/API_DOCUMENTATION.md)** - Dokumentasi API
-- **🚀 [Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Panduan deployment
-- **🐳 [Docker Guide](docs/DOCKER_DEPLOYMENT.md)** - Panduan Docker
+### **📖 Quick Start Guides**
 
-## 🤝 **Kontribusi**
+- **[Panduan Simple](docs/README_SIMPLE.md)** - Untuk user non-teknis
+- **[User Guide](docs/USER_GUIDE.md)** - Panduan lengkap penggunaan
 
-1. Fork project ini
-2. Buat branch fitur baru (`git checkout -b feature/AmazingFeature`)
-3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buat Pull Request
+### **🔧 Technical Documentation**
+
+- **[API Documentation](docs/API_DOCUMENTATION.md)** - Dokumentasi API
+- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Panduan deployment
+- **[Docker Guide](docs/DOCKER_DEPLOYMENT.md)** - Panduan Docker
+- **[Windows Guide](docs/WINDOWS_GUIDE.md)** - Panduan khusus Windows
+
+### **📋 Project Documentation**
+
+- **[Documentation Index](docs/INDEX.md)** - Index semua dokumentasi
+- **[Project Structure](PROJECT_STRUCTURE.md)** - Overview struktur project
+- **[Docker Commands](docs/DOCKER_COMMANDS.md)** - Perintah Docker yang sering digunakan
+
+## 🤝 **Contributing**
+
+Kami menyambut kontribusi dari siapa saja! Berikut cara berkontribusi:
+
+### **🔧 Untuk Developer:**
+
+1. **Fork** project ini
+2. **Buat branch** fitur baru (`git checkout -b feature/AmazingFeature`)
+3. **Commit** perubahan (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** ke branch (`git push origin feature/AmazingFeature`)
+5. **Buat Pull Request**
+
+### **📝 Untuk Non-Developer:**
+
+- **Report bugs** dengan membuat issue
+- **Request features** dengan membuat issue
+- **Improve documentation** dengan membuat Pull Request
+- **Test the application** dan berikan feedback
+
+### **📋 Guidelines:**
+
+- Ikuti struktur project yang sudah ada
+- Tambahkan dokumentasi untuk fitur baru
+- Test fitur sebelum submit
+- Gunakan commit message yang jelas
 
 ## 📄 **License**
 
@@ -194,8 +317,28 @@ Project ini dilisensikan di bawah MIT License - lihat file [LICENSE](LICENSE) un
 
 ## 📞 **Support**
 
-Jika ada pertanyaan atau masalah:
+### **🔍 Self-Help:**
 
-1. Cek dokumentasi di folder `docs/`
-2. Cek troubleshooting section di atas
-3. Buat issue di repository ini
+1. **Cek dokumentasi** di folder `docs/`
+2. **Baca troubleshooting** section di atas
+3. **Gunakan quick commands** untuk debugging
+
+### **📚 Documentation:**
+
+- **[Panduan Simple](docs/README_SIMPLE.md)** - Untuk user non-teknis
+- **[User Guide](docs/USER_GUIDE.md)** - Panduan lengkap penggunaan
+- **[API Documentation](docs/API_DOCUMENTATION.md)** - Untuk developer
+- **[Docker Guide](docs/DOCKER_DEPLOYMENT.md)** - Untuk deployment
+
+### **🐛 Report Issues:**
+
+- **Buat issue** di repository ini
+- **Sertakan detail** error yang terjadi
+- **Lampirkan screenshot** jika diperlukan
+- **Mention OS dan version** yang digunakan
+
+### **💬 Community:**
+
+- **GitHub Discussions** - Untuk diskusi umum
+- **GitHub Issues** - Untuk bug reports dan feature requests
+- **Pull Requests** - Untuk kontribusi kode

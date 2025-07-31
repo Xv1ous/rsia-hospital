@@ -1,213 +1,201 @@
-# RSIA Buah Hati Pamulang
+# 🏥 Hospital Management System
 
-Website resmi RSIA Buah Hati Pamulang - Pelayanan Kesehatan Modern & Terpercaya
+Aplikasi manajemen rumah sakit berbasis Spring Boot dengan interface web yang user-friendly.
 
-## 🏥 Tentang Project
+## 🚀 **Quick Start (SUPER MUDAH)**
 
-Website ini dibangun untuk RSIA Buah Hati Pamulang dengan fitur-fitur modern yang memudahkan pasien dalam mengakses informasi layanan kesehatan, jadwal dokter, dan informasi kontak.
-
-## 🚀 Fitur Utama
-
-- **Landing Page Modern** dengan desain responsif
-- **Jadwal Dokter** dengan filter berdasarkan spesialisasi
-- **Status Dokter** - informasi cuti dan ketersediaan dokter
-- **Informasi Layanan** rumah sakit
-- **Testimoni Pasien** untuk membangun kepercayaan
-- **Kontak & Lokasi** dengan integrasi Google Maps
-- **Admin Panel** untuk manajemen konten
-
-## 🛠️ Tech Stack
-
-### Backend
-
-- **Spring Boot 3.5.3** - Framework Java
-- **Spring Data JPA** - ORM dan database access
-- **MySQL** - Database
-- **Thymeleaf** - Template engine
-- **Lombok** - Boilerplate code reduction
-
-### Frontend
-
-- **Tailwind CSS** - Utility-first CSS framework
-- **JavaScript (Vanilla)** - Interaktivitas client-side
-- **HTML5** - Markup
-- **Responsive Design** - Mobile-first approach
-
-## 📋 Prerequisites
-
-Sebelum menjalankan project, pastikan Anda memiliki:
-
-- **Java 21** atau lebih tinggi
-- **Maven 3.6+**
-- **MySQL 8.0+**
-- **Node.js 18+** (untuk Tailwind CSS)
-
-## 🔧 Installation & Setup
-
-### 1. Clone Repository
+### **Windows:**
 
 ```bash
-git clone <repository-url>
-cd hospital
+# Double-click file ini
+scripts/simple/START.bat
 ```
 
-### 2. Setup Database
-
-```sql
-CREATE DATABASE hospital;
-```
-
-### 3. Konfigurasi Database
-
-Edit file `src/main/resources/application.properties`:
-
-```properties
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-```
-
-### 4. Install Dependencies
+### **Linux/Mac:**
 
 ```bash
-# Install Java dependencies
-mvn clean install
-
-# Install Frontend dependencies
-cd src/main/frontend
-npm install
+# Double-click atau jalankan
+./scripts/simple/start.sh
 ```
 
-### 5. Build Frontend Assets
+### **Akses Aplikasi:**
 
-```bash
-# Dari root project
-mvn compile
-```
+- **URL:** http://localhost:8080
+- **Admin:** admin / admin123
 
-### 6. Run Application
-
-```bash
-# Development mode dengan hot reload
-mvn spring-boot:run
-
-# Atau menggunakan Maven wrapper
-./mvnw spring-boot:run
-```
-
-Aplikasi akan berjalan di `http://localhost:8080`
-
-## 📁 Project Structure
+## 📁 **Struktur Project**
 
 ```
 hospital/
-├── src/
-│   ├── main/
-│   │   ├── java/com/example/hospital/
-│   │   │   ├── controller/          # REST Controllers
-│   │   │   ├── entity/              # JPA Entities
-│   │   │   ├── repository/          # Data Access Layer
-│   │   │   └── HospitalApplication.java
-│   │   ├── resources/
-│   │   │   ├── templates/           # Thymeleaf templates
-│   │   │   │   ├── fragments/       # Reusable components
-│   │   │   │   ├── admin/           # Admin pages
-│   │   │   │   └── user/            # User pages
-│   │   │   ├── static/              # Static assets
-│   │   │   ├── db/migration/        # Database migrations
-│   │   │   └── application.properties
-│   │   └── frontend/                # Tailwind CSS source
-│   └── test/                        # Unit tests
-├── pom.xml                          # Maven configuration
-└── README.md
+├── 📁 src/                    # Source code aplikasi
+│   ├── main/java/            # Java source code
+│   ├── main/resources/       # Konfigurasi & assets
+│   └── main/frontend/        # Frontend assets
+├── 📁 docs/                  # Dokumentasi lengkap
+│   ├── README_SIMPLE.md      # Panduan simple untuk user
+│   ├── USER_GUIDE.md         # Panduan lengkap user
+│   ├── API_DOCUMENTATION.md  # Dokumentasi API
+│   └── ...                   # Dokumentasi lainnya
+├── 📁 scripts/               # Script untuk menjalankan aplikasi
+│   ├── simple/               # Script simple (double-click)
+│   │   ├── START.bat         # Start aplikasi (Windows)
+│   │   ├── STOP.bat          # Stop aplikasi (Windows)
+│   │   ├── start.sh          # Start aplikasi (Linux/Mac)
+│   │   └── stop.sh           # Stop aplikasi (Linux/Mac)
+│   └── advanced/             # Script advanced untuk developer
+├── 📁 docker/                # Konfigurasi Docker
+│   ├── docker-compose.yml    # Production setup
+│   ├── docker-compose.dev.yml # Development setup
+│   ├── Dockerfile            # Full build
+│   └── Dockerfile.simple     # Simple build
+├── 📁 config/                # Konfigurasi tambahan
+│   ├── nginx.conf            # Nginx configuration
+│   ├── env.example           # Environment variables example
+│   └── Makefile              # Build automation
+├── pom.xml                   # Maven configuration
+└── README.md                 # File ini
 ```
 
-## 🎨 Customization
+## 🎯 **Fitur Utama**
 
-### Styling
+### **Untuk Pasien:**
 
-- Edit `src/main/frontend/main.css` untuk custom CSS
-- Konfigurasi Tailwind di `src/main/frontend/tailwind.config.js`
+- 📅 **Janji Temu** - Buat janji dengan dokter
+- 👨‍⚕️ **Jadwal Dokter** - Lihat jadwal praktik dokter
+- 📰 **Berita** - Informasi terbaru rumah sakit
+- ⭐ **Review** - Berikan ulasan dan rating
 
-### Content
+### **Untuk Admin:**
 
-- Update informasi rumah sakit di templates
-- Modifikasi jadwal dokter di `schedule.html`
-- Edit testimoni di `testimonial.html`
+- 👨‍⚕️ **Kelola Dokter** - Tambah, edit, hapus data dokter
+- 📅 **Kelola Jadwal** - Atur jadwal praktik dokter
+- 📰 **Kelola Berita** - Publikasi berita rumah sakit
+- 📊 **Dashboard** - Monitoring sistem
 
-## 🔒 Security
+## 🛠️ **Teknologi**
 
-- Pastikan password database tidak di-commit ke repository
-- Gunakan environment variables untuk sensitive data
-- Aktifkan HTTPS di production
+- **Backend:** Spring Boot 3.x, Java 21
+- **Database:** MySQL 8.0
+- **Frontend:** Thymeleaf, Bootstrap, JavaScript
+- **Container:** Docker & Docker Compose
+- **Build Tool:** Maven
 
-## 📝 Development
+## 📋 **Prerequisites**
 
-### Hot Reload
+- **Docker Desktop** (Windows/Mac) atau **Docker** (Linux)
+- **Java 21** (untuk development)
+- **Maven** (untuk development)
+
+## 🚀 **Cara Menjalankan**
+
+### **1. Simple (Recommended untuk User)**
 
 ```bash
-# Terminal 1: Run Spring Boot
-mvn spring-boot:run
+# Windows
+scripts/simple/START.bat
 
-# Terminal 2: Watch Tailwind CSS
-cd src/main/frontend
-npm run watch
+# Linux/Mac
+./scripts/simple/start.sh
 ```
 
-### Database Migration
+### **2. Advanced (Untuk Developer)**
 
 ```bash
-# Hibernate akan auto-create tables
-# Migration untuk jadwal dokter: V1__init.sql, V2__add_reviews_table.sql
+# Development
+./scripts/advanced/build-and-deploy.sh dev
+
+# Production
+./scripts/advanced/build-and-deploy.sh prod
 ```
 
-## 🚀 Deployment
-
-### Production Build
+### **3. Manual**
 
 ```bash
-mvn clean package
-java -jar target/hospital-0.0.1-SNAPSHOT.jar
+# Build aplikasi
+mvn clean package -DskipTests
+
+# Build Docker image
+docker build -f docker/Dockerfile.simple -t hospital-app:latest .
+
+# Start containers
+docker-compose -f docker/docker-compose.dev.yml up -d
 ```
 
-## 📞 Support
+## 🛑 **Cara Menghentikan**
 
-Untuk pertanyaan atau dukungan teknis:
+```bash
+# Windows
+scripts/simple/STOP.bat
 
-- Email: tech@buahhatipamulang.co.id
-- Phone: (021) 1234 5678
+# Linux/Mac
+./scripts/simple/stop.sh
 
-## 📄 License
+# Atau manual
+docker-compose -f docker/docker-compose.dev.yml down
+```
 
-Project ini dikembangkan untuk RSIA Buah Hati Pamulang. All rights reserved.
+## 📊 **Monitoring**
 
----
+```bash
+# Lihat status container
+docker-compose -f docker/docker-compose.dev.yml ps
 
-**RSIA Buah Hati Pamulang** - Pelayanan Kesehatan Modern & Terpercaya
+# Lihat logs aplikasi
+docker-compose -f docker/docker-compose.dev.yml logs -f hospital-app
 
-# Railway Deployment (Nixpacks)
+# Lihat logs database
+docker-compose -f docker/docker-compose.dev.yml logs -f mysql
+```
 
-## Environment Variables
+## 🔧 **Troubleshooting**
 
-Atur di Railway dashboard (tab Variables):
+### **Docker tidak running:**
 
-| Key               | Value (contoh)                       | Keterangan               |
-| ----------------- | ------------------------------------ | ------------------------ |
-| DATABASE_URL      | jdbc:mysql://HOST:PORT/DATABASE_NAME | URL koneksi MySQL        |
-| DATABASE_USERNAME | root                                 | Username MySQL           |
-| DATABASE_PASSWORD | password                             | Password MySQL           |
-| PORT              | 8080                                 | (Opsional, default 8080) |
+1. Buka Docker Desktop
+2. Tunggu sampai status "Docker Desktop is running"
+3. Jalankan ulang aplikasi
 
-Jika pakai Railway MySQL plugin, Railway akan otomatis mengisi variabel ini.
+### **Port sudah digunakan:**
 
-## Build & Start Command (Opsional)
+```bash
+# Stop aplikasi dulu
+./scripts/simple/stop.sh
 
-Biasanya Railway auto-detect, tapi bisa diatur manual di tab Settings:
+# Tunggu 30 detik, lalu jalankan ulang
+./scripts/simple/start.sh
+```
 
-- Build Command:
-  ```
-  ./mvnw package -DskipTests
-  ```
-- Start Command:
-  ```
-  java -jar target/*.jar
-  ```
+### **Database error:**
+
+```bash
+# Restart database
+docker-compose -f docker/docker-compose.dev.yml restart mysql
+```
+
+## 📚 **Dokumentasi**
+
+- **📖 [Panduan Simple](docs/README_SIMPLE.md)** - Untuk user non-teknis
+- **👤 [User Guide](docs/USER_GUIDE.md)** - Panduan lengkap penggunaan
+- **🔧 [API Documentation](docs/API_DOCUMENTATION.md)** - Dokumentasi API
+- **🚀 [Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Panduan deployment
+- **🐳 [Docker Guide](docs/DOCKER_DEPLOYMENT.md)** - Panduan Docker
+
+## 🤝 **Kontribusi**
+
+1. Fork project ini
+2. Buat branch fitur baru (`git checkout -b feature/AmazingFeature`)
+3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
+4. Push ke branch (`git push origin feature/AmazingFeature`)
+5. Buat Pull Request
+
+## 📄 **License**
+
+Project ini dilisensikan di bawah MIT License - lihat file [LICENSE](LICENSE) untuk detail.
+
+## 📞 **Support**
+
+Jika ada pertanyaan atau masalah:
+
+1. Cek dokumentasi di folder `docs/`
+2. Cek troubleshooting section di atas
+3. Buat issue di repository ini

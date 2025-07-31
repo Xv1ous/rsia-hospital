@@ -1,0 +1,99 @@
+version: "3.8"
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: hospital-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: hospital
+      MYSQL_USER: hospital_user
+      MYSQL_PASSWORD: hospital_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./src/main/resources/db/migration:/docker-entrypoint-initdb.d
+    networks:
+      - hospital-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Spring Boot Application
+  hospital-app:
+    build: .
+    container_name: hospital-app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      # Database Configuration
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/hospital?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: hospital_user
+      SPRING_DATASOURCE_PASSWORD: hospital_pass
+
+      # Application Configuration
+      SPRING_APPLICATION_NAME: rsia-buah-hati-pamulang
+      SERVER_PORT: 8080
+
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: false
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: false
+
+      # Security Configuration
+      SPRING_SECURITY_USER_NAME: admin
+      SPRING_SECURITY_USER_PASSWORD: admin123
+
+      # Logging Configuration
+      LOGGING_LEVEL_ROOT: WARN
+      LOGGING_LEVEL_COM_EXAMPLE_HOSPITAL: INFO
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: WARN
+
+      # JVM Options
+      JAVA_OPTS: "-Xms512m -Xmx1024m -XX:+UseG1GC -XX:+UseContainerSupport"
+    volumes:
+      - app_logs:/app/logs
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - hospital-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Nginx Reverse Proxy (Optional)
+  nginx:
+    image: nginx:alpine
+    container_name: hospital-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - hospital-app
+    networks:
+      - hospital-network
+    profiles:
+      - production
+
+volumes:
+  mysql_data:
+    driver: local
+  app_logs:
+    driver: local
+
+networks:
+  hospital-network:
+    driver: bridge

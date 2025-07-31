@@ -1,0 +1,82 @@
+version: "3.8"
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: hospital-mysql-dev
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: hospital
+      MYSQL_USER: hospital_user
+      MYSQL_PASSWORD: hospital_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data_dev:/var/lib/mysql
+      - ./src/main/resources/db/migration:/docker-entrypoint-initdb.d
+    networks:
+      - hospital-network-dev
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Spring Boot Application
+  hospital-app:
+    build: .
+    container_name: hospital-app-dev
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      # Database Configuration
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/hospital?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: hospital_user
+      SPRING_DATASOURCE_PASSWORD: hospital_pass
+
+      # Application Configuration
+      SPRING_APPLICATION_NAME: rsia-buah-hati-pamulang-dev
+      SERVER_PORT: 8080
+
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+
+      # Security Configuration
+      SPRING_SECURITY_USER_NAME: admin
+      SPRING_SECURITY_USER_PASSWORD: admin123
+
+      # Logging Configuration
+      LOGGING_LEVEL_ROOT: INFO
+      LOGGING_LEVEL_COM_EXAMPLE_HOSPITAL: DEBUG
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: INFO
+
+      # JVM Options untuk development
+      JAVA_OPTS: "-Xms512m -Xmx1024m -XX:+UseG1GC -XX:+UseContainerSupport -Dspring.profiles.active=dev"
+    volumes:
+      - app_logs_dev:/app/logs
+      - ./src:/app/src:ro # Mount source code untuk hot reload (optional)
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - hospital-network-dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  mysql_data_dev:
+    driver: local
+  app_logs_dev:
+    driver: local
+
+networks:
+  hospital-network-dev:
+    driver: bridge

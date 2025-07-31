@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.apache.catalina.connector.ClientAbortException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -16,9 +17,25 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleGeneralException(Exception ex, Model model) {
-        if (ex.getMessage() != null && ex.getMessage().contains("favicon.ico")) {
-            return null; // Skip logging for favicon.ico errors
+        // Skip logging for common client abort and favicon errors
+        if (ex.getMessage() != null && (ex.getMessage().contains("favicon.ico") ||
+                ex.getMessage().contains("Broken pipe") ||
+                ex.getMessage().contains("getOutputStream() has already been called"))) {
+            return null;
         }
+
+        // Skip logging for ClientAbortException
+        if (ex instanceof ClientAbortException) {
+            return null;
+        }
+
+        // Skip logging for IllegalStateException related to output stream
+        if (ex instanceof IllegalStateException &&
+                ex.getMessage() != null &&
+                ex.getMessage().contains("getOutputStream() has already been called")) {
+            return null;
+        }
+
         logger.error("Terjadi kesalahan umum: ", ex);
         model.addAttribute("errorCode", "500");
         model.addAttribute("errorTitle", "Terjadi Kesalahan");
@@ -26,6 +43,24 @@ public class GlobalExceptionHandler {
                 "Maaf, terjadi kesalahan di server. Silakan coba lagi beberapa saat.");
         model.addAttribute("errorDetails", "Tim kami sedang memperbaiki masalah ini.");
         return "error/error";
+    }
+
+    // Specific handler for ClientAbortException
+    @ExceptionHandler(ClientAbortException.class)
+    public String handleClientAbortException(ClientAbortException ex) {
+        // Don't log this - it's just a client disconnection
+        return null;
+    }
+
+    // Specific handler for IllegalStateException with output stream
+    @ExceptionHandler(IllegalStateException.class)
+    public String handleIllegalStateException(IllegalStateException ex) {
+        if (ex.getMessage() != null && ex.getMessage().contains("getOutputStream() has already been called")) {
+            // Don't log this - it's just a response handling issue
+            return null;
+        }
+        // For other IllegalStateException, let the general handler deal with it
+        throw ex;
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)

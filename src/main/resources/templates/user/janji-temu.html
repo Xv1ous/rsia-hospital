@@ -42,9 +42,9 @@
           </div>
           <h1
             class="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4"
-          >
-            Buat Janji Temu
-          </h1>
+        >
+          Buat Janji Temu
+        </h1>
           <p class="text-base sm:text-xl text-gray-600 max-w-2xl mx-auto px-4">
             Pilih dokter dan waktu yang sesuai untuk konsultasi kesehatan Anda
           </p>
@@ -78,8 +78,8 @@
             Permintaan Berhasil!
           </h3>
           <p class="text-sm sm:text-base text-green-700">
-            Permintaan janji temu berhasil dikirim! Kami akan segera menghubungi
-            Anda.
+          Permintaan janji temu berhasil dikirim! Kami akan segera menghubungi
+          Anda.
           </p>
         </div>
 
@@ -97,16 +97,16 @@
           </div>
 
           <div class="p-4 sm:p-8">
-            <form
-              method="post"
-              th:object="${appointment}"
+        <form
+          method="post"
+          th:object="${appointment}"
               class="space-y-4 sm:space-y-6"
-            >
-              <input
-                type="hidden"
-                th:name="${_csrf.parameterName}"
-                th:value="${_csrf.token}"
-              />
+        >
+          <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"
+          />
 
               <!-- Personal Information Section -->
               <div class="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6">
@@ -152,15 +152,15 @@
                           ></path>
                         </svg>
                       </div>
-                      <input
-                        type="text"
-                        name="patientName"
-                        th:field="*{patientName}"
+            <input
+              type="text"
+              name="patientName"
+              th:field="*{patientName}"
                         class="block w-full pl-10 pr-4 py-3 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#E6521F] focus:border-[#E6521F] transition duration-200 text-base"
                         placeholder="Masukkan nama lengkap"
-                        required
-                      />
-                    </div>
+              required
+            />
+          </div>
                   </div>
 
                   <div class="space-y-2">
@@ -185,15 +185,15 @@
                           ></path>
                         </svg>
                       </div>
-                      <input
+            <input
                         type="tel"
-                        name="patientPhone"
-                        th:field="*{patientPhone}"
+              name="patientPhone"
+              th:field="*{patientPhone}"
                         class="block w-full pl-10 pr-4 py-3 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#E6521F] focus:border-[#E6521F] transition duration-200 text-base"
                         placeholder="081234567890"
-                        required
-                      />
-                    </div>
+              required
+            />
+          </div>
                   </div>
                 </div>
               </div>
@@ -242,19 +242,19 @@
                           ></path>
                         </svg>
                       </div>
-                      <select
-                        name="doctorId"
-                        th:field="*{doctorId}"
+            <select
+              name="doctorId"
+              th:field="*{doctorId}"
                         class="block w-full pl-10 pr-10 py-3 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#E6521F] focus:border-[#E6521F] transition duration-200 appearance-none bg-white text-base"
-                        required
-                      >
-                        <option value="">Pilih Dokter</option>
-                        <option
-                          th:each="doc : ${doctors}"
-                          th:value="${doc.id}"
-                          th:text="${doc.name + ' (' + doc.specialization + ')'}"
-                        ></option>
-                      </select>
+              required
+            >
+              <option value="">Pilih Dokter</option>
+              <option
+                th:each="doc : ${doctors}"
+                th:value="${doc.id}"
+                th:text="${doc.name + ' (' + doc.specialization + ')'}"
+              ></option>
+            </select>
                       <div
                         class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
                       >
@@ -273,7 +273,7 @@
                         </svg>
                       </div>
                     </div>
-                  </div>
+          </div>
 
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div class="space-y-2">
@@ -298,14 +298,14 @@
                             ></path>
                           </svg>
                         </div>
-                        <input
-                          type="date"
-                          name="appointmentDate"
-                          th:field="*{appointmentDate}"
+            <input
+              type="date"
+              name="appointmentDate"
+              th:field="*{appointmentDate}"
                           class="block w-full pl-10 pr-4 py-3 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#E6521F] focus:border-[#E6521F] transition duration-200 text-base"
-                          required
-                        />
-                      </div>
+              required
+            />
+          </div>
                     </div>
 
                     <div class="space-y-2">
@@ -330,14 +330,14 @@
                             ></path>
                           </svg>
                         </div>
-                        <input
-                          type="time"
-                          name="appointmentTime"
-                          th:field="*{appointmentTime}"
+            <input
+              type="time"
+              name="appointmentTime"
+              th:field="*{appointmentTime}"
                           class="block w-full pl-10 pr-4 py-3 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#E6521F] focus:border-[#E6521F] transition duration-200 text-base"
-                          required
-                        />
-                      </div>
+              required
+            />
+          </div>
                     </div>
                   </div>
                 </div>
@@ -369,20 +369,20 @@
                     Catatan (Opsional)
                   </label>
                   <textarea
-                    name="notes"
-                    th:field="*{notes}"
+              name="notes"
+              th:field="*{notes}"
                     rows="4"
                     class="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#E6521F] focus:border-[#E6521F] transition duration-200 resize-none text-base"
                     placeholder="Keluhan, riwayat penyakit, atau informasi tambahan yang perlu diketahui dokter..."
                   ></textarea>
                 </div>
-              </div>
+          </div>
 
               <!-- Action Buttons -->
               <div class="flex flex-col gap-3 sm:gap-4 pt-4 sm:pt-6">
-                <button
-                  type="button"
-                  onclick="kirimKeWhatsApp()"
+          <button
+            type="button"
+            onclick="kirimKeWhatsApp()"
                   class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 text-base"
                 >
                   <svg
@@ -390,15 +390,15 @@
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
-                    <path
-                      d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"
-                    />
-                  </svg>
-                  Kirim ke WhatsApp
-                </button>
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"
+              />
+            </svg>
+            Kirim ke WhatsApp
+          </button>
 
-                <a
-                  href="/"
+        <a
+          href="/"
                   class="w-full bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 text-base"
                 >
                   <svg

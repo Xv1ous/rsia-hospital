@@ -1,0 +1,60 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Build artifacts (but keep the final JAR)
+target/
+!target/*.jar
+build/
+out/
+
+# Node modules (if any)
+node_modules/
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Documentation
+*.md
+docs/
+
+# Test files
+src/test/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# SSL certificates
+ssl/
+*.pem
+*.key
+*.crt
+
+# Backup files
+*.bak
+*.backup

@@ -21,8 +21,8 @@
       href="/asset hospital/RSIA_BHP_LOGO5.png"
     />
 
-    <!-- Optimized Tailwind CSS (Built for Production) -->
-    <link rel="stylesheet" href="/main.css" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Alpine.js -->
     <script
@@ -30,25 +30,29 @@
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
 
-    <!-- Main JavaScript (includes navbar, modal, services, gallery) -->
-    <script defer src="/js/main.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/main.css" />
 
-    <!-- Conditional JavaScript Loading -->
-    <script
-      th:if="${#httpServletRequest.requestURI.contains('schedule') or #httpServletRequest.requestURI.contains('doctor-profile')}"
-      defer
-      src="/js/schedule.js"
-    ></script>
-    <script
-      th:if="${#httpServletRequest.requestURI.contains('admin')}"
-      defer
-      src="/js/admin.js"
-    ></script>
-    <script
-      th:if="${#httpServletRequest.requestURI.contains('janji-temu')}"
-      defer
-      src="/js/janji-temu.js"
-    ></script>
+    <!-- Main JavaScript (includes navbar, modal, services, gallery) -->
+    <script src="/js/main.js"></script>
+
+    <!-- Schedule JavaScript (loads on all pages but only runs if schedule elements exist) -->
+    <script src="/js/schedule.js"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#E6521F",
+              secondary: "#FB9E3A",
+              accent: "#17695B",
+            },
+          },
+        },
+      };
+    </script>
 
     <!-- Custom Styles -->
     <style>

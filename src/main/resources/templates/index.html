@@ -39,5 +39,84 @@
 
     <!-- Modal Fragment -->
     <div th:replace="~{fragments/modal :: janji-modal}"></div>
+
+    <!-- Test Button for Modal -->
+    <button
+      onclick="document.getElementById('janji-modal-bg').classList.remove('hidden')"
+      class="fixed top-4 right-4 z-[10001] bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg"
+      style="display: none"
+    >
+      Test Modal
+    </button>
+
+    <script>
+      // Show test button after 3 seconds
+      setTimeout(function () {
+        const testBtn = document.querySelector(
+          'button[onclick*="janji-modal-bg"]'
+        );
+        if (testBtn) {
+          testBtn.style.display = "block";
+          console.log("[DEBUG] Test button enabled");
+        }
+      }, 3000);
+
+      // Simple JavaScript test
+      console.log("[DEBUG] Index.html script loaded");
+
+      // Test if main.js is loaded
+      setTimeout(function () {
+        console.log("[DEBUG] Checking if main.js is loaded...");
+        if (typeof window.toggleMobileMenu === "function") {
+          console.log(
+            "[DEBUG] main.js is loaded - toggleMobileMenu function exists"
+          );
+        } else {
+          console.log(
+            "[ERROR] main.js is NOT loaded - toggleMobileMenu function missing"
+          );
+        }
+      }, 1000);
+
+      // Direct modal test
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("[DEBUG] DOMContentLoaded fired in index.html");
+
+        // Add direct event listeners for modal buttons
+        const openBtn = document.getElementById("open-janji-modal");
+        const openBtnMobile = document.getElementById(
+          "open-janji-modal-mobile"
+        );
+        const modalBg = document.getElementById("janji-modal-bg");
+
+        console.log("[DEBUG] Direct element check:", {
+          openBtn: !!openBtn,
+          openBtnMobile: !!openBtnMobile,
+          modalBg: !!modalBg,
+        });
+
+        if (openBtn) {
+          openBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.log("[DEBUG] Direct click on desktop button");
+            if (modalBg) {
+              modalBg.classList.remove("hidden");
+              console.log("[DEBUG] Modal shown via direct listener");
+            }
+          });
+        }
+
+        if (openBtnMobile) {
+          openBtnMobile.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.log("[DEBUG] Direct click on mobile button");
+            if (modalBg) {
+              modalBg.classList.remove("hidden");
+              console.log("[DEBUG] Modal shown via direct listener");
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>

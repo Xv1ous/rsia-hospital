@@ -11,11 +11,12 @@ echo "[1] Start Application"
 echo "[2] Stop Application"
 echo "[3] View Application Status"
 echo "[4] View Application Logs"
-echo "[5] Open Documentation"
-echo "[6] Open Simple Guide"
-echo "[7] Exit"
+echo "[5] MySQL Database Access"
+echo "[6] Open Documentation"
+echo "[7] Open Simple Guide"
+echo "[8] Exit"
 echo ""
-read -p "Enter your choice (1-7): " choice
+read -p "Enter your choice (1-8): " choice
 
 case $choice in
     1)
@@ -42,6 +43,11 @@ case $choice in
         ;;
     5)
         echo ""
+        echo "Opening MySQL Database Access..."
+        ./scripts/simple/mysql-access.sh
+        ;;
+    6)
+        echo ""
         echo "Opening documentation..."
         if command -v xdg-open > /dev/null; then
             xdg-open docs/
@@ -51,7 +57,7 @@ case $choice in
             echo "Please manually open the docs/ folder"
         fi
         ;;
-    6)
+    7)
         echo ""
         echo "Opening simple guide..."
         if command -v xdg-open > /dev/null; then
@@ -62,7 +68,7 @@ case $choice in
             echo "Please manually open docs/README_SIMPLE.md"
         fi
         ;;
-    7)
+    8)
         echo ""
         echo "Goodbye!"
         exit 0

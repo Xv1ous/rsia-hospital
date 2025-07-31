@@ -31,13 +31,13 @@ case $choice in
         echo ""
         echo "Type 'exit' to quit MySQL"
         echo ""
-        docker exec -it hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital
+        docker exec -it -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital
         ;;
     2)
         echo ""
         echo "Showing database tables..."
         echo ""
-        docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SHOW TABLES;"
+        docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SHOW TABLES;"
         echo ""
         read -p "Press Enter to continue..."
         ;;
@@ -46,13 +46,13 @@ case $choice in
         echo "Showing sample data from main tables..."
         echo ""
         echo "=== DOCTORS ==="
-        docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, name, specialization FROM doctor LIMIT 5;"
+        docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, name, specialization FROM doctor LIMIT 5;"
         echo ""
         echo "=== APPOINTMENTS ==="
-        docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, patient_name, doctor_name, appointment_date FROM appointment LIMIT 5;"
+        docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, patient_name, doctor_id, appointment_date FROM appointments LIMIT 5;"
         echo ""
         echo "=== NEWS ==="
-        docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, title, date FROM news LIMIT 5;"
+        docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, title, created_at FROM news LIMIT 5;"
         echo ""
         read -p "Press Enter to continue..."
         ;;
@@ -60,7 +60,7 @@ case $choice in
         echo ""
         echo "Creating database backup..."
         BACKUP_FILE="hospital_backup_$(date +%Y%m%d_%H%M%S).sql"
-        docker exec hospital-mysql-dev mysqldump -u hospital_user -phospital_pass hospital > "$BACKUP_FILE"
+        docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysqldump -u hospital_user hospital > "$BACKUP_FILE"
         echo "Backup saved as: $BACKUP_FILE"
         echo ""
         read -p "Press Enter to continue..."
@@ -73,7 +73,7 @@ case $choice in
         read -p "Enter backup filename (or press Enter to cancel): " backup_file
         if [ -n "$backup_file" ] && [ -f "$backup_file" ]; then
             echo "Restoring database from $backup_file..."
-            docker exec -i hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital < "$backup_file"
+            docker exec -i -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital < "$backup_file"
             echo "Database restored successfully!"
         else
             echo "Invalid filename or file not found."

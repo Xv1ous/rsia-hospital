@@ -14,7 +14,7 @@ echo "Backup file: $BACKUP_FILE"
 echo ""
 
 # Create backup
-docker exec hospital-mysql-dev mysqldump -u hospital_user -phospital_pass hospital > "$BACKUP_FILE"
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysqldump -u hospital_user hospital > "$BACKUP_FILE"
 
 if [ $? -eq 0 ]; then
     echo "✅ Backup created successfully!"

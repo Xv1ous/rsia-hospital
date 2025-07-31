@@ -44,27 +44,27 @@ echo [5/5] Verifying database initialization...
 echo.
 
 echo 📊 Database Tables:
-docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SHOW TABLES;"
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SHOW TABLES;"
 echo.
 
 echo 👨‍⚕️ Doctors:
-docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, name, specialization FROM doctor LIMIT 5;"
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, name, specialization FROM doctor LIMIT 5;"
 echo.
 
 echo 📅 Doctor Schedules:
-docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, name, day, time, specialization FROM doctor_schedule LIMIT 5;"
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, name, day, time, specialization FROM doctor_schedule LIMIT 5;"
 echo.
 
 echo 📰 News:
-docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, title, published_at FROM news LIMIT 5;"
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, title, created_at FROM news LIMIT 5;"
 echo.
 
 echo 🔧 Services:
-docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, name, description FROM services LIMIT 5;"
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, name, description FROM services LIMIT 5;"
 echo.
 
 echo 👤 Users:
-docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, username, role FROM users;"
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, username, role FROM users;"
 echo.
 
 echo ========================================

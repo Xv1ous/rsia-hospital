@@ -12,7 +12,7 @@ PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
 
 echo "Current users in database:"
 echo ""
-docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, username, role FROM users;"
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, username, role FROM users;"
 echo ""
 
 read -p "Enter username to change password: " username
@@ -23,7 +23,7 @@ if [ -z "$username" ]; then
 fi
 
 # Check if user exists
-USER_EXISTS=$(docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT COUNT(*) FROM users WHERE username='$username';" -s -N)
+USER_EXISTS=$(docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT COUNT(*) FROM users WHERE username='$username';" -s -N)
 
 if [ "$USER_EXISTS" -eq 0 ]; then
     echo "❌ User '$username' not found in database!"
@@ -46,7 +46,7 @@ case $choice in
         read -p "Press Enter to update password..."
 
         # Update password with provided encrypted value
-        docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "UPDATE users SET password='$2a$12$lLKRwSUbB7NQOOr6pL.ysO7c1sss.9qpZYIi2Tpigo.Z6GsjNYuL.' WHERE username='$username';"
+        docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "UPDATE users SET password='$2a$12$lLKRwSUbB7NQOOr6pL.ysO7c1sss.9qpZYIi2Tpigo.Z6GsjNYuL.' WHERE username='$username';"
 
         if [ $? -eq 0 ]; then
             echo "✅ Password updated successfully for user '$username'!"
@@ -82,7 +82,7 @@ case $choice in
         # In production, Spring Security will handle the encryption
         HASHED_PASSWORD=$(echo -n "$new_password" | openssl dgst -sha256 | cut -d' ' -f2)
 
-        docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "UPDATE users SET password='$HASHED_PASSWORD' WHERE username='$username';"
+        docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "UPDATE users SET password='$HASHED_PASSWORD' WHERE username='$username';"
 
         if [ $? -eq 0 ]; then
             echo "✅ Password updated successfully for user '$username'!"
@@ -100,7 +100,7 @@ esac
 
 echo ""
 echo "Updated user information:"
-docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, username, role FROM users WHERE username='$username';"
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, username, role FROM users WHERE username='$username';"
 echo ""
 
 read -p "Press Enter to continue..."

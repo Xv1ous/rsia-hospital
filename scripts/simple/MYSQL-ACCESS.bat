@@ -28,12 +28,12 @@ if "%choice%"=="1" (
     echo.
     echo Type 'exit' to quit MySQL
     echo.
-    docker exec -it hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital
+    docker exec -it -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital
 ) else if "%choice%"=="2" (
     echo.
     echo Showing database tables...
     echo.
-    docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SHOW TABLES;"
+    docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SHOW TABLES;"
     echo.
     pause
 ) else if "%choice%"=="3" (
@@ -41,13 +41,13 @@ if "%choice%"=="1" (
     echo Showing sample data from main tables...
     echo.
     echo === DOCTORS ===
-    docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, name, specialization FROM doctor LIMIT 5;"
+    docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, name, specialization FROM doctor LIMIT 5;"
     echo.
     echo === APPOINTMENTS ===
-    docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, patient_name, doctor_name, appointment_date FROM appointment LIMIT 5;"
+    docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, patient_name, doctor_id, appointment_date FROM appointments LIMIT 5;"
     echo.
     echo === NEWS ===
-    docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, title, date FROM news LIMIT 5;"
+    docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, title, created_at FROM news LIMIT 5;"
     echo.
     pause
 ) else if "%choice%"=="4" (
@@ -58,7 +58,7 @@ if "%choice%"=="1" (
     set "HH=%dt:~8,2%" & set "Min=%dt:~10,2%" & set "Sec=%dt:~12,2%"
     set "datestamp=%YYYY%%MM%%DD%_%HH%%Min%%Sec%"
     set "BACKUP_FILE=hospital_backup_%datestamp%.sql"
-    docker exec hospital-mysql-dev mysqldump -u hospital_user -phospital_pass hospital > "%BACKUP_FILE%"
+    docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysqldump -u hospital_user hospital > "%BACKUP_FILE%"
     echo Backup saved as: %BACKUP_FILE%
     echo.
     pause
@@ -71,7 +71,7 @@ if "%choice%"=="1" (
     if not "%backup_file%"=="" (
         if exist "%backup_file%" (
             echo Restoring database from %backup_file%...
-            docker exec -i hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital < "%backup_file%"
+            docker exec -i -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital < "%backup_file%"
             echo Database restored successfully!
         ) else (
             echo Invalid filename or file not found.

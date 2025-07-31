@@ -13,4 +13,4 @@ echo ""
 echo "Type 'exit' to quit MySQL"
 echo ""
 
-docker exec -it hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital
+docker exec -it -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital

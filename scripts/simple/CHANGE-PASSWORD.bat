@@ -10,7 +10,7 @@ echo.
 
 echo Current users in database:
 echo.
-docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, username, role FROM users;"
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, username, role FROM users;"
 echo.
 
 set /p username="Enter username to change password: "
@@ -22,7 +22,7 @@ if "%username%"=="" (
 )
 
 REM Check if user exists
-for /f %%i in ('docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT COUNT(*) FROM users WHERE username='%username%';" -s -N') do set USER_EXISTS=%%i
+for /f %%i in ('docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT COUNT(*) FROM users WHERE username='%username%';" -s -N') do set USER_EXISTS=%%i
 
 if %USER_EXISTS% equ 0 (
     echo ❌ User '%username%' not found in database!
@@ -45,7 +45,7 @@ if "%choice%"=="1" (
     pause
 
     REM Update password with provided encrypted value
-    docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "UPDATE users SET password='$2a$12$lLKRwSUbB7NQOOr6pL.ysO7c1sss.9qpZYIi2Tpigo.Z6GsjNYuL.' WHERE username='%username%';"
+            docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "UPDATE users SET password='$2a$12$lLKRwSUbB7NQOOr6pL.ysO7c1sss.9qpZYIi2Tpigo.Z6GsjNYuL.' WHERE username='%username%';"
 
     if %errorlevel% equ 0 (
         echo ✅ Password updated successfully for user '%username%'!
@@ -83,7 +83,7 @@ if "%choice%"=="1" (
     for /f %%h in ('certutil -hashfile temp_password.txt SHA256 ^| findstr /v "CertUtil" ^| findstr /v "SHA256"') do set HASHED_PASSWORD=%%h
     del temp_password.txt
 
-    docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "UPDATE users SET password='%HASHED_PASSWORD%' WHERE username='%username%';"
+            docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "UPDATE users SET password='%HASHED_PASSWORD%' WHERE username='%username%';"
 
     if %errorlevel% equ 0 (
         echo ✅ Password updated successfully for user '%username%'!
@@ -101,7 +101,7 @@ if "%choice%"=="1" (
 
 echo.
 echo Updated user information:
-docker exec hospital-mysql-dev mysql -u hospital_user -phospital_pass hospital -e "SELECT id, username, role FROM users WHERE username='%username%';"
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, username, role FROM users WHERE username='%username%';"
 echo.
 
 pause

@@ -58,6 +58,24 @@ Setelah aplikasi berhasil dijalankan:
   - Username: `admin`
   - Password: `admin123`
 
+### **🗄️ Initialize Database (Optional)**
+
+Untuk mengisi database dengan data sample (dokter, jadwal, berita, dll):
+
+#### **Windows:**
+
+```bash
+scripts/simple/INITIALIZE-DB.bat
+```
+
+#### **Linux/Mac:**
+
+```bash
+./scripts/simple/initialize-db.sh
+```
+
+**Note:** Proses ini akan menghapus semua data yang ada dan mengisi dengan data sample dari RSIA Buah Hati Pamulang.
+
 ### **✅ Verifikasi Berhasil**
 
 - Browser akan terbuka otomatis ke http://localhost:8080

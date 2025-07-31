@@ -12,11 +12,12 @@ echo "[2] Stop Application"
 echo "[3] View Application Status"
 echo "[4] View Application Logs"
 echo "[5] MySQL Database Access"
-echo "[6] Open Documentation"
-echo "[7] Open Simple Guide"
-echo "[8] Exit"
+echo "[6] Initialize Database (Reset & Load Sample Data)"
+echo "[7] Open Documentation"
+echo "[8] Open Simple Guide"
+echo "[9] Exit"
 echo ""
-read -p "Enter your choice (1-8): " choice
+read -p "Enter your choice (1-9): " choice
 
 case $choice in
     1)
@@ -48,6 +49,11 @@ case $choice in
         ;;
     6)
         echo ""
+        echo "Initializing database..."
+        ./scripts/simple/initialize-db.sh
+        ;;
+    7)
+        echo ""
         echo "Opening documentation..."
         if command -v xdg-open > /dev/null; then
             xdg-open docs/
@@ -69,6 +75,17 @@ case $choice in
         fi
         ;;
     8)
+        echo ""
+        echo "Opening simple guide..."
+        if command -v xdg-open > /dev/null; then
+            xdg-open docs/README_SIMPLE.md
+        elif command -v open > /dev/null; then
+            open docs/README_SIMPLE.md
+        else
+            echo "Please manually open docs/README_SIMPLE.md"
+        fi
+        ;;
+    9)
         echo ""
         echo "Goodbye!"
         exit 0

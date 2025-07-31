@@ -14,11 +14,12 @@ echo [2] Stop Application
 echo [3] View Application Status
 echo [4] View Application Logs
 echo [5] MySQL Database Access
-echo [6] Open Documentation
-echo [7] Open Simple Guide
-echo [8] Exit
+echo [6] Initialize Database (Reset & Load Sample Data)
+echo [7] Open Documentation
+echo [8] Open Simple Guide
+echo [9] Exit
 echo.
-set /p choice="Enter your choice (1-8): "
+set /p choice="Enter your choice (1-9): "
 
 if "%choice%"=="1" (
     echo.
@@ -44,6 +45,10 @@ if "%choice%"=="1" (
     call scripts\simple\MYSQL-ACCESS.bat
 ) else if "%choice%"=="6" (
     echo.
+    echo Initializing database...
+    call scripts\simple\INITIALIZE-DB.bat
+) else if "%choice%"=="7" (
+    echo.
     echo Opening documentation...
     start docs\
 ) else if "%choice%"=="7" (
@@ -51,6 +56,10 @@ if "%choice%"=="1" (
     echo Opening simple guide...
     start docs\README_SIMPLE.md
 ) else if "%choice%"=="8" (
+    echo.
+    echo Opening simple guide...
+    start docs\README_SIMPLE.md
+) else if "%choice%"=="9" (
     echo.
     echo Goodbye!
     exit /b 0

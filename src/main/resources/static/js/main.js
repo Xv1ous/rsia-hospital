@@ -1,6 +1,36 @@
 // Main JavaScript - Common functionality
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("[DEBUG] Main.js loaded");
+  console.log("[MAIN] DOM Content Loaded - Main script initializing...");
+
+  // Check if modal elements exist
+  const modalBg = document.getElementById("janji-modal-bg");
+  const openBtn = document.getElementById("open-janji-modal");
+  const openBtnMobile = document.getElementById("open-janji-modal-mobile");
+
+  console.log("[MAIN] Modal elements check:", {
+    modalBg: !!modalBg,
+    openBtn: !!openBtn,
+    openBtnMobile: !!openBtnMobile,
+  });
+
+  // Additional debug for janji modal
+  if (modalBg) {
+    console.log("[MAIN] Modal background element:", modalBg);
+    console.log(
+      "[MAIN] Modal hidden class:",
+      modalBg.classList.contains("hidden")
+    );
+  }
+
+  if (openBtn) {
+    console.log("[MAIN] Desktop button element:", openBtn);
+    console.log("[MAIN] Desktop button text:", openBtn.textContent);
+  }
+
+  if (openBtnMobile) {
+    console.log("[MAIN] Mobile button element:", openBtnMobile);
+    console.log("[MAIN] Mobile button text:", openBtnMobile.textContent);
+  }
 
   // --- NAVBAR FUNCTIONALITY ---
   function toggleMobileMenu() {
@@ -12,71 +42,87 @@ document.addEventListener("DOMContentLoaded", function () {
   window.toggleMobileMenu = toggleMobileMenu;
 
   // --- MODAL FUNCTIONALITY ---
-  // Check if modal elements exist
-  const modalBg = document.getElementById("janji-modal-bg");
-  const openBtn = document.getElementById("open-janji-modal");
-  const openBtnMobile = document.getElementById("open-janji-modal-mobile");
-
-  console.log("[DEBUG] Modal elements check:", {
-    modalBg: !!modalBg,
-    openBtn: !!openBtn,
-    openBtnMobile: !!openBtnMobile,
-  });
 
   // Event delegation untuk modal pilihan pasien
   document.addEventListener("click", function (e) {
-    console.log("[DEBUG] Click event on:", e.target.id || e.target.className);
+    console.log("[MAIN] Global click event detected");
+    console.log("[MAIN] Click target:", e.target);
+    console.log("[MAIN] Target ID:", e.target.id);
+    console.log("[MAIN] Target class:", e.target.className);
 
-    // Desktop button
-    if (e.target && e.target.id === "open-janji-modal") {
-      console.log("[DEBUG] Desktop button clicked");
+    // Skip if event was already handled by other scripts
+    if (e.defaultPrevented) {
+      console.log("[MAIN] Event already handled, skipping...");
+      return;
+    }
+
+    // Skip if event is from schedule cards (handled by clean.js)
+    if (
+      e.target.closest("#doctor-schedule-cards-mobile") ||
+      e.target.closest(".popover-btn-mobile")
+    ) {
+      console.log("[MAIN] Event from schedule cards, skipping...");
+      return;
+    }
+
+    // Desktop button - check button itself or any child element
+    if (
+      e.target &&
+      (e.target.id === "open-janji-modal" ||
+        e.target.closest("#open-janji-modal"))
+    ) {
+      console.log("[MAIN] Opening janji modal (desktop)...");
       var modalBg = document.getElementById("janji-modal-bg");
+      console.log("[MAIN] Modal element found:", !!modalBg);
       if (modalBg) {
         modalBg.classList.remove("hidden");
-        console.log("[DEBUG] Modal should be visible now");
-      } else {
-        console.log("[ERROR] Modal background not found");
+        document.body.classList.add("modal-open");
+        console.log("[MAIN] Modal opened successfully");
       }
     }
 
-    // Mobile button
-    if (e.target && e.target.id === "open-janji-modal-mobile") {
-      console.log("[DEBUG] Mobile button clicked");
+    // Mobile button - check button itself or any child element
+    if (
+      e.target &&
+      (e.target.id === "open-janji-modal-mobile" ||
+        e.target.closest("#open-janji-modal-mobile"))
+    ) {
+      console.log("[MAIN] Opening janji modal (mobile)...");
       var modalBg = document.getElementById("janji-modal-bg");
+      console.log("[MAIN] Modal element found:", !!modalBg);
       if (modalBg) {
         modalBg.classList.remove("hidden");
-        console.log("[DEBUG] Modal should be visible now");
+        document.body.classList.add("modal-open");
+        console.log("[MAIN] Modal opened successfully");
         // Sembunyikan menu mobile jika terbuka
         var menu = document.getElementById("navbar-default");
         if (menu) menu.classList.add("hidden");
-      } else {
-        console.log("[ERROR] Modal background not found");
       }
     }
 
-    // Close modal button
-    if (e.target && e.target.id === "close-janji-modal") {
-      console.log("[DEBUG] Close button clicked");
+    // Close modal button - check button itself or any child element
+    if (
+      e.target &&
+      (e.target.id === "close-janji-modal" ||
+        e.target.closest("#close-janji-modal"))
+    ) {
+      console.log("[MAIN] Closing janji modal...");
       var modalBg = document.getElementById("janji-modal-bg");
+      console.log("[MAIN] Modal element found:", !!modalBg);
       if (modalBg) {
         modalBg.classList.add("hidden");
-        console.log("[DEBUG] Modal should be hidden now");
-      } else {
-        console.log("[ERROR] Modal background not found");
+        document.body.classList.remove("modal-open");
+        console.log("[MAIN] Modal closed successfully");
       }
-    }
-
-    // Pasien lama button
-    if (e.target && e.target.id === "pasien-lama-btn") {
-      console.log("[DEBUG] Pasien lama button clicked");
-      alert("Fitur untuk pasien lama belum tersedia.");
     }
 
     // Close modal when clicking outside
     var modalBg = document.getElementById("janji-modal-bg");
     if (modalBg && e.target === modalBg) {
-      console.log("[DEBUG] Modal background clicked");
+      console.log("[MAIN] Closing janji modal (outside click)...");
       modalBg.classList.add("hidden");
+      document.body.classList.remove("modal-open");
+      console.log("[MAIN] Modal closed successfully (outside click)");
     }
   });
 
@@ -85,82 +131,69 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.key === "Escape") {
       var modalBg = document.getElementById("janji-modal-bg");
       if (modalBg && !modalBg.classList.contains("hidden")) {
-        console.log("[DEBUG] Escape key pressed");
         modalBg.classList.add("hidden");
+        document.body.classList.remove("modal-open");
       }
     }
   });
 
-  // Test modal functionality after page load
-  setTimeout(function () {
-    console.log("[DEBUG] Testing modal elements after 2 seconds:");
-    const modalBg = document.getElementById("janji-modal-bg");
-    const openBtn = document.getElementById("open-janji-modal");
-    const openBtnMobile = document.getElementById("open-janji-modal-mobile");
-
-    console.log("[DEBUG] Modal elements after delay:", {
-      modalBg: !!modalBg,
-      openBtn: !!openBtn,
-      openBtnMobile: !!openBtnMobile,
+  // --- LOADING INDICATOR ---
+  const loadingIndicator = document.getElementById("loading-indicator");
+  if (loadingIndicator) {
+    // Hide loading indicator after page load
+    window.addEventListener("load", function () {
+      loadingIndicator.style.display = "none";
     });
 
-    if (modalBg) {
-      console.log("[DEBUG] Modal background found, testing show/hide");
-      // Test show modal
-      modalBg.classList.remove("hidden");
-      console.log("[DEBUG] Modal shown for testing");
+    // Hide after 3 seconds as fallback
+    setTimeout(function () {
+      if (loadingIndicator) {
+        loadingIndicator.style.display = "none";
+      }
+    }, 3000);
+  }
 
-      // Hide after 1 second
-      setTimeout(function () {
-        modalBg.classList.add("hidden");
-        console.log("[DEBUG] Modal hidden after test");
-      }, 1000);
-    }
-  }, 2000);
+  // --- BACK TO TOP BUTTON ---
+  const backToTopBtn = document.getElementById("back-to-top");
+  if (backToTopBtn) {
+    // Show/hide button based on scroll position
+    window.addEventListener("scroll", function () {
+      if (window.pageYOffset > 300) {
+        backToTopBtn.classList.remove("hidden");
+      } else {
+        backToTopBtn.classList.add("hidden");
+      }
+    });
 
-  // --- SERVICES SEARCH FUNCTIONALITY ---
-  const searchInput = document.getElementById("service-search");
-  if (searchInput) {
-    const cards = document.querySelectorAll("#services-grid > div");
-    searchInput.addEventListener("input", function () {
-      const query = this.value.toLowerCase();
-      cards.forEach((card) => {
-        const text = card.textContent.toLowerCase();
-        card.style.display = text.includes(query) ? "" : "none";
+    // Smooth scroll to top
+    backToTopBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
       });
     });
   }
 
-  // --- GALLERY LIGHTBOX FUNCTIONALITY ---
-  const images = document.querySelectorAll(".gallery-img");
-  if (images.length > 0) {
-    console.log("Found gallery images:", images.length);
-    const modal = document.getElementById("lightbox-modal");
-    const modalImg = document.getElementById("lightbox-img");
-    const closeBtn = document.getElementById("lightbox-close");
+  // --- LAZY LOADING ---
+  const observerOptions = {
+    root: null,
+    rootMargin: "50px",
+    threshold: 0.1,
+  };
 
-    images.forEach((img) => {
-      img.addEventListener("click", function () {
-        console.log("Image clicked:", img.src);
-        modalImg.src = img.getAttribute("data-img") || img.src;
-        modal.classList.remove("hidden");
-      });
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("animate-fade-in");
+        observer.unobserve(entry.target);
+      }
     });
+  }, observerOptions);
 
-    if (closeBtn) {
-      closeBtn.addEventListener("click", function () {
-        modal.classList.add("hidden");
-        modalImg.src = "";
-      });
-    }
-
-    if (modal) {
-      modal.addEventListener("click", function (e) {
-        if (e.target === modal) {
-          modal.classList.add("hidden");
-          modalImg.src = "";
-        }
-      });
-    }
-  }
+  // Observe elements for lazy loading
+  const lazyElements = document.querySelectorAll(".lazy-load");
+  lazyElements.forEach(function (element) {
+    observer.observe(element);
+  });
 });

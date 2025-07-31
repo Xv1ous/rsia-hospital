@@ -1,18 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
   <head th:fragment="head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RSIA Buah Hati Pamulang</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Primary Meta Tags -->
+    <title>
+      RSIA Buah Hati Pamulang - Pelayanan Kesehatan Terbaik untuk Keluarga
+    </title>
+    <meta
+      name="title"
+      content="RSIA Buah Hati Pamulang - Pelayanan Kesehatan Terbaik untuk Keluarga"
+    />
     <meta
       name="description"
-      content="Rumah Sakit Ibu dan Anak Buah Hati Pamulang - Pelayanan kesehatan terbaik untuk keluarga Anda"
+      content="Rumah Sakit Ibu dan Anak Buah Hati Pamulang menyediakan pelayanan kesehatan terbaik untuk ibu, anak, dan keluarga. Dokter spesialis berpengalaman, fasilitas modern, dan pelayanan 24 jam."
     />
     <meta
       name="keywords"
-      content="rumah sakit, ibu dan anak, pamulang, kesehatan"
+      content="rumah sakit ibu dan anak, RSIA, pamulang, dokter spesialis, kesehatan ibu, kesehatan anak, poliklinik, rawat inap, rawat jalan"
     />
     <meta name="author" content="RSIA Buah Hati Pamulang" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Indonesian" />
+    <meta name="revisit-after" content="7 days" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rsia-buahhati.com/" />
+    <meta
+      property="og:title"
+      content="RSIA Buah Hati Pamulang - Pelayanan Kesehatan Terbaik untuk Keluarga"
+    />
+    <meta
+      property="og:description"
+      content="Rumah Sakit Ibu dan Anak Buah Hati Pamulang menyediakan pelayanan kesehatan terbaik untuk ibu, anak, dan keluarga."
+    />
+    <meta property="og:image" content="/asset hospital/RSIA_BHP_LOGO5.png" />
+    <meta property="og:site_name" content="RSIA Buah Hati Pamulang" />
+    <meta property="og:locale" content="id_ID" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://rsia-buahhati.com/" />
+    <meta
+      property="twitter:title"
+      content="RSIA Buah Hati Pamulang - Pelayanan Kesehatan Terbaik untuk Keluarga"
+    />
+    <meta
+      property="twitter:description"
+      content="Rumah Sakit Ibu dan Anak Buah Hati Pamulang menyediakan pelayanan kesehatan terbaik untuk ibu, anak, dan keluarga."
+    />
+    <meta
+      property="twitter:image"
+      content="/asset hospital/RSIA_BHP_LOGO5.png"
+    />
+
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#E6521F" />
+    <meta name="msapplication-TileColor" content="#E6521F" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="RSIA Buah Hati" />
+
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
 
     <!-- Favicon -->
     <link
@@ -20,6 +76,8 @@
       type="image/x-icon"
       href="/asset hospital/RSIA_BHP_LOGO5.png"
     />
+    <link rel="apple-touch-icon" href="/asset hospital/RSIA_BHP_LOGO5.png" />
+    <link rel="shortcut icon" href="/asset hospital/RSIA_BHP_LOGO5.png" />
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -36,8 +94,8 @@
     <!-- Main JavaScript (includes navbar, modal, services, gallery) -->
     <script src="/js/main.js"></script>
 
-    <!-- Schedule JavaScript (loads on all pages but only runs if schedule elements exist) -->
-    <script src="/js/schedule.js"></script>
+    <!-- Schedule JavaScript (modular system - loads on all pages but only runs if schedule elements exist) -->
+    <!-- Schedule modules will be loaded by individual pages -->
 
     <!-- Custom Tailwind Config -->
     <script>
@@ -49,48 +107,71 @@
               secondary: "#FB9E3A",
               accent: "#17695B",
             },
+            animation: {
+              "fade-in": "fadeIn 0.3s ease-out",
+              float: "float 3s ease-in-out infinite",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0" },
+                "100%": { opacity: "1" },
+              },
+              float: {
+                "0%, 100%": { transform: "translateY(0px)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+            },
           },
         },
       };
     </script>
 
-    <!-- Custom Styles -->
+    <!-- Critical CSS for above-the-fold content -->
     <style>
-      .fade-in {
-        animation: fadeIn 0.5s ease-in;
+      /* Critical styles for immediate rendering */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
+      .focus\:not-sr-only:focus {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: 0.5rem 1rem;
+        margin: 0;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+        border: 2px solid currentColor;
+      }
+
+      /* Loading skeleton animation */
+      @keyframes shimmer {
+        0% {
+          background-position: -200px 0;
         }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .maskot-anim {
-        animation: float 3s ease-in-out infinite;
-      }
-
-      @keyframes float {
-        0%,
         100% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-10px);
+          background-position: calc(200px + 100%) 0;
         }
       }
 
-      .hover-scale {
-        transition: transform 0.2s ease-in-out;
-      }
-
-      .hover-scale:hover {
-        transform: scale(1.05);
+      .skeleton {
+        background: linear-gradient(
+          90deg,
+          #f0f0f0 25%,
+          #e0e0e0 50%,
+          #f0f0f0 75%
+        );
+        background-size: 200px 100%;
+        animation: shimmer 1.5s infinite;
       }
     </style>
   </head>

@@ -1,0 +1,202 @@
+<!-- Mobile Card View Fragment -->
+<div
+  th:fragment="schedule-mobile"
+  class="lg:hidden space-y-6"
+  id="doctor-schedule-cards-mobile"
+>
+  <div
+    th:each="doctor : ${doctors}"
+    th:if="${doctor != null and doctor.name != null and doctor.name != ''}"
+    th:attr="data-slug=${#strings.replace(#strings.toLowerCase(doctor.specialization).trim(), ' ', '-')}, data-spec=${doctor.specialization}, data-name=${doctor.name}, data-id=${doctor.id}"
+    class="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+  >
+    <!-- Doctor Header -->
+    <div class="p-6 border-b border-gray-100">
+      <div class="flex items-center gap-4">
+        <div
+          class="w-16 h-16 bg-gradient-to-r from-[#E6521F] to-[#FF8000] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+            ></path>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h3
+            class="font-bold text-xl text-gray-900 mb-1 transition-colors duration-300"
+            th:text="${doctor.name}"
+          ></h3>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span
+              class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800 transition-colors duration-300"
+              th:text="${doctor.specialization}"
+            ></span>
+            <!-- Doctor Leave Status Mobile -->
+            <div
+              th:if="${doctor.isOnLeave != null and doctor.isOnLeave}"
+              class="flex items-center gap-1"
+            >
+              <span
+                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 transition-colors duration-300"
+              >
+                <svg
+                  class="w-3 h-3 mr-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                Sedang Cuti
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schedule Preview -->
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h4
+          class="font-semibold text-gray-800 flex items-center gap-2 transition-colors duration-300"
+        >
+          <svg
+            class="w-5 h-5 text-[#FF8000] transition-colors duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            ></path>
+          </svg>
+          Jadwal Praktik
+        </h4>
+        <span
+          class="text-sm text-gray-500 transition-colors duration-300"
+          th:if="${scheduleMap != null and doctor.name != null and scheduleMap[doctor.name] != null}"
+          th:text="${#lists.size(scheduleMap[doctor.name])} + ' hari'"
+        ></span>
+        <span
+          class="text-sm text-gray-500 transition-colors duration-300"
+          th:if="${scheduleMap == null or doctor.name == null or scheduleMap[doctor.name] == null or #lists.size(scheduleMap[doctor.name]) == 0}"
+          >0 hari</span
+        >
+      </div>
+
+      <!-- Quick Schedule Preview -->
+      <div class="flex flex-wrap gap-2 mb-6">
+        <!-- Jadwal tersedia -->
+        <div
+          th:if="${scheduleMap != null and doctor.name != null and scheduleMap[doctor.name] != null and iterStat.index < 3}"
+          th:each="jadwal, iterStat : ${scheduleMap[doctor.name]}"
+          class="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-100"
+        >
+          <div class="w-2 h-2 bg-[#FF8000] rounded-full"></div>
+          <span
+            class="text-sm font-medium text-[#E6521F]"
+            th:text="${#strings.substring(jadwal.day, 0, 3)}"
+          ></span>
+          <span class="text-sm text-gray-600" th:text="${jadwal.time}"></span>
+        </div>
+
+        <!-- Indikator jadwal lebih dari 3 -->
+        <div
+          th:if="${scheduleMap != null and doctor.name != null and scheduleMap[doctor.name] != null and #lists.size(scheduleMap[doctor.name]) > 3}"
+          class="flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-xl border border-gray-300"
+        >
+          <span class="text-sm text-gray-600">
+            +<span
+              th:text="${#lists.size(scheduleMap[doctor.name]) - 3}"
+            ></span>
+            lagi
+          </span>
+        </div>
+
+        <!-- Fallback: Tidak ada jadwal -->
+        <div
+          th:unless="${scheduleMap != null and doctor.name != null and scheduleMap[doctor.name] != null and !scheduleMap[doctor.name].isEmpty()}"
+          class="flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-xl border border-gray-300"
+        >
+          <span class="text-sm text-gray-500">Jadwal belum tersedia</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="grid grid-cols-2 gap-3">
+        <button
+          class="group relative w-full px-4 py-3 rounded-xl bg-gradient-to-r from-[#E6521F] to-[#FF8000] text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 popover-btn-mobile"
+        >
+          <svg
+            class="w-4 h-4 text-white group-hover:scale-110 transition-transform duration-200 relative z-10"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+            ></path>
+          </svg>
+          <span
+            class="text-white group-hover:text-white transition-colors duration-200 relative z-10"
+            >Jadwal</span
+          >
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-[#FF8000] to-[#E6521F] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          ></div>
+        </button>
+
+        <a
+          th:href="@{'/doctor-profile/' + ${doctor.id}}"
+          class="group relative w-full px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+        >
+          <svg
+            class="w-4 h-4 text-white group-hover:scale-110 transition-transform duration-200 relative z-10"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+            ></path>
+          </svg>
+          <span
+            class="text-white group-hover:text-white transition-colors duration-200 relative z-10"
+            >Profil</span
+          >
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-500 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          ></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

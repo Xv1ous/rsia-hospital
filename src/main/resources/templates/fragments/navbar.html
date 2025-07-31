@@ -1,24 +1,33 @@
 <nav
   th:fragment="navbar"
   class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-[#E6521F] to-[#FF8000] shadow-lg backdrop-blur-sm"
+  role="navigation"
+  aria-label="Main navigation"
 >
   <div
     class="max-w-screen-xl mx-auto flex items-center justify-between px-4 sm:px-6 py-4"
   >
     <!-- Logo -->
-    <a href="/" class="flex items-center space-x-3 group">
+    <a
+      href="/"
+      class="flex items-center space-x-3 group focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-[#E6521F] rounded-lg p-1"
+      aria-label="RSIA Buah Hati Pamulang - Beranda"
+    >
       <div class="relative">
-      <img
-        src="/asset hospital/RSIA_BHP_LOGO5.png"
-        alt="RSIA Buah Hati Pamulang"
+        <img
+          src="/asset hospital/RSIA_BHP_LOGO5.png"
+          alt="Logo RSIA Buah Hati Pamulang"
           class="h-10 w-10 sm:h-12 sm:w-12 transition-transform duration-300 group-hover:scale-110"
-      />
+          loading="eager"
+          width="48"
+          height="48"
+        />
         <div
           class="absolute inset-0 bg-white rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"
         ></div>
       </div>
       <div class="flex flex-col">
-      <span
+        <span
           class="text-lg sm:text-xl md:text-2xl font-bold text-white group-hover:text-orange-100 transition-colors duration-300"
         >
           RS Buah Hati Pamulang
@@ -30,11 +39,16 @@
     </a>
 
     <!-- Desktop Menu -->
-    <ul class="hidden lg:flex items-center space-x-1 font-medium text-white">
-      <li>
+    <ul
+      class="hidden lg:flex items-center space-x-1 font-medium text-white"
+      role="menubar"
+    >
+      <li role="none">
         <a
           href="/"
-          class="relative px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group"
+          class="relative px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-white/50"
+          role="menuitem"
+          aria-current="page"
         >
           <span class="relative z-10">Beranda</span>
           <div
@@ -42,10 +56,11 @@
           ></div>
         </a>
       </li>
-      <li>
+      <li role="none">
         <a
           href="/about"
-          class="relative px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group"
+          class="relative px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-white/50"
+          role="menuitem"
         >
           <span class="relative z-10">Tentang</span>
           <div
@@ -53,10 +68,11 @@
           ></div>
         </a>
       </li>
-      <li>
+      <li role="none">
         <a
           href="/services"
-          class="relative px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group"
+          class="relative px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-white/50"
+          role="menuitem"
         >
           <span class="relative z-10">Layanan</span>
           <div
@@ -64,10 +80,11 @@
           ></div>
         </a>
       </li>
-      <li>
+      <li role="none">
         <a
           href="/fasilitas"
-          class="relative px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group"
+          class="relative px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-white/50"
+          role="menuitem"
         >
           <span class="relative z-10">Promosi</span>
           <div
@@ -75,10 +92,11 @@
           ></div>
         </a>
       </li>
-      <li>
+      <li role="none">
         <a
           href="/homecare"
-          class="relative px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group"
+          class="relative px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-white/50"
+          role="menuitem"
         >
           <span class="relative z-10">Home Care</span>
           <div
@@ -92,8 +110,9 @@
     <div class="hidden lg:flex items-center space-x-2">
       <button
         id="open-janji-modal"
-        class="group relative px-4 py-2 rounded-lg bg-white text-[#E6521F] font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm"
+        class="group relative px-4 py-2 rounded-lg bg-white text-[#E6521F] font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-[#E6521F]"
         type="button"
+        aria-label="Buat janji temu dengan dokter"
       >
         <span class="flex items-center space-x-1">
           <svg
@@ -101,6 +120,7 @@
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               stroke-linecap="round"
@@ -118,7 +138,8 @@
 
       <a
         href="/schedule"
-        class="group relative px-4 py-2 rounded-lg bg-white/10 text-white font-semibold backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 text-sm"
+        class="group relative px-4 py-2 rounded-lg bg-white/10 text-white font-semibold backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 text-sm focus:outline-none focus:ring-2 focus:ring-white/50"
+        aria-label="Lihat jadwal dokter"
       >
         <span class="flex items-center space-x-1">
           <svg
@@ -126,6 +147,7 @@
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               stroke-linecap="round"
@@ -143,9 +165,10 @@
     <button
       id="navbar-toggle"
       onclick="toggleMobileMenu()"
-      class="lg:hidden relative p-2 w-12 h-12 text-white rounded-xl hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
+      class="lg:hidden relative p-2 w-12 h-12 text-white rounded-xl hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300"
       aria-controls="navbar-default"
       aria-expanded="false"
+      aria-label="Toggle navigation menu"
       type="button"
     >
       <span class="sr-only">Buka menu utama</span>
@@ -153,19 +176,20 @@
         <span
           class="absolute inset-0 transform transition-all duration-300 origin-center"
         >
-      <svg
-        class="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16"
-        ></path>
-      </svg>
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
         </span>
       </div>
     </button>
@@ -182,7 +206,7 @@
         <button
           id="open-janji-modal-mobile"
           type="button"
-          class="flex-1 px-3 py-2 rounded-lg bg-white text-[#E6521F] font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm"
+          class="flex-1 px-3 py-2 rounded-lg bg-white text-[#E6521F] font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm focus:outline-none focus:ring-2 focus:ring-white/50"
         >
           <span class="flex items-center justify-center space-x-1">
             <svg
@@ -204,7 +228,7 @@
 
         <a
           href="/schedule"
-          class="flex-1 px-3 py-2 rounded-lg bg-white/10 text-white font-semibold backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 text-sm"
+          class="flex-1 px-3 py-2 rounded-lg bg-white/10 text-white font-semibold backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 text-sm focus:outline-none focus:ring-2 focus:ring-white/50"
         >
           <span class="flex items-center justify-center space-x-1">
             <svg

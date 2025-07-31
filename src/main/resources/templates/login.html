@@ -1,44 +1,298 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Login - RSIA Buah Hati Pamulang</title>
+    <meta
+      name="description"
+      content="Halaman login untuk akses admin RSIA Buah Hati Pamulang"
+    />
+    <meta name="robots" content="noindex, nofollow" />
     <link href="/main.css" rel="stylesheet" />
   </head>
-  <body class="bg-orange-50 flex items-center justify-center min-h-screen">
-    <form
-      th:action="@{/login}"
-      method="post"
-      class="bg-white rounded-xl shadow-lg p-8 w-full max-w-sm flex flex-col gap-4"
-    >
-      <h1 class="text-2xl font-bold text-[#FB9E3A] mb-2 text-center">Login</h1>
-      <div th:if="${param.error}" class="text-red-600 text-sm text-center">
-        Username atau password salah.
-      </div>
-      <input
-        type="text"
-        name="username"
-        placeholder="Username"
-        required
-        class="px-4 py-2 rounded border border-[#FB9E3A] focus:ring-2 focus:ring-[#FB9E3A] focus:outline-none"
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        required
-        class="px-4 py-2 rounded border border-[#FB9E3A] focus:ring-2 focus:ring-[#FB9E3A] focus:outline-none"
-      />
-      <button
-        type="submit"
-        class="w-full px-4 py-2 rounded bg-[#FB9E3A] text-white font-semibold shadow hover:bg-[#E6521F] transition"
+  <body
+    class="bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center min-h-screen p-4"
+  >
+    <main class="w-full max-w-sm">
+      <form
+        th:action="@{/login}"
+        method="post"
+        class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 flex flex-col gap-6 border border-white/20"
+        role="form"
+        aria-labelledby="login-title"
       >
-        Login
-      </button>
-      <a href="/" class="text-center text-[#E6521F] text-sm hover:underline"
-        >Kembali ke Beranda</a
-      >
-    </form>
+        <!-- Logo and Title -->
+        <div class="text-center mb-4">
+          <img
+            src="/asset hospital/RSIA_BHP_LOGO5.png"
+            alt="Logo RSIA Buah Hati Pamulang"
+            class="h-16 w-16 mx-auto mb-4"
+            loading="eager"
+            width="64"
+            height="64"
+          />
+          <h1 id="login-title" class="text-2xl font-bold text-[#E6521F] mb-2">
+            Login Admin
+          </h1>
+          <p class="text-gray-600 text-sm">Masuk ke panel administrasi</p>
+        </div>
+
+        <!-- Error Message -->
+        <div
+          th:if="${param.error}"
+          class="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm text-center"
+          role="alert"
+          aria-live="polite"
+        >
+          <svg
+            class="w-5 h-5 inline mr-2"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          Username atau password salah.
+        </div>
+
+        <!-- Logout Message -->
+        <div
+          th:if="${param.logout}"
+          class="bg-green-50 border border-green-200 rounded-lg p-4 text-green-700 text-sm text-center"
+          role="alert"
+          aria-live="polite"
+        >
+          <svg
+            class="w-5 h-5 inline mr-2"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          Anda telah berhasil logout.
+        </div>
+
+        <!-- Username Field -->
+        <div class="space-y-2">
+          <label for="username" class="block text-sm font-medium text-gray-700">
+            Username
+          </label>
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+            >
+              <svg
+                class="h-5 w-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                ></path>
+              </svg>
+            </div>
+            <input
+              id="username"
+              type="text"
+              name="username"
+              placeholder="Masukkan username"
+              required
+              autocomplete="username"
+              class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#E6521F] focus:border-[#E6521F] focus:outline-none transition-colors duration-200"
+              aria-describedby="username-error"
+            />
+          </div>
+          <div id="username-error" class="hidden text-red-600 text-xs"></div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="space-y-2">
+          <label for="password" class="block text-sm font-medium text-gray-700">
+            Password
+          </label>
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+            >
+              <svg
+                class="h-5 w-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                ></path>
+              </svg>
+            </div>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Masukkan password"
+              required
+              autocomplete="current-password"
+              class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#E6521F] focus:border-[#E6521F] focus:outline-none transition-colors duration-200"
+              aria-describedby="password-error"
+            />
+          </div>
+          <div id="password-error" class="hidden text-red-600 text-xs"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-[#E6521F] to-[#FF8000] text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#E6521F] focus:ring-offset-2"
+          aria-describedby="login-status"
+        >
+          <span class="flex items-center justify-center space-x-2">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+              ></path>
+            </svg>
+            <span>Masuk</span>
+          </span>
+        </button>
+
+        <!-- Back to Home -->
+        <div class="text-center">
+          <a
+            href="/"
+            class="inline-flex items-center text-[#E6521F] text-sm hover:text-[#FF8000] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#E6521F] focus:ring-offset-2 rounded-lg px-2 py-1"
+            aria-label="Kembali ke halaman beranda"
+          >
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              ></path>
+            </svg>
+            Kembali ke Beranda
+          </a>
+        </div>
+
+        <!-- Status for screen readers -->
+        <div id="login-status" class="sr-only" aria-live="polite"></div>
+      </form>
+    </main>
+
+    <!-- Form validation script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const username = document.getElementById("username");
+        const password = document.getElementById("password");
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        // Form validation
+        function validateForm() {
+          let isValid = true;
+
+          // Username validation
+          if (username.value.trim().length < 3) {
+            showError(username, "Username minimal 3 karakter");
+            isValid = false;
+          } else {
+            hideError(username);
+          }
+
+          // Password validation
+          if (password.value.length < 6) {
+            showError(password, "Password minimal 6 karakter");
+            isValid = false;
+          } else {
+            hideError(password);
+          }
+
+          return isValid;
+        }
+
+        function showError(input, message) {
+          const errorDiv = document.getElementById(input.id + "-error");
+          errorDiv.textContent = message;
+          errorDiv.classList.remove("hidden");
+          input.classList.add("border-red-500");
+        }
+
+        function hideError(input) {
+          const errorDiv = document.getElementById(input.id + "-error");
+          errorDiv.classList.add("hidden");
+          input.classList.remove("border-red-500");
+        }
+
+        // Real-time validation
+        username.addEventListener("blur", () => {
+          if (
+            username.value.trim().length > 0 &&
+            username.value.trim().length < 3
+          ) {
+            showError(username, "Username minimal 3 karakter");
+          } else {
+            hideError(username);
+          }
+        });
+
+        password.addEventListener("blur", () => {
+          if (password.value.length > 0 && password.value.length < 6) {
+            showError(password, "Password minimal 6 karakter");
+          } else {
+            hideError(password);
+          }
+        });
+
+        // Form submission
+        form.addEventListener("submit", function (e) {
+          if (!validateForm()) {
+            e.preventDefault();
+            document.getElementById("login-status").textContent =
+              "Form tidak valid, silakan perbaiki error yang ada";
+          } else {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML =
+              '<svg class="animate-spin w-5 h-5 mx-auto" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+            document.getElementById("login-status").textContent =
+              "Sedang memproses login...";
+          }
+        });
+      });
+    </script>
   </body>
 </html>

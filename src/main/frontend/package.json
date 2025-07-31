@@ -7,7 +7,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "build": "tailwindcss -i ./main.css -o ../resources/static/main.css",
+    "build": "NODE_ENV=production tailwindcss -i ./main.css -o ../resources/static/main.css --minify",
+    "build:dev": "tailwindcss -i ./main.css -o ../resources/static/main.css",
     "watch": "tailwindcss -i ./main.css -o ../resources/static/main.css --watch"
   },
   "devDependencies": {

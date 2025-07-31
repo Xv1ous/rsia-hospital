@@ -19,8 +19,57 @@
       </ol>
     </nav>
 
-    <!-- Doctor Profile Header -->
-    <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col gap-2">
+    <!-- Error Message -->
+    <div th:if="${error}" class="max-w-6xl mx-auto px-4 py-8">
+      <div class="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+        <div class="flex items-center justify-center mb-4">
+          <svg
+            class="w-12 h-12 text-red-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+            ></path>
+          </svg>
+        </div>
+        <h2 class="text-xl font-bold text-red-800 mb-2">
+          Dokter Tidak Ditemukan
+        </h2>
+        <p class="text-red-600 mb-4" th:text="${error}">
+          Dokter tidak ditemukan
+        </p>
+        <a
+          href="/schedule"
+          class="inline-flex items-center px-6 py-3 bg-[#E6521F] text-white font-semibold rounded-lg shadow hover:bg-[#FF8000] transition"
+        >
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            ></path>
+          </svg>
+          Kembali ke Jadwal Dokter
+        </a>
+      </div>
+    </div>
+
+    <!-- Doctor Profile Content (only show if no error) -->
+    <div
+      th:if="${error == null}"
+      class="max-w-6xl mx-auto px-4 py-8 flex flex-col gap-2"
+    >
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <!-- Header Section -->
         <div
@@ -63,7 +112,10 @@
                       >Jadwal Praktik:</span
                     >
                   </p>
-                  <ul class="mb-2">
+                  <ul
+                    class="mb-2"
+                    th:if="${schedules != null and !schedules.empty}"
+                  >
                     <li
                       th:each="jadwal : ${schedules}"
                       class="text-gray-700 text-sm"
@@ -77,6 +129,12 @@
                       ></span>
                     </li>
                   </ul>
+                  <p
+                    th:if="${schedules == null or schedules.empty}"
+                    class="text-gray-500 text-sm italic"
+                  >
+                    Belum ada jadwal tersedia
+                  </p>
                 </div>
               </div>
               <a

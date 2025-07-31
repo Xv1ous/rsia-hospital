@@ -1,122 +1,137 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
   <!-- Head Fragment -->
   <head th:replace="~{fragments/head :: head}"></head>
 
-  <body class="bg-gray-50 text-gray-900 font-sans">
+  <body class="bg-gray-50 text-gray-900 font-sans antialiased">
+    <!-- Skip to main content for accessibility -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-white px-4 py-2 rounded-lg z-50"
+    >
+      Skip to main content
+    </a>
+
     <!-- Main Content for Pamulang (default) -->
-    <div id="hospital-pamulang">
+    <main id="main-content" class="hospital-pamulang">
       <!-- Flowbite Responsive Navbar -->
-      <div th:replace="~{fragments/navbar :: navbar}"></div>
+      <header th:replace="~{fragments/navbar :: navbar}"></header>
 
       <!-- Hero Section -->
-      <div th:replace="~{fragments/hero :: hero}"></div>
+      <section th:replace="~{fragments/hero :: hero}"></section>
 
       <!-- About/Values Section -->
-      <div th:replace="~{fragments/about :: about}"></div>
+      <section th:replace="~{fragments/about :: about}"></section>
 
       <!-- Doctor Schedule Section -->
-      <div th:replace="~{fragments/schedule :: schedule}"></div>
+      <section th:replace="~{fragments/schedule :: schedule}"></section>
 
       <!-- Specializations Slider Section -->
-      <!-- <div th:replace="~{fragments/specializations :: specializations}"></div>-->
+      <!-- <section th:replace="~{fragments/specializations :: specializations}"></section>-->
 
       <!-- News/Berita Section -->
-      <div th:replace="~{fragments/news :: news}"></div>
+      <section th:replace="~{fragments/news :: news}"></section>
 
       <!-- Testimonial Section -->
-      <div th:replace="~{fragments/testimonial :: testimonial}"></div>
+      <section th:replace="~{fragments/testimonial :: testimonial}"></section>
 
       <!-- Partners Section -->
-      <!-- <div th:replace="~{fragments/partners :: partners}"></div> -->
+      <!-- <section th:replace="~{fragments/partners :: partners}"></section> -->
 
       <!-- Location/Contact Section -->
-      <div th:replace="~{fragments/contact :: contact}"></div>
-    </div>
+      <section th:replace="~{fragments/contact :: contact}"></section>
+    </main>
 
     <!-- Footer Section -->
-    <div th:replace="~{fragments/footer :: footer}"></div>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
 
     <!-- Modal Fragment -->
     <div th:replace="~{fragments/modal :: janji-modal}"></div>
 
-    <!-- Test Button for Modal -->
-    <button
-      onclick="document.getElementById('janji-modal-bg').classList.remove('hidden')"
-      class="fixed top-4 right-4 z-[10001] bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg"
-      style="display: none"
+    <!-- Loading Indicator -->
+    <div
+      id="loading-indicator"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden"
     >
-      Test Modal
+      <div class="bg-white rounded-2xl p-8 shadow-2xl">
+        <div
+          class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"
+        ></div>
+        <p class="text-gray-600 mt-4 text-center">Loading...</p>
+      </div>
+    </div>
+
+    <!-- Back to top button -->
+    <button
+      id="back-to-top"
+      class="fixed bottom-8 right-8 bg-primary text-white p-3 rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300 opacity-0 invisible z-40"
+      aria-label="Back to top"
+    >
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 10l7-7m0 0l7 7m-7-7v18"
+        ></path>
+      </svg>
     </button>
 
+    <!-- Performance and UX Scripts -->
     <script>
-      // Show test button after 3 seconds
-      setTimeout(function () {
-        const testBtn = document.querySelector(
-          'button[onclick*="janji-modal-bg"]'
-        );
-        if (testBtn) {
-          testBtn.style.display = "block";
-          console.log("[DEBUG] Test button enabled");
-        }
-      }, 3000);
-
-      // Simple JavaScript test
-      console.log("[DEBUG] Index.html script loaded");
-
-      // Test if main.js is loaded
-      setTimeout(function () {
-        console.log("[DEBUG] Checking if main.js is loaded...");
-        if (typeof window.toggleMobileMenu === "function") {
-          console.log(
-            "[DEBUG] main.js is loaded - toggleMobileMenu function exists"
-          );
-        } else {
-          console.log(
-            "[ERROR] main.js is NOT loaded - toggleMobileMenu function missing"
-          );
-        }
-      }, 1000);
-
-      // Direct modal test
+      // Back to top functionality
       document.addEventListener("DOMContentLoaded", function () {
-        console.log("[DEBUG] DOMContentLoaded fired in index.html");
+        const backToTopBtn = document.getElementById("back-to-top");
 
-        // Add direct event listeners for modal buttons
-        const openBtn = document.getElementById("open-janji-modal");
-        const openBtnMobile = document.getElementById(
-          "open-janji-modal-mobile"
-        );
-        const modalBg = document.getElementById("janji-modal-bg");
-
-        console.log("[DEBUG] Direct element check:", {
-          openBtn: !!openBtn,
-          openBtnMobile: !!openBtnMobile,
-          modalBg: !!modalBg,
+        window.addEventListener("scroll", function () {
+          if (window.pageYOffset > 300) {
+            backToTopBtn.classList.remove("opacity-0", "invisible");
+            backToTopBtn.classList.add("opacity-100", "visible");
+          } else {
+            backToTopBtn.classList.add("opacity-0", "invisible");
+            backToTopBtn.classList.remove("opacity-100", "visible");
+          }
         });
 
-        if (openBtn) {
-          openBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            console.log("[DEBUG] Direct click on desktop button");
-            if (modalBg) {
-              modalBg.classList.remove("hidden");
-              console.log("[DEBUG] Modal shown via direct listener");
-            }
+        backToTopBtn.addEventListener("click", function () {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
           });
-        }
-
-        if (openBtnMobile) {
-          openBtnMobile.addEventListener("click", function (e) {
-            e.preventDefault();
-            console.log("[DEBUG] Direct click on mobile button");
-            if (modalBg) {
-              modalBg.classList.remove("hidden");
-              console.log("[DEBUG] Modal shown via direct listener");
-            }
-          });
-        }
+        });
       });
+
+      // Loading indicator
+      window.addEventListener("beforeunload", function () {
+        document.getElementById("loading-indicator").classList.remove("hidden");
+      });
+
+      // Intersection Observer for lazy loading
+      if ("IntersectionObserver" in window) {
+        const observerOptions = {
+          rootMargin: "50px",
+          threshold: 0.1,
+        };
+
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("fade-in");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        // Observe all sections for lazy loading
+        document.querySelectorAll("section").forEach((section) => {
+          observer.observe(section);
+        });
+      }
     </script>
   </body>
 </html>

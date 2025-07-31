@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import com.example.hospital.repository.DoctorRepository;
 import com.example.hospital.repository.DoctorScheduleRepository;
 import com.example.hospital.repository.NewsRepository;
@@ -88,15 +92,18 @@ public class HomeController {
             model.addAttribute("scheduleMap", new HashMap<>());
         }
 
-        // Add specializations
+        // Add specializations from both doctor and doctor_schedule tables
         try {
-            List<String> specializations = new ArrayList<>();
-            specializations.add("Dokter Umum");
-            specializations.add("Dokter Gigi");
-            specializations.add("Dokter Anak");
-            specializations.add("Dokter Kandungan");
-            specializations.add("Dokter Bedah");
-            model.addAttribute("specializations", specializations);
+            Set<String> specializations = new TreeSet<>();
+            doctorRepository.findAll().forEach(d -> {
+                if (d.getSpecialization() != null && !d.getSpecialization().trim().isEmpty())
+                    specializations.add(d.getSpecialization().trim());
+            });
+            doctorScheduleRepository.findAll().forEach(s -> {
+                if (s.getSpecialization() != null && !s.getSpecialization().trim().isEmpty())
+                    specializations.add(s.getSpecialization().trim());
+            });
+            model.addAttribute("specializations", new ArrayList<>(specializations));
         } catch (Exception e) {
             model.addAttribute("specializations", new ArrayList<>());
         }
@@ -137,15 +144,18 @@ public class HomeController {
             model.addAttribute("scheduleMap", new HashMap<>());
         }
 
-        // Add specializations
+        // Add specializations from both doctor and doctor_schedule tables
         try {
-            List<String> specializations = new ArrayList<>();
-            specializations.add("Dokter Umum");
-            specializations.add("Dokter Gigi");
-            specializations.add("Dokter Anak");
-            specializations.add("Dokter Kandungan");
-            specializations.add("Dokter Bedah");
-            model.addAttribute("specializations", specializations);
+            Set<String> specializations = new TreeSet<>();
+            doctorRepository.findAll().forEach(d -> {
+                if (d.getSpecialization() != null && !d.getSpecialization().trim().isEmpty())
+                    specializations.add(d.getSpecialization().trim());
+            });
+            doctorScheduleRepository.findAll().forEach(s -> {
+                if (s.getSpecialization() != null && !s.getSpecialization().trim().isEmpty())
+                    specializations.add(s.getSpecialization().trim());
+            });
+            model.addAttribute("specializations", new ArrayList<>(specializations));
         } catch (Exception e) {
             model.addAttribute("specializations", new ArrayList<>());
         }
@@ -205,5 +215,34 @@ public class HomeController {
     @GetMapping("/login")
     public String login(Model model) {
         return "login";
+    }
+
+    @GetMapping("/doctor-profile/{id}")
+    public String doctorProfile(@PathVariable Long id, Model model) {
+        try {
+            // Find doctor by ID
+            Doctor doctor = doctorRepository.findById(id).orElse(null);
+            if (doctor != null) {
+                model.addAttribute("doctor", doctor);
+
+                // Find schedules for this doctor
+                List<DoctorSchedule> schedules = doctorScheduleRepository.findAll().stream()
+                        .filter(schedule -> schedule.getName() != null &&
+                                schedule.getName().equals(doctor.getName()))
+                        .collect(Collectors.toList());
+                model.addAttribute("schedules", schedules);
+            } else {
+                // If doctor not found, add error message
+                model.addAttribute("error", "Dokter tidak ditemukan");
+                model.addAttribute("doctor", null);
+                model.addAttribute("schedules", new ArrayList<>());
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Terjadi kesalahan saat memuat profil dokter");
+            model.addAttribute("doctor", null);
+            model.addAttribute("schedules", new ArrayList<>());
+        }
+
+        return "user/doctor-profile";
     }
 }

@@ -221,17 +221,33 @@
         <section id="doctors" class="p-6">
           <div class="flex items-center justify-between mb-4">
             <h2 class="text-2xl font-bold text-[#17695b]">Manajemen Dokter</h2>
-            <button
-              id="open-add-doctor-modal"
-              class="px-4 py-2 rounded bg-primary-orange text-white font-semibold hover:bg-primary-orange-dark transition"
-            >
-              + Tambah Dokter
-            </button>
+            <div class="flex gap-2">
+              <button
+                id="bulk-actions-btn"
+                class="px-4 py-2 rounded bg-gray-500 text-white font-semibold hover:bg-gray-600 transition hidden"
+                disabled
+              >
+                Bulk Actions (<span id="selected-count">0</span>)
+              </button>
+              <button
+                id="open-add-doctor-modal"
+                class="px-4 py-2 rounded bg-primary-orange text-white font-semibold hover:bg-primary-orange-dark transition"
+              >
+                + Tambah Dokter
+              </button>
+            </div>
           </div>
           <div class="overflow-x-auto rounded-xl shadow bg-white">
             <table class="min-w-full">
               <thead class="bg-[#17695b] text-white">
                 <tr>
+                  <th class="py-3 px-4 text-left">
+                    <input
+                      type="checkbox"
+                      id="select-all-doctors"
+                      class="w-4 h-4 text-primary-orange bg-gray-100 border-gray-300 rounded focus:ring-primary-orange focus:ring-2"
+                    />
+                  </th>
                   <th class="py-3 px-4 text-left">Nama Dokter</th>
                   <th class="py-3 px-4 text-left">Spesialisasi</th>
                   <th class="py-3 px-4 text-left">Hari</th>
@@ -244,7 +260,15 @@
                 <tr
                   th:each="doctor : ${doctorSchedules}"
                   th:if="${doctor != null and doctor.name != null and doctor.name != ''}"
+                  class="hover:bg-gray-50"
                 >
+                  <td class="py-3 px-4">
+                    <input
+                      type="checkbox"
+                      th:attr="data-id=${doctor.id}"
+                      class="doctor-checkbox w-4 h-4 text-primary-orange bg-gray-100 border-gray-300 rounded focus:ring-primary-orange focus:ring-2"
+                    />
+                  </td>
                   <td class="py-3 px-4" th:text="${doctor.name}"></td>
                   <td class="py-3 px-4" th:text="${doctor.specialization}"></td>
                   <td class="py-3 px-4">-</td>
@@ -515,6 +539,61 @@
             class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-left relative max-h-[90vh] overflow-y-auto modal-scroll"
           >
             <!-- Content will be injected by JS -->
+          </div>
+        </div>
+
+        <!-- Modal Bulk Actions -->
+        <div
+          id="bulk-actions-modal"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 hidden p-4"
+        >
+          <div
+            class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-left relative max-h-[90vh] overflow-y-auto modal-scroll"
+          >
+            <button
+              onclick="document.getElementById('bulk-actions-modal').classList.add('hidden')"
+              class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold z-10"
+            >
+              &times;
+            </button>
+            <h3 class="text-xl font-bold mb-4 text-[#17695b]">
+              Bulk Actions (<span id="bulk-selected-count">0</span> doctors
+              selected)
+            </h3>
+            <div class="space-y-4">
+              <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <p class="text-yellow-800 text-sm">
+                  <strong>Selected doctors:</strong>
+                  <span id="bulk-selected-names" class="block mt-1"></span>
+                </p>
+              </div>
+              <div class="space-y-3">
+                <button
+                  id="bulk-set-active"
+                  class="w-full px-4 py-2 rounded bg-green-500 text-white font-semibold hover:bg-green-600 transition"
+                >
+                  🟢 Set Active
+                </button>
+                <button
+                  id="bulk-set-on-leave"
+                  class="w-full px-4 py-2 rounded bg-orange-500 text-white font-semibold hover:bg-orange-600 transition"
+                >
+                  🏖️ Set On Leave
+                </button>
+                <button
+                  id="bulk-lock"
+                  class="w-full px-4 py-2 rounded bg-yellow-500 text-white font-semibold hover:bg-yellow-600 transition"
+                >
+                  🔒 Lock Doctors
+                </button>
+                <button
+                  id="bulk-delete"
+                  class="w-full px-4 py-2 rounded bg-red-500 text-white font-semibold hover:bg-red-600 transition"
+                >
+                  🗑️ Delete Selected
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <script src="/js/admin.js"></script>

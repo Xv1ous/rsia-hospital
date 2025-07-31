@@ -25,7 +25,9 @@ services:
 
   # Spring Boot Application
   hospital-app:
-    build: .
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.simple
     container_name: hospital-app-dev
     restart: unless-stopped
     ports:

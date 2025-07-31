@@ -22,9 +22,13 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
+
 # Start the application
 echo "[1/3] Starting containers..."
-docker-compose -f ../docker/docker-compose.dev.yml up -d
+docker-compose -f "$PROJECT_ROOT/docker/docker-compose.dev.yml" up -d
 
 echo "[2/3] Waiting for application to start..."
 sleep 45
@@ -44,7 +48,7 @@ echo "👤 Admin Login:"
 echo "   Username: admin"
 echo "   Password: admin123"
 echo ""
-echo "📊 To view logs: docker-compose -f ../docker/docker-compose.dev.yml logs -f hospital-app"
+echo "📊 To view logs: docker-compose -f $PROJECT_ROOT/docker/docker-compose.dev.yml logs -f hospital-app"
 echo "🛑 To stop: ./stop.sh"
 echo ""
 echo "Press Enter to open the application in browser..."

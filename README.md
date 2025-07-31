@@ -15,7 +15,6 @@ Aplikasi manajemen rumah sakit berbasis Spring Boot dengan interface web yang us
 - [⚡ Quick Commands](#-quick-commands)
 - [🔧 Troubleshooting](#-troubleshooting)
 - [📚 Dokumentasi](#-dokumentasi)
-- [🤝 Contributing](#-contributing)
 - [📄 License](#-license)
 - [📞 Support](#-support)
 
@@ -284,32 +283,6 @@ docker-compose -f docker/docker-compose.dev.yml restart mysql
 - **[Documentation Index](docs/INDEX.md)** - Index semua dokumentasi
 - **[Project Structure](PROJECT_STRUCTURE.md)** - Overview struktur project
 - **[Docker Commands](docs/DOCKER_COMMANDS.md)** - Perintah Docker yang sering digunakan
-
-## 🤝 **Contributing**
-
-Kami menyambut kontribusi dari siapa saja! Berikut cara berkontribusi:
-
-### **🔧 Untuk Developer:**
-
-1. **Fork** project ini
-2. **Buat branch** fitur baru (`git checkout -b feature/AmazingFeature`)
-3. **Commit** perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** ke branch (`git push origin feature/AmazingFeature`)
-5. **Buat Pull Request**
-
-### **📝 Untuk Non-Developer:**
-
-- **Report bugs** dengan membuat issue
-- **Request features** dengan membuat issue
-- **Improve documentation** dengan membuat Pull Request
-- **Test the application** dan berikan feedback
-
-### **📋 Guidelines:**
-
-- Ikuti struktur project yang sudah ada
-- Tambahkan dokumentasi untuk fitur baru
-- Test fitur sebelum submit
-- Gunakan commit message yang jelas
 
 ## 📄 **License**
 

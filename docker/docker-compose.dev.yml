@@ -1,26 +1,4 @@
 services:
-  # MySQL Database
-  mysql:
-    image: mysql:8.0
-    container_name: hospital-mysql-dev
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: hospital
-      MYSQL_USER: hospital_user
-      MYSQL_PASSWORD: hospital_pass
-    ports:
-      - "3307:3306"
-    volumes:
-      - mysql_data_dev:/var/lib/mysql
-      - ./src/main/resources/db/migration:/docker-entrypoint-initdb.d
-    networks:
-      - hospital-network-dev
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
-
   # Spring Boot Application
   hospital-app:
     build:
@@ -41,7 +19,7 @@ services:
       SERVER_PORT: 8080
 
       # JPA Configuration
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update # Changed from validate to update
       SPRING_JPA_SHOW_SQL: true
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
 
@@ -54,27 +32,61 @@ services:
       LOGGING_LEVEL_COM_EXAMPLE_HOSPITAL: DEBUG
       LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: INFO
 
-      # JVM Options untuk development
-      JAVA_OPTS: "-Xms512m -Xmx1024m -XX:+UseG1GC -XX:+UseContainerSupport -Dspring.profiles.active=dev"
-    volumes:
-      - app_logs_dev:/app/logs
-      - ./src:/app/src:ro # Mount source code untuk hot reload (optional)
+      # Health Check Configuration
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: health,info
+      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: when-authorized
+    networks:
+      - hospital-network-dev
     depends_on:
       mysql:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: "0.5"
+        reservations:
+          memory: 512M
+          cpus: "0.25"
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: hospital-mysql-dev
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: hospital
+      MYSQL_USER: hospital_user
+      MYSQL_PASSWORD: hospital_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data_dev:/var/lib/mysql
+      - ../src/main/resources/db/migration:/docker-entrypoint-initdb.d # Corrected path
     networks:
       - hospital-network-dev
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.25"
+        reservations:
+          memory: 256M
+          cpus: "0.1"
 
 volumes:
   mysql_data_dev:
-    driver: local
-  app_logs_dev:
     driver: local
 
 networks:

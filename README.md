@@ -234,6 +234,19 @@ scripts/simple/STOP.bat
 docker-compose -f docker/docker-compose.dev.yml down
 ```
 
+### **🔄 Restart Application**
+
+```bash
+# Windows
+scripts/simple/RESTART.bat
+
+# Linux/Mac
+./scripts/simple/restart.sh
+
+# Manual
+docker-compose -f docker/docker-compose.dev.yml restart
+```
+
 ### **📊 Check Status**
 
 ```bash
@@ -256,6 +269,18 @@ QUICK_ACCESS.bat
 # Linux/Mac
 ./quick-access.sh
 ```
+
+**Fitur Quick Access Menu:**
+
+- Start Application
+- Stop Application
+- **🔄 Restart Application** _(NEW!)_
+- View Application Status
+- View Application Logs
+- MySQL Database Access
+- Initialize Database
+- Open Documentation
+- Open Simple Guide
 
 ## 🔧 **Troubleshooting**
 

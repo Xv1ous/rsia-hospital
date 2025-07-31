@@ -9,9 +9,18 @@ USE hospital;
 
 -- Doctors table (basic info)
 CREATE TABLE IF NOT EXISTS doctor (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
-    specialization VARCHAR(100)
+    specialization VARCHAR(100),
+    is_on_leave BOOLEAN DEFAULT FALSE,
+    leave_reason VARCHAR(255),
+    leave_start_date VARCHAR(50),
+    leave_end_date VARCHAR(50),
+    max_patients_per_day INT DEFAULT 30,
+    is_locked BOOLEAN DEFAULT FALSE,
+    lock_reason VARCHAR(255),
+    lock_start_date VARCHAR(50),
+    lock_end_date VARCHAR(50)
 );
 
 -- Doctor schedules table (detailed schedule info)
@@ -31,7 +40,7 @@ CREATE TABLE IF NOT EXISTS services (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
-    icon VARCHAR(100),
+    category VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -41,7 +50,9 @@ CREATE TABLE IF NOT EXISTS news (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
+    date DATE,
     image_url VARCHAR(500),
+    status VARCHAR(50),
     published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -56,7 +67,7 @@ CREATE TABLE IF NOT EXISTS appointments (
     department VARCHAR(100),
     appointment_date DATE NOT NULL,
     appointment_time TIME NOT NULL,
-    status ENUM('Menunggu', 'Dikonfirmasi', 'Dibatalkan', 'Selesai') DEFAULT 'Menunggu',
+    status VARCHAR(50) DEFAULT 'Menunggu',
     notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

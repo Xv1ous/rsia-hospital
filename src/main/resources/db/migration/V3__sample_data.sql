@@ -157,35 +157,38 @@ INSERT INTO doctor_schedule(hospital, name, day, time, specialization) VALUES
 ('Rumah Sakit Buah Hati Pamulang', 'Susilawaty, SST.Ft', 'Jumat', '10:00-17:00', 'Tumbuh Kembang'),
 ('Rumah Sakit Buah Hati Pamulang', 'Susilawaty, SST.Ft', 'Sabtu', '10:00-17:00', 'Tumbuh Kembang');
 
--- Insert basic doctor data from schedule data
+-- Insert basic doctor data from schedule data (REMOVED DUPLICATION)
+-- This is already done in V1__init.sql
+
+-- Insert doctor data from schedule data (ADDED BACK)
 INSERT INTO doctor (name, specialization)
 SELECT DISTINCT name, specialization FROM doctor_schedule;
 
 -- Insert sample services
-INSERT INTO services (name, description, icon) VALUES
-('Konsultasi Umum', 'Layanan konsultasi kesehatan umum dengan dokter spesialis', 'fa-user-md'),
-('Pemeriksaan Laboratorium', 'Tes darah, urin, dan pemeriksaan laboratorium lainnya', 'fa-flask'),
-('Radiologi', 'X-Ray, CT Scan, MRI, dan pemeriksaan radiologi lainnya', 'fa-x-ray'),
-('Farmasi', 'Layanan apotek dan konsultasi obat', 'fa-pills'),
-('Gawat Darurat', 'Layanan gawat darurat 24 jam', 'fa-ambulance'),
-('Rawat Inap', 'Layanan rawat inap dengan fasilitas lengkap', 'fa-bed'),
-('Fisioterapi', 'Layanan fisioterapi dan rehabilitasi', 'fa-walking'),
-('Konsultasi Gizi', 'Konsultasi nutrisi dan diet', 'fa-apple-alt'),
-('Vaksinasi', 'Layanan vaksinasi untuk anak dan dewasa', 'fa-syringe'),
-('Kesehatan Gigi', 'Layanan kesehatan gigi dan mulut', 'fa-tooth');
+INSERT INTO services (name, description, category) VALUES
+('Konsultasi Umum', 'Layanan konsultasi kesehatan umum dengan dokter spesialis', 'Konsultasi'),
+('Pemeriksaan Laboratorium', 'Tes darah, urin, dan pemeriksaan laboratorium lainnya', 'Laboratorium'),
+('Radiologi', 'X-Ray, CT Scan, MRI, dan pemeriksaan radiologi lainnya', 'Radiologi'),
+('Farmasi', 'Layanan apotek dan konsultasi obat', 'Farmasi'),
+('Gawat Darurat', 'Layanan gawat darurat 24 jam', 'Gawat Darurat'),
+('Rawat Inap', 'Layanan rawat inap dengan fasilitas lengkap', 'Rawat Inap'),
+('Fisioterapi', 'Layanan fisioterapi dan rehabilitasi', 'Rehabilitasi'),
+('Konsultasi Gizi', 'Konsultasi nutrisi dan diet', 'Konsultasi'),
+('Vaksinasi', 'Layanan vaksinasi untuk anak dan dewasa', 'Vaksinasi'),
+('Kesehatan Gigi', 'Layanan kesehatan gigi dan mulut', 'Dental');
 
 -- Insert sample news
-INSERT INTO news (title, content, image_url, published_at) VALUES
-('RSIA Buah Hati Pamulang Buka Layanan Vaksinasi COVID-19', 'RSIA Buah Hati Pamulang kini menyediakan layanan vaksinasi COVID-19 untuk masyarakat umum. Vaksinasi tersedia setiap hari kerja dengan jadwal yang dapat diatur melalui aplikasi atau telepon.', 'news-covid-vaccine.jpg', '2024-01-15 10:00:00'),
-('Tips Menjaga Kesehatan Jantung di Usia Muda', 'Dokter kardiologi kami memberikan tips penting untuk menjaga kesehatan jantung sejak usia muda. Mulai dari pola makan hingga olahraga yang tepat.', 'news-heart-health.jpg', '2024-01-20 14:30:00'),
-('Pelayanan 24 Jam untuk Gawat Darurat', 'RSIA Buah Hati Pamulang memberikan pelayanan gawat darurat 24 jam dengan tim dokter dan perawat yang siap sedia melayani pasien.', 'news-emergency.jpg', '2024-01-25 09:15:00'),
-('Program Skrining Kesehatan Gratis', 'Dalam rangka memperingati Hari Kesehatan Nasional, RSIA Buah Hati Pamulang menyelenggarakan program skrining kesehatan gratis untuk masyarakat.', 'news-screening.jpg', '2024-02-01 11:45:00'),
-('Teknologi Terbaru untuk Diagnosis Penyakit', 'RSIA Buah Hati Pamulang telah mengadopsi teknologi terbaru untuk diagnosis penyakit yang lebih akurat dan cepat.', 'news-technology.jpg', '2024-02-05 16:20:00'),
-('Konsultasi Online dengan Dokter Spesialis', 'Nikmati kemudahan konsultasi online dengan dokter spesialis kami tanpa perlu datang ke rumah sakit.', 'news-online-consultation.jpg', '2024-02-10 13:00:00'),
-('Program Vaksinasi Anak Terlengkap', 'RSIA Buah Hati Pamulang menyediakan program vaksinasi anak terlengkap sesuai dengan jadwal imunisasi yang direkomendasikan IDAI.', 'news-child-vaccine.jpg', '2024-02-15 10:30:00'),
-('Layanan Fisioterapi untuk Pemulihan', 'Tim fisioterapi kami siap membantu pemulihan pasien pasca operasi atau cedera dengan program terapi yang disesuaikan.', 'news-physiotherapy.jpg', '2024-02-20 15:45:00'),
-('Konsultasi Gizi untuk Diet Sehat', 'Dapatkan konsultasi gizi dari ahli gizi kami untuk program diet sehat yang sesuai dengan kondisi kesehatan Anda.', 'news-nutrition.jpg', '2024-02-25 12:15:00'),
-('Pelayanan Kesehatan Gigi Modern', 'Klinik gigi RSIA Buah Hati Pamulang dilengkapi dengan peralatan modern untuk pelayanan kesehatan gigi yang optimal.', 'news-dental.jpg', '2024-03-01 14:00:00');
+INSERT INTO news (title, content, image_url, date, status, published_at) VALUES
+('RSIA Buah Hati Pamulang Buka Layanan Vaksinasi COVID-19', 'RSIA Buah Hati Pamulang kini menyediakan layanan vaksinasi COVID-19 untuk masyarakat umum. Vaksinasi tersedia setiap hari kerja dengan jadwal yang dapat diatur melalui aplikasi atau telepon.', 'news-covid-vaccine.jpg', '2024-01-15', 'Published', '2024-01-15 10:00:00'),
+('Tips Menjaga Kesehatan Jantung di Usia Muda', 'Dokter kardiologi kami memberikan tips penting untuk menjaga kesehatan jantung sejak usia muda. Mulai dari pola makan hingga olahraga yang tepat.', 'news-heart-health.jpg', '2024-01-20', 'Published', '2024-01-20 14:30:00'),
+('Pelayanan 24 Jam untuk Gawat Darurat', 'RSIA Buah Hati Pamulang memberikan pelayanan gawat darurat 24 jam dengan tim dokter dan perawat yang siap sedia melayani pasien.', 'news-emergency.jpg', '2024-01-25', 'Published', '2024-01-25 09:15:00'),
+('Program Skrining Kesehatan Gratis', 'Dalam rangka memperingati Hari Kesehatan Nasional, RSIA Buah Hati Pamulang menyelenggarakan program skrining kesehatan gratis untuk masyarakat.', 'news-screening.jpg', '2024-02-01', 'Published', '2024-02-01 11:45:00'),
+('Teknologi Terbaru untuk Diagnosis Penyakit', 'RSIA Buah Hati Pamulang telah mengadopsi teknologi terbaru untuk diagnosis penyakit yang lebih akurat dan cepat.', 'news-technology.jpg', '2024-02-05', 'Published', '2024-02-05 16:20:00'),
+('Konsultasi Online dengan Dokter Spesialis', 'Nikmati kemudahan konsultasi online dengan dokter spesialis kami tanpa perlu datang ke rumah sakit.', 'news-online-consultation.jpg', '2024-02-10', 'Published', '2024-02-10 13:00:00'),
+('Program Vaksinasi Anak Terlengkap', 'RSIA Buah Hati Pamulang menyediakan program vaksinasi anak terlengkap sesuai dengan jadwal imunisasi yang direkomendasikan IDAI.', 'news-child-vaccine.jpg', '2024-02-15', 'Published', '2024-02-15 10:30:00'),
+('Layanan Fisioterapi untuk Pemulihan', 'Tim fisioterapi kami siap membantu pemulihan pasien pasca operasi atau cedera dengan program terapi yang disesuaikan.', 'news-physiotherapy.jpg', '2024-02-20', 'Published', '2024-02-20 15:45:00'),
+('Konsultasi Gizi untuk Diet Sehat', 'Dapatkan konsultasi gizi dari ahli gizi kami untuk program diet sehat yang sesuai dengan kondisi kesehatan Anda.', 'news-nutrition.jpg', '2024-02-25', 'Published', '2024-02-25 12:15:00'),
+('Pelayanan Kesehatan Gigi Modern', 'Klinik gigi RSIA Buah Hati Pamulang dilengkapi dengan peralatan modern untuk pelayanan kesehatan gigi yang optimal.', 'news-dental.jpg', '2024-03-01', 'Published', '2024-03-01 14:00:00');
 
 -- Insert sample appointments
 INSERT INTO appointments (patient_name, patient_phone, doctor_id, department, appointment_date, appointment_time, status, notes) VALUES
@@ -202,3 +205,14 @@ INSERT INTO appointments (patient_name, patient_phone, doctor_id, department, ap
 
 -- Update admin password to the provided encrypted value
 UPDATE users SET password='$2a$12$lLKRwSUbB7NQOOr6pL.ysO7c1sss.9qpZYIi2Tpigo.Z6GsjNYuL.' WHERE username='admin';
+
+-- Insert sample reviews (after doctor data is available)
+INSERT INTO reviews (author_name, author_email, rating, comment, patient_type, doctor_id) VALUES
+('Budi Santoso', 'budi@email.com', 5, 'Dokter sangat ramah dan profesional. Penjelasannya mudah dipahami.', 'rawat_jalan', 1),
+('Siti Nurhaliza', 'siti@email.com', 4, 'Pelayanan sangat baik, dokter sangat teliti dalam pemeriksaan.', 'rawat_inap', 2),
+('Ahmad Rizki', 'ahmad@email.com', 5, 'Sangat puas dengan pelayanan dokter. Penanganan cepat dan tepat.', 'ibu_anak', 3),
+('Dewi Sartika', 'dewi@email.com', 4, 'Dokter sangat sabar menjelaskan kondisi kesehatan anak saya.', 'rawat_jalan', 4),
+('Rudi Hermawan', 'rudi@email.com', 5, 'Pelayanan prima, dokter sangat kompeten dalam bidangnya.', 'rawat_inap', 5);
+
+-- Add foreign key constraints after data is inserted
+ALTER TABLE reviews ADD CONSTRAINT fk_reviews_doctor FOREIGN KEY (doctor_id) REFERENCES doctor(id) ON DELETE SET NULL;

@@ -26,6 +26,25 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
 
+# Check if JAR file exists
+if [ ! -f "$PROJECT_ROOT/target/hospital-0.0.1-SNAPSHOT.jar" ]; then
+    echo "❌ JAR file not found!"
+    echo ""
+    echo "The application needs to be built first."
+    echo "Please run one of these commands:"
+    echo ""
+    echo "  🛠️  Build project: ./scripts/simple/build.sh"
+    echo "  🚀 Or use quick build: ./mvnw clean package -DskipTests"
+    echo ""
+    echo "After building, run this script again."
+    echo ""
+    read -p "Press Enter to continue..."
+    exit 1
+fi
+
+echo "✅ JAR file found: target/hospital-0.0.1-SNAPSHOT.jar"
+echo ""
+
 # Start the application
 echo "[1/3] Starting containers..."
 docker-compose -f "$PROJECT_ROOT/docker/docker-compose.dev.yml" up -d

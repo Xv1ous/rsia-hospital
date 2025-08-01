@@ -11,6 +11,25 @@ echo Starting application...
 echo Please wait...
 echo.
 
+REM Check if JAR file exists
+if not exist "target\hospital-0.0.1-SNAPSHOT.jar" (
+    echo ❌ JAR file not found!
+    echo.
+    echo The application needs to be built first.
+    echo Please run one of these commands:
+    echo.
+    echo   🛠️  Build project: scripts\simple\BUILD.bat
+    echo   🚀 Or use quick build: mvnw.cmd clean package -DskipTests
+    echo.
+    echo After building, run this script again.
+    echo.
+    pause
+    exit /b 1
+)
+
+echo ✅ JAR file found: target\hospital-0.0.1-SNAPSHOT.jar
+echo.
+
 REM Check if Docker is running
 docker info >nul 2>&1
 if %errorlevel% neq 0 (

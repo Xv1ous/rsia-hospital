@@ -30,111 +30,51 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div
+            th:each="facility : ${facilities}"
+            th:if="${facility.isActive}"
             class="bg-gradient-to-br from-orange-100 to-red-100 rounded-xl shadow-lg p-4 sm:p-6 flex flex-col items-center text-center w-full border-2 border-orange-200"
           >
             <div
               class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold mb-3"
             >
-              PROMO TERBATAS
+              <span th:text="${facility.category ?: 'PROMO TERBATAS'}"></span>
             </div>
-            <svg
+            <div
+              th:if="${facility.iconSvg}"
+              th:utext="${facility.iconSvg}"
               class="h-12 w-12 text-[#E6521F] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+            ></div>
+            <h3
+              class="font-bold text-xl text-[#E6521F] mb-2"
+              th:text="${facility.title}"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 10c-2.21 0-4-1.79-4-4h8c0 2.21-1.79 4-4 4z"
-              />
-            </svg>
-            <h3 class="font-bold text-xl text-[#E6521F] mb-2">
               Paket Check Up Lengkap
             </h3>
-            <div class="text-2xl font-bold text-red-600 mb-2">
-              <span class="line-through text-gray-500">Rp 500.000</span>
-              <span class="ml-2">Rp 350.000</span>
+            <div
+              class="text-2xl font-bold text-red-600 mb-2"
+              th:if="${facility.price}"
+            >
+              <span
+                th:if="${facility.originalPrice}"
+                class="line-through text-gray-500"
+                th:text="${facility.originalPrice}"
+              ></span>
+              <span class="ml-2" th:text="${facility.price}"></span>
             </div>
-            <p class="text-gray-700 text-sm mb-3">
+            <p
+              class="text-gray-700 text-sm mb-3"
+              th:text="${facility.description}"
+            >
               Hemat 30% untuk pemeriksaan kesehatan lengkap termasuk
               laboratorium
             </p>
-            <span class="text-xs text-red-600 font-semibold"
-              >Berlaku hingga 31 Desember 2024</span
-            >
-          </div>
-
-          <div
-            class="bg-gradient-to-br from-green-100 to-blue-100 rounded-xl shadow-lg p-4 sm:p-6 flex flex-col items-center text-center w-full border-2 border-green-200"
-          >
             <div
-              class="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold mb-3"
+              th:if="${facility.features}"
+              class="text-xs text-red-600 font-semibold"
+              th:utext="${facility.features}"
             >
-              NEW ARRIVAL
+              Berlaku hingga 31 Desember 2024
             </div>
-            <svg
-              class="h-12 w-12 text-[#FB9E3A] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-              />
-            </svg>
-            <h3 class="font-bold text-xl text-[#E6521F] mb-2">
-              Layanan Home Care
-            </h3>
-            <div class="text-2xl font-bold text-green-600 mb-2">
-              Mulai Rp 200.000
-            </div>
-            <p class="text-gray-700 text-sm mb-3">
-              Perawatan kesehatan di rumah dengan tenaga medis profesional
-            </p>
-            <span class="text-xs text-green-600 font-semibold"
-              >Tersedia 24/7</span
-            >
-          </div>
-
-          <div
-            class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl shadow-lg p-4 sm:p-6 flex flex-col items-center text-center w-full border-2 border-purple-200"
-          >
-            <div
-              class="bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold mb-3"
-            >
-              BUNDLE OFFER
-            </div>
-            <svg
-              class="h-12 w-12 text-[#E6521F] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
-            </svg>
-            <h3 class="font-bold text-xl text-[#E6521F] mb-2">
-              Paket Keluarga Sehat
-            </h3>
-            <div class="text-2xl font-bold text-purple-600 mb-2">
-              <span class="line-through text-gray-500">Rp 1.200.000</span>
-              <span class="ml-2">Rp 800.000</span>
-            </div>
-            <p class="text-gray-700 text-sm mb-3">
-              Check up untuk 4 anggota keluarga + konsultasi dokter gratis
-            </p>
-            <span class="text-xs text-purple-600 font-semibold"
-              >Hemat Rp 400.000</span
-            >
           </div>
         </div>
 

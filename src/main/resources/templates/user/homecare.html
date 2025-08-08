@@ -36,237 +36,46 @@
           <div
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
           >
-            <!-- Nursing Care -->
             <div
+              th:each="homecareService : ${homecareServices}"
+              th:if="${homecareService.isActive}"
               class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-6 border border-blue-200 hover:shadow-lg transition-shadow"
             >
               <div class="flex items-center gap-3 mb-4">
                 <div
+                  th:if="${homecareService.iconSvg}"
+                  th:utext="${homecareService.iconSvg}"
                   class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center"
+                ></div>
+                <h3
+                  class="font-bold text-lg text-blue-800"
+                  th:text="${homecareService.title}"
                 >
-                  <svg
-                    class="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 class="font-bold text-lg text-blue-800">
                   Perawatan Keperawatan
                 </h3>
               </div>
-              <p class="text-gray-700 text-sm mb-4">
+              <p
+                class="text-gray-700 text-sm mb-4"
+                th:text="${homecareService.description}"
+              >
                 Perawatan luka, pemasangan infus, dan monitoring tanda vital
               </p>
-              <ul class="text-xs text-gray-600 space-y-1 mb-4">
+              <div
+                th:if="${homecareService.features}"
+                class="text-xs text-gray-600 space-y-1 mb-4"
+                th:utext="${homecareService.features}"
+              >
                 <li>• Perawatan luka pasca operasi</li>
                 <li>• Pemasangan dan monitoring infus</li>
                 <li>• Pengukuran tekanan darah</li>
                 <li>• Perawatan kateter</li>
-              </ul>
-              <div class="text-lg font-bold text-blue-600">
+              </div>
+              <div
+                th:if="${homecareService.price}"
+                class="text-lg font-bold text-blue-600"
+                th:text="${homecareService.price}"
+              >
                 Mulai Rp 150.000
-              </div>
-            </div>
-
-            <!-- Doctor Visit -->
-            <div
-              class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-6 border border-green-200 hover:shadow-lg transition-shadow"
-            >
-              <div class="flex items-center gap-3 mb-4">
-                <div
-                  class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center"
-                >
-                  <svg
-                    class="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 class="font-bold text-lg text-green-800">
-                  Kunjungan Dokter
-                </h3>
-              </div>
-              <p class="text-gray-700 text-sm mb-4">
-                Konsultasi dan pemeriksaan langsung oleh dokter spesialis
-              </p>
-              <ul class="text-xs text-gray-600 space-y-1 mb-4">
-                <li>• Konsultasi kesehatan</li>
-                <li>• Pemeriksaan fisik</li>
-                <li>• Evaluasi pengobatan</li>
-                <li>• Resep obat</li>
-              </ul>
-              <div class="text-lg font-bold text-green-600">
-                Mulai Rp 300.000
-              </div>
-            </div>
-
-            <!-- Physiotherapy -->
-            <div
-              class="bg-gradient-to-br from-purple-50 to-violet-100 rounded-xl p-6 border border-purple-200 hover:shadow-lg transition-shadow"
-            >
-              <div class="flex items-center gap-3 mb-4">
-                <div
-                  class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center"
-                >
-                  <svg
-                    class="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 10V3L4 14h7v7l9-11h-7z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 class="font-bold text-lg text-purple-800">Fisioterapi</h3>
-              </div>
-              <p class="text-gray-700 text-sm mb-4">
-                Terapi fisik untuk pemulihan dan rehabilitasi
-              </p>
-              <ul class="text-xs text-gray-600 space-y-1 mb-4">
-                <li>• Terapi pasca stroke</li>
-                <li>• Rehabilitasi pasca operasi</li>
-                <li>• Terapi nyeri sendi</li>
-                <li>• Latihan pernapasan</li>
-              </ul>
-              <div class="text-lg font-bold text-purple-600">
-                Mulai Rp 250.000
-              </div>
-            </div>
-
-            <!-- Baby Care -->
-            <div
-              class="bg-gradient-to-br from-pink-50 to-rose-100 rounded-xl p-6 border border-pink-200 hover:shadow-lg transition-shadow"
-            >
-              <div class="flex items-center gap-3 mb-4">
-                <div
-                  class="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center"
-                >
-                  <svg
-                    class="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 class="font-bold text-lg text-pink-800">Perawatan Bayi</h3>
-              </div>
-              <p class="text-gray-700 text-sm mb-4">
-                Perawatan khusus untuk bayi dan balita
-              </p>
-              <ul class="text-xs text-gray-600 space-y-1 mb-4">
-                <li>• Perawatan tali pusat</li>
-                <li>• Pijat bayi</li>
-                <li>• Konsultasi ASI</li>
-                <li>• Monitoring tumbuh kembang</li>
-              </ul>
-              <div class="text-lg font-bold text-pink-600">
-                Mulai Rp 200.000
-              </div>
-            </div>
-
-            <!-- Elderly Care -->
-            <div
-              class="bg-gradient-to-br from-orange-50 to-red-100 rounded-xl p-6 border border-orange-200 hover:shadow-lg transition-shadow"
-            >
-              <div class="flex items-center gap-3 mb-4">
-                <div
-                  class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center"
-                >
-                  <svg
-                    class="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 class="font-bold text-lg text-orange-800">
-                  Perawatan Lansia
-                </h3>
-              </div>
-              <p class="text-gray-700 text-sm mb-4">
-                Perawatan khusus untuk lansia dan penderita demensia
-              </p>
-              <ul class="text-xs text-gray-600 space-y-1 mb-4">
-                <li>• Pendampingan 24 jam</li>
-                <li>• Bantuan aktivitas harian</li>
-                <li>• Monitoring kesehatan</li>
-                <li>• Terapi kognitif</li>
-              </ul>
-              <div class="text-lg font-bold text-orange-600">
-                Mulai Rp 500.000
-              </div>
-            </div>
-
-            <!-- Medical Equipment -->
-            <div
-              class="bg-gradient-to-br from-teal-50 to-cyan-100 rounded-xl p-6 border border-teal-200 hover:shadow-lg transition-shadow"
-            >
-              <div class="flex items-center gap-3 mb-4">
-                <div
-                  class="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center"
-                >
-                  <svg
-                    class="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 class="font-bold text-lg text-teal-800">Penyewaan Alat</h3>
-              </div>
-              <p class="text-gray-700 text-sm mb-4">
-                Penyewaan alat medis untuk perawatan di rumah
-              </p>
-              <ul class="text-xs text-gray-600 space-y-1 mb-4">
-                <li>• Oxygen concentrator</li>
-                <li>• Nebulizer</li>
-                <li>• Tensi meter</li>
-                <li>• Kursi roda</li>
-              </ul>
-              <div class="text-lg font-bold text-teal-600">
-                Mulai Rp 100.000
               </div>
             </div>
           </div>

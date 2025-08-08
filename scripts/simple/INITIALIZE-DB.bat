@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 title Hospital App - Initialize Database
 color 0E
 
@@ -39,8 +40,49 @@ REM Wait for database to be ready
 echo [4/5] Waiting for database to be ready...
 timeout /t 30 /nobreak >nul
 
+REM Wait for MySQL to be ready
+echo [4/5] Waiting for MySQL to be ready...
+for /l %%i in (1,1,30) do (
+    docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysqladmin ping -h localhost -u hospital_user --silent >nul 2>&1
+    if !errorlevel! equ 0 (
+        echo ✅ MySQL is ready!
+        goto :mysql_ready
+    )
+    timeout /t 2 /nobreak >nul
+)
+echo ❌ MySQL failed to start within 60 seconds
+pause
+exit /b 1
+
+:mysql_ready
+
+REM Apply SQL migration files
+echo [5/5] Checking for pending migrations...
+echo.
+
+set MIGRATION_DIR=src\main\resources\db\migration
+
+if exist "%MIGRATION_DIR%" (
+    echo 🔄 Checking for pending migrations from %MIGRATION_DIR%...
+    echo.
+
+    for %%f in ("%MIGRATION_DIR%\V*.sql") do (
+        echo ▶️  Checking: %%~nxf
+        docker exec -i -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital < "%%f" >nul 2>&1
+        if !errorlevel! equ 0 (
+            echo ✅ %%~nxf applied successfully
+        ) else (
+            echo ⚠️  %%~nxf already applied or failed (this is normal)
+        )
+        echo.
+    )
+) else (
+    echo ⚠️  Migration directory not found: %MIGRATION_DIR%
+    echo.
+)
+
 REM Verify initialization
-echo [5/5] Verifying database initialization...
+echo 📊 Verifying database initialization...
 echo.
 
 echo 📊 Database Tables:
@@ -67,18 +109,30 @@ echo 👤 Users:
 docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT id, username, role FROM users;"
 echo.
 
+echo 📄 Page Contents:
+docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -e "SELECT page_type, COUNT(*) as count FROM page_contents GROUP BY page_type ORDER BY page_type;" 2>nul
+echo.
+
 echo ========================================
 echo    ✅ DATABASE INITIALIZED SUCCESSFULLY!
 echo ========================================
 echo.
 echo 🌐 Application URL: http://localhost:8080
-echo 👤 Admin Login: admin / (password from encrypted value)
+echo 👤 Admin Login: admin / admin123
+echo 🗄️  MySQL Access: localhost:3307 (user: hospital_user, password: hospital_pass)
+echo.
+echo 📋 Admin Dashboard Features:
+echo    - Main Dashboard: http://localhost:8080/admin
+echo    - Page Content Management: http://localhost:8080/admin/page-contents
+echo    - Doctor Management: http://localhost:8080/admin/doctors
+echo    - Appointment Management: http://localhost:8080/admin/appointments
 echo.
 echo 📊 Sample data has been loaded:
 echo    - Doctors and schedules
 echo    - News articles
 echo    - Services
 echo    - Admin user
+echo    - Page contents (Facilities, Services, Home Care)
 echo.
 
 pause

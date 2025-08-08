@@ -102,12 +102,53 @@ echo "Appointments: $APPOINTMENT_COUNT"
 USER_COUNT=$(docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -s -N -e "SELECT COUNT(*) FROM users;")
 echo "Users: $USER_COUNT"
 
+# Apply SQL migration files from src/main/resources/db/migration
+MIGRATION_DIR="src/main/resources/db/migration"
+
+echo ""
+echo "🔄 Checking for pending migrations from $MIGRATION_DIR..."
+
+if [ -d "$MIGRATION_DIR" ]; then
+    for file in $(ls "$MIGRATION_DIR"/V*.sql | sort); do
+        filename=$(basename "$file")
+        echo "▶️  Checking: $filename"
+
+        # Try to run the migration (will fail gracefully if already applied)
+        if docker exec -i -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital < "$file" 2>/dev/null; then
+            print_status "$filename applied successfully"
+        else
+            print_warning "$filename already applied or failed (this is normal)"
+        fi
+    done
+else
+    print_warning "Migration directory not found: $MIGRATION_DIR"
+fi
+
+# Check page contents (V5 migration)
+PAGE_CONTENT_COUNT=$(docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -s -N -e "SELECT COUNT(*) FROM page_contents;" 2>/dev/null || echo "0")
+echo "Page Contents: $PAGE_CONTENT_COUNT"
+
+# Check page contents by type
+FACILITIES_COUNT=$(docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -s -N -e "SELECT COUNT(*) FROM page_contents WHERE page_type = 'FACILITIES';" 2>/dev/null || echo "0")
+SERVICES_COUNT=$(docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -s -N -e "SELECT COUNT(*) FROM page_contents WHERE page_type = 'SERVICES';" 2>/dev/null || echo "0")
+HOMECARE_COUNT=$(docker exec -e MYSQL_PWD=hospital_pass hospital-mysql-dev mysql -u hospital_user hospital -s -N -e "SELECT COUNT(*) FROM page_contents WHERE page_type = 'HOMECARE';" 2>/dev/null || echo "0")
+
+echo "  - Facilities: $FACILITIES_COUNT"
+echo "  - Services: $SERVICES_COUNT"
+echo "  - Home Care: $HOMECARE_COUNT"
+
 echo ""
 echo "🎉 Database initialization completed!"
 echo ""
 echo "Application URL: http://localhost:8080"
 echo "Admin Login: admin / admin123"
 echo "MySQL Access: localhost:3307 (user: hospital_user, password: hospital_pass)"
+echo ""
+echo "📋 Admin Dashboard Features:"
+echo "  - Main Dashboard: http://localhost:8080/admin"
+echo "  - Page Content Management: http://localhost:8080/admin/page-contents"
+echo "  - Doctor Management: http://localhost:8080/admin/doctors"
+echo "  - Appointment Management: http://localhost:8080/admin/appointments"
 echo ""
 echo "Use './scripts/simple/mysql-access.sh' for database management"
 echo "Use './scripts/simple/backup-db.sh' to create backups"

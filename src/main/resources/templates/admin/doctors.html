@@ -1,36 +1,552 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
   <head>
-    <title>Admin - Dokter</title>
-    <link href="/main.css" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Dokter - RSIA Buah Hati Pamulang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#ff6b35",
+              "primary-dark": "#e55a2b",
+              "primary-light": "#ff8a5c",
+              "primary-orange": "#ff6b35",
+              "primary-orange-dark": "#e55a2b",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .modal-scroll {
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e0 #f7fafc;
+      }
+      .modal-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+      .modal-scroll::-webkit-scrollbar-track {
+        background: #f7fafc;
+      }
+      .modal-scroll::-webkit-scrollbar-thumb {
+        background-color: #cbd5e0;
+        border-radius: 3px;
+      }
+    </style>
   </head>
-  <body>
-    <div th:replace="fragments/navbar :: navbar"></div>
-    <div class="container mx-auto py-8">
-      <h1 class="text-2xl font-bold mb-4">Daftar Dokter</h1>
-      <table class="min-w-full bg-white rounded shadow">
-        <thead>
-          <tr class="bg-gray-200">
-            <th class="py-2 px-4">Nama</th>
-            <th class="py-2 px-4">Spesialisasi</th>
-            <th class="py-2 px-4">Hari</th>
-            <th class="py-2 px-4">Jam</th>
-            <th class="py-2 px-4">Rumah Sakit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            th:each="doctor : ${doctorSchedules}"
-            th:if="${doctor != null and doctor.name != null and doctor.name != ''}"
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-primary text-white shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <h1 class="text-xl font-bold">RSIA Buah Hati Pamulang</h1>
+            </div>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a href="/admin" class="hover:text-gray-200 transition-colors"
+              >Dashboard</a
+            >
+            <a
+              href="/admin/appointments"
+              class="hover:text-gray-200 transition-colors"
+              >Janji Temu</a
+            >
+            <a
+              href="/admin/doctors"
+              class="hover:text-gray-200 transition-colors"
+              >Dokter</a
+            >
+            <a
+              href="/admin/page-contents"
+              class="hover:text-gray-200 transition-colors"
+              >Konten Halaman</a
+            >
+            <a href="/" class="hover:text-gray-200 transition-colors"
+              >Kembali ke Website</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h2 class="text-3xl font-bold text-gray-900">Daftar Dokter</h2>
+        <p class="text-gray-600 mt-2">Kelola data dokter dan jadwal praktik</p>
+      </div>
+
+      <!-- Search and Filter Bar -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+          <div
+            class="flex flex-col md:flex-row gap-4 items-center justify-between"
           >
-            <td class="py-2 px-4" th:text="${doctor.name}"></td>
-            <td class="py-2 px-4" th:text="${doctor.specialization}"></td>
-            <td class="py-2 px-4" th:text="${doctor.day}"></td>
-            <td class="py-2 px-4" th:text="${doctor.time}"></td>
-            <td class="py-2 px-4" th:text="${doctor.hospital}"></td>
-          </tr>
-        </tbody>
-      </table>
+            <div class="flex-1 w-full md:w-auto">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="search-doctors"
+                  placeholder="Cari dokter berdasarkan nama, spesialisasi, atau rumah sakit..."
+                  class="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <svg
+                    class="h-5 w-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <select
+                id="filter-specialization"
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              >
+                <option value="">Semua Spesialisasi</option>
+                <!-- Options will be populated dynamically -->
+              </select>
+              <select
+                id="filter-hospital"
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              >
+                <option value="">Semua Rumah Sakit</option>
+                <!-- Options will be populated dynamically -->
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctors Table -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200 bg-primary text-white">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-lg font-semibold">Dokter</h3>
+              <p class="text-sm opacity-90 mt-1">
+                <span id="doctors-count">0</span> dokter ditemukan
+              </p>
+            </div>
+            <button
+              onclick="openModal('add-doctor')"
+              class="px-4 py-2 bg-white text-primary rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium"
+            >
+              + Tambah Dokter
+            </button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="py-3 px-6 text-left font-semibold text-gray-900">
+                  Nama
+                </th>
+                <th class="py-3 px-6 text-left font-semibold text-gray-900">
+                  Spesialisasi
+                </th>
+                <th class="py-3 px-6 text-left font-semibold text-gray-900">
+                  Hari
+                </th>
+                <th class="py-3 px-6 text-left font-semibold text-gray-900">
+                  Jam
+                </th>
+                <th class="py-3 px-6 text-left font-semibold text-gray-900">
+                  Rumah Sakit
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <tr
+                th:each="doctor : ${doctors}"
+                th:if="${doctor != null and doctor.name != null and doctor.name != ''}"
+                class="hover:bg-gray-50 transition-colors"
+              >
+                <td class="py-4 px-6" th:text="${doctor.name}"></td>
+                <td class="py-4 px-6" th:text="${doctor.specialization}"></td>
+                <td class="py-4 px-6" th:text="${doctor.day}"></td>
+                <td class="py-4 px-6" th:text="${doctor.time}"></td>
+                <td class="py-4 px-6" th:text="${doctor.hospital}"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center text-sm text-gray-700">
+              <span>Menampilkan</span>
+              <select
+                id="page-size"
+                class="mx-2 px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent"
+              >
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              <span>dari <span id="total-doctors">0</span> dokter</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button
+                id="prev-page"
+                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled
+              >
+                Sebelumnya
+              </button>
+              <div class="flex items-center space-x-1" id="page-numbers">
+                <!-- Page numbers will be generated here -->
+              </div>
+              <button
+                id="next-page"
+                class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled
+              >
+                Selanjutnya
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Include Scripts Fragment -->
+    <div th:insert="admin/fragments/scripts :: fragment"></div>
+
+    <!-- Search and Pagination Script -->
+    <script>
+      // Global variables for pagination and search
+      let allDoctors = [];
+      let filteredDoctors = [];
+      let currentPage = 1;
+      let pageSize = 10;
+      let totalPages = 0;
+
+      // Initialize when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeDoctorsData();
+        setupEventListeners();
+        renderDoctors();
+      });
+
+      // Initialize doctors data from Thymeleaf
+      function initializeDoctorsData() {
+        // Get all doctors from the table
+        const tableRows = document.querySelectorAll("tbody tr");
+        allDoctors = Array.from(tableRows).map((row) => {
+          const cells = row.querySelectorAll("td");
+          return {
+            name: cells[0]?.textContent?.trim() || "",
+            specialization: cells[1]?.textContent?.trim() || "",
+            day: cells[2]?.textContent?.trim() || "",
+            time: cells[3]?.textContent?.trim() || "",
+            hospital: cells[4]?.textContent?.trim() || "",
+            element: row,
+          };
+        });
+        filteredDoctors = [...allDoctors];
+
+        console.log("Extracted doctors data:", allDoctors);
+
+        // Populate specialization filter with actual data
+        populateSpecializationFilter();
+        populateHospitalFilter();
+
+        updateCounts();
+      }
+
+      // Populate specialization filter with actual data
+      function populateSpecializationFilter() {
+        const specializationFilter = document.getElementById(
+          "filter-specialization"
+        );
+        if (!specializationFilter) return;
+
+        // Get unique specializations from data
+        const specializations = [
+          ...new Set(
+            allDoctors.map((doctor) => doctor.specialization).filter(Boolean)
+          ),
+        ];
+
+        // Clear existing options except the first one
+        specializationFilter.innerHTML =
+          '<option value="">Semua Spesialisasi</option>';
+
+        // Add options for each unique specialization
+        specializations.sort().forEach((specialization) => {
+          const option = document.createElement("option");
+          option.value = specialization;
+          option.textContent = specialization;
+          specializationFilter.appendChild(option);
+        });
+      }
+
+      // Populate hospital filter with actual data
+      function populateHospitalFilter() {
+        const hospitalFilter = document.getElementById("filter-hospital");
+        if (!hospitalFilter) return;
+
+        // Get unique hospitals from data
+        const hospitals = [
+          ...new Set(
+            allDoctors.map((doctor) => doctor.hospital).filter(Boolean)
+          ),
+        ];
+
+        // Clear existing options except the first one
+        hospitalFilter.innerHTML =
+          '<option value="">Semua Rumah Sakit</option>';
+
+        // Add options for each unique hospital
+        hospitals.sort().forEach((hospital) => {
+          const option = document.createElement("option");
+          option.value = hospital;
+          option.textContent = hospital;
+          hospitalFilter.appendChild(option);
+        });
+      }
+
+      // Setup event listeners
+      function setupEventListeners() {
+        // Search input
+        const searchInput = document.getElementById("search-doctors");
+        if (searchInput) {
+          searchInput.addEventListener("input", function (e) {
+            console.log("Search input changed:", e.target.value);
+            currentPage = 1;
+            filterDoctors();
+          });
+        } else {
+          console.error("Search input not found");
+        }
+
+        // Filter dropdowns
+        const specializationFilter = document.getElementById(
+          "filter-specialization"
+        );
+        if (specializationFilter) {
+          specializationFilter.addEventListener("change", function (e) {
+            console.log("Specialization filter changed:", e.target.value);
+            currentPage = 1;
+            filterDoctors();
+          });
+        } else {
+          console.error("Specialization filter not found");
+        }
+
+        const hospitalFilter = document.getElementById("filter-hospital");
+        if (hospitalFilter) {
+          hospitalFilter.addEventListener("change", function (e) {
+            console.log("Hospital filter changed:", e.target.value);
+            currentPage = 1;
+            filterDoctors();
+          });
+        } else {
+          console.error("Hospital filter not found");
+        }
+
+        // Page size selector
+        document
+          .getElementById("page-size")
+          .addEventListener("change", function (e) {
+            pageSize = parseInt(e.target.value);
+            currentPage = 1;
+            renderDoctors();
+          });
+
+        // Pagination buttons
+        document
+          .getElementById("prev-page")
+          .addEventListener("click", function () {
+            if (currentPage > 1) {
+              currentPage--;
+              renderDoctors();
+            }
+          });
+
+        document
+          .getElementById("next-page")
+          .addEventListener("click", function () {
+            if (currentPage < totalPages) {
+              currentPage++;
+              renderDoctors();
+            }
+          });
+      }
+
+      // Filter doctors based on search and filters
+      function filterDoctors() {
+        const searchTerm = document
+          .getElementById("search-doctors")
+          .value.toLowerCase();
+        const specializationFilter = document.getElementById(
+          "filter-specialization"
+        ).value;
+        const hospitalFilter = document.getElementById("filter-hospital").value;
+
+        console.log("Filtering with:", {
+          searchTerm,
+          specializationFilter,
+          hospitalFilter,
+          totalDoctors: allDoctors.length,
+        });
+
+        filteredDoctors = allDoctors.filter((doctor) => {
+          const matchesSearch =
+            !searchTerm ||
+            doctor.name.toLowerCase().includes(searchTerm) ||
+            doctor.specialization.toLowerCase().includes(searchTerm) ||
+            doctor.hospital.toLowerCase().includes(searchTerm);
+
+          const matchesSpecialization =
+            !specializationFilter ||
+            doctor.specialization === specializationFilter;
+
+          const matchesHospital =
+            !hospitalFilter || doctor.hospital === hospitalFilter;
+
+          return matchesSearch && matchesSpecialization && matchesHospital;
+        });
+
+        console.log("Filtered doctors:", filteredDoctors.length);
+
+        updateCounts();
+        renderDoctors();
+      }
+
+      // Update counts and pagination info
+      function updateCounts() {
+        document.getElementById("doctors-count").textContent =
+          filteredDoctors.length;
+        document.getElementById("total-doctors").textContent =
+          filteredDoctors.length;
+        totalPages = Math.ceil(filteredDoctors.length / pageSize);
+      }
+
+      // Render doctors for current page
+      function renderDoctors() {
+        const tbody = document.querySelector("tbody");
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        const doctorsToShow = filteredDoctors.slice(startIndex, endIndex);
+
+        // Clear current table
+        tbody.innerHTML = "";
+
+        // Add filtered doctors
+        doctorsToShow.forEach((doctor) => {
+          const row = document.createElement("tr");
+          row.className = "hover:bg-gray-50 transition-colors";
+          row.innerHTML = `
+            <td class="py-4 px-6">${doctor.name}</td>
+            <td class="py-4 px-6">${doctor.specialization}</td>
+            <td class="py-4 px-6">${doctor.day}</td>
+            <td class="py-4 px-6">${doctor.time}</td>
+            <td class="py-4 px-6">${doctor.hospital}</td>
+          `;
+          tbody.appendChild(row);
+        });
+
+        // Update pagination
+        updatePagination();
+      }
+
+      // Update pagination controls
+      function updatePagination() {
+        const prevBtn = document.getElementById("prev-page");
+        const nextBtn = document.getElementById("next-page");
+        const pageNumbers = document.getElementById("page-numbers");
+
+        // Update button states
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+
+        // Generate page numbers
+        pageNumbers.innerHTML = "";
+
+        if (totalPages <= 1) return;
+
+        const maxVisiblePages = 5;
+        let startPage = Math.max(
+          1,
+          currentPage - Math.floor(maxVisiblePages / 2)
+        );
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        if (endPage - startPage + 1 < maxVisiblePages) {
+          startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        // Add first page if not visible
+        if (startPage > 1) {
+          addPageNumber(1);
+          if (startPage > 2) {
+            addPageEllipsis();
+          }
+        }
+
+        // Add visible page numbers
+        for (let i = startPage; i <= endPage; i++) {
+          addPageNumber(i);
+        }
+
+        // Add last page if not visible
+        if (endPage < totalPages) {
+          if (endPage < totalPages - 1) {
+            addPageEllipsis();
+          }
+          addPageNumber(totalPages);
+        }
+      }
+
+      // Add page number button
+      function addPageNumber(pageNum) {
+        const pageNumbers = document.getElementById("page-numbers");
+        const button = document.createElement("button");
+        button.className = `px-3 py-1 text-sm border rounded ${
+          pageNum === currentPage
+            ? "bg-primary text-white border-primary"
+            : "border-gray-300 hover:bg-gray-100"
+        }`;
+        button.textContent = pageNum;
+        button.addEventListener("click", () => {
+          currentPage = pageNum;
+          renderDoctors();
+        });
+        pageNumbers.appendChild(button);
+      }
+
+      // Add page ellipsis
+      function addPageEllipsis() {
+        const pageNumbers = document.getElementById("page-numbers");
+        const span = document.createElement("span");
+        span.className = "px-2 py-1 text-sm text-gray-500";
+        span.textContent = "...";
+        pageNumbers.appendChild(span);
+      }
+    </script>
   </body>
 </html>

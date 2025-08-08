@@ -1,7 +1,10 @@
 @echo off
+setlocal enabledelayedexpansion
 title Hospital App - Quick Access
 color 0B
 
+:menu
+cls
 echo.
 echo ========================================
 echo    HOSPITAL APP - QUICK ACCESS
@@ -27,24 +30,37 @@ if "%choice%"=="1" (
     echo.
     echo Building project...
     call scripts\simple\BUILD.bat
+    echo.
+    pause
+    goto menu
 ) else if "%choice%"=="2" (
     echo.
     echo Starting application...
     call scripts\simple\START.bat
+    echo.
+    pause
+    goto menu
 ) else if "%choice%"=="3" (
     echo.
     echo Stopping application...
     call scripts\simple\STOP.bat
+    echo.
+    pause
+    goto menu
 ) else if "%choice%"=="4" (
     echo.
     echo Restarting application...
     call scripts\simple\RESTART.bat
+    echo.
+    pause
+    goto menu
 ) else if "%choice%"=="5" (
     echo.
     echo Checking application status...
     docker-compose -f docker/docker-compose.dev.yml ps
     echo.
     pause
+    goto menu
 ) else if "%choice%"=="6" (
     echo.
     echo Opening application logs...
@@ -53,18 +69,30 @@ if "%choice%"=="1" (
     echo.
     echo Opening MySQL Database Access...
     call scripts\simple\MYSQL-ACCESS.bat
+    echo.
+    pause
+    goto menu
 ) else if "%choice%"=="8" (
     echo.
     echo Initializing database...
     call scripts\simple\INITIALIZE-DB.bat
+    echo.
+    pause
+    goto menu
 ) else if "%choice%"=="9" (
     echo.
     echo Opening documentation...
     start docs\
+    echo.
+    pause
+    goto menu
 ) else if "%choice%"=="10" (
     echo.
     echo Opening simple guide...
     start docs\README_SIMPLE.md
+    echo.
+    pause
+    goto menu
 ) else if "%choice%"=="11" (
     echo.
     echo Goodbye!
@@ -73,5 +101,5 @@ if "%choice%"=="1" (
     echo.
     echo Invalid choice. Please try again.
     pause
-    call QUICK_ACCESS.bat
+    goto menu
 )

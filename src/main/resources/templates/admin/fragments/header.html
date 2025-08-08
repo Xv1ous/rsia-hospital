@@ -10,9 +10,7 @@
         theme: {
           extend: {
             colors: {
-              primary: "#ff6b35",
-              "primary-dark": "#e55a2b",
-              "primary-light": "#ff8a5c",
+              primary: "#17695b",
               "primary-orange": "#ff6b35",
               "primary-orange-dark": "#e55a2b",
             },
@@ -39,7 +37,7 @@
   </head>
   <body class="bg-gray-50">
     <!-- Navigation -->
-    <nav class="bg-primary text-white shadow-lg">
+    <nav class="bg-[#17695b] text-white shadow-lg">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
           <div class="flex items-center">
@@ -50,6 +48,11 @@
           <div class="flex items-center space-x-4">
             <a href="/admin" class="hover:text-gray-200 transition-colors"
               >Dashboard</a
+            >
+            <a
+              href="/admin/appointments"
+              class="hover:text-gray-200 transition-colors"
+              >Janji Temu</a
             >
             <a
               href="/admin/doctors"
@@ -78,18 +81,6 @@
           Kelola data rumah sakit dan monitor aktivitas
         </p>
       </div>
-
-      <!-- Include Dashboard Overview Fragment -->
-      <div th:replace="admin/fragments/dashboard-overview :: fragment"></div>
-
-      <!-- Include Doctors Table Fragment -->
-      <div th:replace="admin/fragments/doctors-table :: fragment"></div>
-
-      <!-- Include Modals Fragment -->
-      <div th:replace="admin/fragments/modals :: fragment"></div>
     </div>
-
-    <!-- Include Scripts Fragment -->
-    <div th:insert="admin/fragments/scripts :: fragment"></div>
   </body>
 </html>

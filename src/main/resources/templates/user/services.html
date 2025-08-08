@@ -3,283 +3,196 @@
   <!-- Head Fragment -->
   <head th:replace="~{fragments/head :: head}"></head>
   <body
-    class="min-h-screen h-full flex flex-col bg-gray-50 text-gray-900 font-sans"
+    class="min-h-screen h-full flex flex-col bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 font-sans"
   >
     <script th:inline="javascript">
       document.title = "Layanan Kami - RSIA Buah Hati Pamulang";
     </script>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <main class="flex-1">
-      <nav class="max-w-6xl mx-auto px-4 pt-20" aria-label="Breadcrumb">
-        <ol class="flex items-center space-x-2 text-sm text-gray-500">
-          <li><a href="/" class="hover:underline">Beranda</a></li>
-          <li><span class="mx-2">/</span></li>
-          <li class="text-[#FB9E3A] font-semibold">Layanan Kami</li>
-        </ol>
-      </nav>
-      <div
-        class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row sm:justify-between sm:items-center mt-2 mb-4 gap-2"
-      >
-        <h1
-          class="text-2xl sm:text-3xl md:text-4xl font-bold text-[#E6521F] mb-2 sm:mb-4 flex items-center gap-2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 text-[#FB9E3A]"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          Layanan Kami
-        </h1>
-        <a
-          href="/"
-          class="w-full sm:w-auto px-4 py-2 rounded bg-[#E6521F] text-white font-semibold shadow hover:bg-[#FF8000] transition text-sm text-center"
-          >Kembali ke Beranda</a
-        >
-      </div>
-      <section
-        class="py-8 bg-white flex flex-col items-center px-4 fade-in rounded-xl shadow max-w-6xl mx-auto mb-12"
-      >
-        <p class="text-lg text-[#17695b] mb-8 font-medium text-center">
-          Solusi Kesehatan Lengkap untuk Keluarga Anda. Berikut layanan unggulan
-          kami.
-        </p>
-        <!-- Search Bar -->
-        <div class="w-full max-w-md mb-8">
-          <input
-            id="service-search"
-            type="text"
-            placeholder="Cari layanan..."
-            class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#17695b] focus:outline-none text-lg shadow"
-          />
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-[#17695b] to-[#2d5a4f] py-20 overflow-hidden">
+      <div class="absolute inset-0 bg-black opacity-10"></div>
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+
+      <div class="relative max-w-6xl mx-auto px-4 text-center">
+        <div class="mb-6">
+          <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight flex items-center justify-center gap-4">
+            <svg class="h-12 w-12 text-[#FB9E3A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Layanan Kami
+          </h1>
+          <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+            Solusi kesehatan lengkap untuk keluarga Anda dengan layanan unggulan yang didukung teknologi modern dan tim medis berpengalaman.
+          </p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-          <div
-            class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a
+            href="/"
+            class="px-8 py-4 bg-white text-[#17695b] font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg"
           >
-            <svg
-              class="h-10 w-10 text-[#FB9E3A] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
-              IGD 24 Jam
-            </h3>
-            <span
-              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
-              >Darurat</span
-            >
-            <p class="text-gray-700 text-sm">
-              Layanan gawat darurat siap 24 jam untuk kebutuhan mendesak.
+            Kembali ke Beranda
+          </a>
+          <a
+            href="/user/about"
+            class="px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-[#17695b] transition-all duration-300 text-lg"
+          >
+            Tentang Kami
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <div class="max-w-6xl mx-auto px-4 py-6">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li><a href="/" class="hover:text-[#17695b] transition-colors">Beranda</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-[#17695b] font-semibold">Layanan Kami</li>
+      </ol>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <!-- Search Section -->
+      <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Temukan Layanan yang Anda Butuhkan
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Kami menyediakan berbagai layanan kesehatan berkualitas tinggi untuk memenuhi kebutuhan medis keluarga Anda.
             </p>
           </div>
-          <div
-            class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
-          >
-            <svg
-              class="h-10 w-10 text-[#E6521F] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <rect x="3" y="10" width="18" height="7" rx="2" />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 17V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10"
+
+          <!-- Enhanced Search Bar -->
+          <div class="max-w-2xl mx-auto mb-12">
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <input
+                id="service-search"
+                type="text"
+                placeholder="Cari layanan kesehatan..."
+                class="w-full pl-12 pr-4 py-4 text-lg border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-[#17695b]/20 focus:border-[#17695b] outline-none transition-all duration-300 shadow-sm hover:shadow-md"
               />
-            </svg>
-            <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
-              Rawat Inap
-            </h3>
-            <span
-              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
-              >Inap</span
-            >
-            <p class="text-gray-700 text-sm">
-              Fasilitas kamar nyaman untuk perawatan intensif dan pemulihan.
-            </p>
-          </div>
-          <div
-            class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
-          >
-            <svg
-              class="h-10 w-10 text-[#FB9E3A] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 15a4 4 0 108 0V7m-4 8v2a2 2 0 104 0v-2"
-              />
-            </svg>
-            <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
-              Rawat Jalan
-            </h3>
-            <span
-              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
-              >Jalan</span
-            >
-            <p class="text-gray-700 text-sm">
-              Konsultasi dan perawatan tanpa harus menginap di rumah sakit.
-            </p>
-          </div>
-          <div
-            class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
-          >
-            <svg
-              class="h-10 w-10 text-[#E6521F] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 2v6a6 6 0 006 6 6 6 0 006-6V2"
-              />
-            </svg>
-            <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
-              Laboratorium
-            </h3>
-            <span
-              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
-              >Lab</span
-            >
-            <p class="text-gray-700 text-sm">
-              Pemeriksaan laboratorium lengkap dan akurat.
-            </p>
-          </div>
-          <div
-            class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
-          >
-            <svg
-              class="h-10 w-10 text-[#FB9E3A] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <rect x="4" y="4" width="16" height="16" rx="2" />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 8h8v8H8z"
-              />
-            </svg>
-            <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
-              USG & Radiologi
-            </h3>
-            <span
-              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
-              >Radiologi</span
-            >
-            <p class="text-gray-700 text-sm">
-              Layanan USG, rontgen, dan radiologi modern.
-            </p>
-          </div>
-          <div
-            class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
-          >
-            <svg
-              class="h-10 w-10 text-[#E6521F] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <rect x="7" y="7" width="10" height="10" rx="5" />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M7 17l10-10"
-              />
-            </svg>
-            <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">Apotek</h3>
-            <span
-              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
-              >Apotek</span
-            >
-            <p class="text-gray-700 text-sm">
-              Apotek lengkap dengan obat-obatan berkualitas.
-            </p>
-          </div>
-          <div
-            class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
-          >
-            <svg
-              class="h-10 w-10 text-[#FB9E3A] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 7l-7 7-4-4m0 0V3m0 4h4"
-              />
-            </svg>
-            <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">Vaksinasi</h3>
-            <span
-              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
-              >Vaksin</span
-            >
-            <p class="text-gray-700 text-sm">
-              Layanan vaksinasi untuk anak dan dewasa.
-            </p>
-          </div>
-          <div
-            class="bg-[#ffede6] rounded-xl shadow p-4 sm:p-6 flex flex-col items-center text-center w-full"
-          >
-            <svg
-              class="h-10 w-10 text-[#E6521F] mb-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 8h2a2 2 0 012 2v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8a2 2 0 012-2h2m4-4v4m0 0l-2-2m2 2l2-2"
-              />
-            </svg>
-            <h3 class="font-semibold text-xl text-[#FB9E3A] mb-1">
-              Konsultasi Online
-            </h3>
-            <span
-              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-700 text-white shadow mb-2"
-              >Online</span
-            >
-            <p class="text-gray-700 text-sm">
-              Konsultasi dokter secara online, mudah dan praktis.
+            </div>
+            <p class="text-sm text-gray-500 mt-3 text-center">
+              Ketik nama layanan atau kategori untuk menemukan layanan yang sesuai
             </p>
           </div>
         </div>
       </section>
+
+      <!-- Services Grid -->
+      <section class="py-16 bg-gradient-to-b from-white to-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+          <div id="services-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Service Cards -->
+            <div
+              th:each="service : ${services}"
+              th:if="${service.isActive}"
+              class="service-card group bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden border border-gray-100"
+            >
+              <!-- Service Icon -->
+              <div class="p-8 pb-6">
+                <div class="bg-gradient-to-br from-[#17695b] to-[#2d5a4f] w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <div th:if="${service.iconSvg}" th:utext="${service.iconSvg}" class="h-8 w-8 text-white"></div>
+                  <svg th:unless="${service.iconSvg}" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z" />
+                  </svg>
+                </div>
+
+                <!-- Service Title -->
+                <h3 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#17695b] transition-colors duration-300" th:text="${service.title}">
+                  IGD 24 Jam
+                </h3>
+
+                <!-- Service Category -->
+                <span class="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-[#17695b]/10 text-[#17695b] mb-4" th:text="${service.category ?: 'Layanan'}">
+                  Darurat
+                </span>
+
+                <!-- Service Description -->
+                <p class="text-gray-600 leading-relaxed mb-6" th:text="${service.description}">
+                  Layanan gawat darurat siap 24 jam untuk kebutuhan mendesak.
+                </p>
+
+                <!-- Service Price -->
+                <div th:if="${service.price}" class="flex items-center justify-between">
+                  <span class="text-lg font-bold text-[#17695b]" th:text="${service.price}"></span>
+                  <button class="px-4 py-2 bg-[#17695b] text-white rounded-full text-sm font-semibold hover:bg-[#2d5a4f] transition-colors duration-300">
+                    Info Detail
+                  </button>
+                </div>
+              </div>
+
+              <!-- Service Footer -->
+              <div class="px-8 pb-6">
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                  <span class="flex items-center">
+                    <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Tersedia 24/7
+                  </span>
+                  <span class="flex items-center">
+                    <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    Tim Spesialis
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- No Results Message -->
+          <div id="no-results" class="hidden text-center py-12">
+            <div class="max-w-md mx-auto">
+              <svg class="h-16 w-16 text-gray-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33" />
+              </svg>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">Layanan Tidak Ditemukan</h3>
+              <p class="text-gray-600">Coba kata kunci lain atau hubungi kami untuk informasi lebih lanjut.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="py-16 bg-[#17695b]">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+            Butuh Konsultasi?
+          </h2>
+          <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            Tim medis kami siap membantu Anda memilih layanan yang tepat sesuai kebutuhan kesehatan keluarga.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/user/janji-temu"
+              class="px-8 py-4 bg-white text-[#17695b] font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg"
+            >
+              Buat Janji Temu
+            </a>
+            <a
+              href="/user/contact"
+              class="px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-[#17695b] transition-all duration-300 text-lg"
+            >
+              Hubungi Kami
+            </a>
+          </div>
+        </div>
+      </section>
     </main>
+
     <div th:replace="~{fragments/footer :: footer}"></div>
 
     <!-- Modal Pilihan Pasien Baru/Lama -->
@@ -287,5 +200,57 @@
 
     <!-- Script Modal -->
     <script src="/js/modal.js"></script>
+
+    <!-- Enhanced Search Script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('service-search');
+        const serviceCards = document.querySelectorAll('.service-card');
+        const noResults = document.getElementById('no-results');
+        const servicesContainer = document.getElementById('services-container');
+
+        searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase().trim();
+          let visibleCards = 0;
+
+          serviceCards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            const category = card.querySelector('span').textContent.toLowerCase();
+            const description = card.querySelector('p').textContent.toLowerCase();
+
+            const matches = title.includes(searchTerm) ||
+                           category.includes(searchTerm) ||
+                           description.includes(searchTerm);
+
+            if (matches) {
+              card.style.display = 'block';
+              card.style.animation = 'fadeIn 0.5s ease-in-out';
+              visibleCards++;
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          // Show/hide no results message
+          if (visibleCards === 0 && searchTerm !== '') {
+            noResults.classList.remove('hidden');
+            servicesContainer.classList.add('hidden');
+          } else {
+            noResults.classList.add('hidden');
+            servicesContainer.classList.remove('hidden');
+          }
+        });
+
+        // Add fade-in animation
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+        `;
+        document.head.appendChild(style);
+      });
+    </script>
   </body>
 </html>

@@ -21,11 +21,14 @@ import com.example.hospital.entity.Doctor;
 import com.example.hospital.entity.DoctorSchedule;
 import com.example.hospital.entity.News;
 import com.example.hospital.entity.Service;
+import com.example.hospital.entity.PageContent;
 import com.example.hospital.repository.AppointmentRepository;
 import com.example.hospital.repository.DoctorRepository;
 import com.example.hospital.repository.DoctorScheduleRepository;
 import com.example.hospital.repository.NewsRepository;
 import com.example.hospital.repository.ServiceRepository;
+import com.example.hospital.repository.PageContentRepository;
+import com.example.hospital.service.PageContentService;
 
 @RestController
 @RequestMapping("/admin/api")
@@ -40,11 +43,21 @@ public class AdminController {
     private ServiceRepository serviceRepository;
     @Autowired
     private DoctorScheduleRepository doctorScheduleRepository;
+    @Autowired
+    private PageContentRepository pageContentRepository;
+    @Autowired
+    private PageContentService pageContentService;
 
     // --- Appointment CRUD ---
     @GetMapping("/appointments")
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
+    }
+
+    @GetMapping("/appointments/{id}")
+    public Appointment getAppointmentById(@PathVariable Long id) {
+        return appointmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Appointment not found"));
     }
 
     @PostMapping("/appointments")
@@ -67,6 +80,12 @@ public class AdminController {
     @GetMapping("/doctors")
     public List<Doctor> getAllDoctors() {
         return doctorRepository.findAll();
+    }
+
+    @GetMapping("/doctors/{id}")
+    public Doctor getDoctorById(@PathVariable Long id) {
+        return doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
     }
 
     @PostMapping("/doctors")
@@ -171,6 +190,11 @@ public class AdminController {
         return doctorScheduleRepository.findAll();
     }
 
+    @GetMapping("/doctor-schedules/search")
+    public List<DoctorSchedule> getDoctorSchedulesByName(@RequestParam String doctorName) {
+        return doctorScheduleRepository.findByName(doctorName);
+    }
+
     @PostMapping("/doctor-schedules")
     public DoctorSchedule createDoctorSchedule(@RequestBody DoctorSchedule d) {
         return doctorScheduleRepository.save(d);
@@ -192,5 +216,51 @@ public class AdminController {
     @GetMapping("/api/doctors")
     public List<Doctor> getDoctorsForAPI() {
         return doctorRepository.findAll();
+    }
+
+    // --- Page Content CRUD ---
+    @GetMapping("/page-contents")
+    public List<PageContent> getAllPageContents() {
+        return pageContentRepository.findAll();
+    }
+
+    @GetMapping("/page-contents/{pageType}")
+    public List<PageContent> getPageContentsByType(@PathVariable String pageType) {
+        try {
+            PageContent.PageType type = PageContent.PageType.valueOf(pageType.toUpperCase());
+            return pageContentRepository.findByPageTypeOrderBySortOrderAsc(type);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid page type: " + pageType);
+        }
+    }
+
+    @PostMapping("/page-contents")
+    public PageContent createPageContent(@RequestBody PageContent content) {
+        return pageContentService.saveContent(content);
+    }
+
+    @PutMapping("/page-contents/{id}")
+    public PageContent updatePageContent(@PathVariable Long id, @RequestBody PageContent content) {
+        PageContent existingContent = pageContentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Page content not found"));
+
+        existingContent.setPageType(content.getPageType());
+        existingContent.setTitle(content.getTitle());
+        existingContent.setDescription(content.getDescription());
+        existingContent.setIconSvg(content.getIconSvg());
+        existingContent.setCategory(content.getCategory());
+        existingContent.setPrice(content.getPrice());
+        existingContent.setOriginalPrice(content.getOriginalPrice());
+        existingContent.setFeatures(content.getFeatures());
+        existingContent.setImageUrl(content.getImageUrl());
+        existingContent.setSortOrder(content.getSortOrder());
+        existingContent.setIsActive(content.getIsActive());
+
+        return pageContentService.saveContent(existingContent);
+    }
+
+    @DeleteMapping("/page-contents/{id}")
+    public void deletePageContent(@PathVariable Long id) {
+        pageContentService.deleteContent(id);
     }
 }

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kelola Jadwal Dokter - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#ff6b35",
+              "primary-dark": "#e55a2b",
+              "primary-light": "#ff8a5c",
+              "primary-orange": "#ff6b35",
+              "primary-orange-dark": "#e55a2b",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-primary text-white shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <h1 class="text-xl font-bold">RSIA Buah Hati Pamulang</h1>
+            </div>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a href="/admin" class="hover:text-gray-200 transition-colors"
+              >Dashboard</a
+            >
+            <a
+              href="/admin/doctors"
+              class="hover:text-gray-200 transition-colors"
+              >Dokter</a
+            >
+            <a
+              href="/admin/page-contents"
+              class="hover:text-gray-200 transition-colors"
+              >Konten Halaman</a
+            >
+            <a href="/" class="hover:text-gray-200 transition-colors"
+              >Kembali ke Website</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">
+              Kelola Jadwal Dokter
+            </h1>
+            <p class="text-gray-600">
+              Kelola jadwal praktik untuk
+              <span class="font-semibold" th:text="${doctor.name}">Dokter</span>
+            </p>
+          </div>
+          <div class="flex items-center space-x-3">
+            <a
+              href="/admin"
+              class="px-4 py-2 rounded-lg bg-gray-500 text-white font-semibold hover:bg-gray-600 transition-colors"
+            >
+              ← Kembali
+            </a>
+            <button
+              id="add-schedule-btn"
+              class="px-6 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              + Tambah Jadwal
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctor Info Card -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <div class="flex items-center">
+          <div
+            class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4"
+          >
+            <span
+              class="text-green-600 font-bold text-xl"
+              th:text="${#strings.substring(doctor.name,0,1).toUpperCase()}"
+              >D</span
+            >
+          </div>
+          <div>
+            <h2
+              class="text-2xl font-bold text-gray-900"
+              th:text="${doctor.name}"
+            >
+              Nama Dokter
+            </h2>
+            <p class="text-gray-600" th:text="${doctor.specialization}">
+              Spesialisasi
+            </p>
+            <div class="flex items-center mt-2 space-x-4">
+              <span
+                class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
+                th:text="${doctor.maxPatientsPerDay != null ? 'Max: ' + doctor.maxPatientsPerDay + ' pasien/hari' : 'Tidak ada batasan'}"
+              >
+                Max Pasien
+              </span>
+              <span
+                th:if="${doctor.isOnLeave == true}"
+                class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium"
+              >
+                Sedang Cuti
+              </span>
+              <span
+                th:if="${doctor.isLocked == true}"
+                class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium"
+              >
+                Dikunci
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current Schedules -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h3 class="text-lg font-semibold text-[#17695b]">
+            Jadwal Praktik Saat Ini
+          </h3>
+          <p class="text-gray-600 text-sm mt-1">
+            Daftar jadwal praktik yang sudah diatur
+          </p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full">
+            <thead class="bg-[#17695b] text-white">
+              <tr>
+                <th class="py-4 px-6 text-left font-semibold">Rumah Sakit</th>
+                <th class="py-4 px-6 text-left font-semibold">Hari</th>
+                <th class="py-4 px-6 text-left font-semibold">Jam</th>
+                <th class="py-4 px-6 text-left font-semibold">Spesialisasi</th>
+                <th class="py-4 px-6 text-left font-semibold">Aksi</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <tr
+                th:each="schedule : ${doctorSchedules}"
+                class="hover:bg-gray-50 transition-colors"
+              >
+                <td class="py-4 px-6">
+                  <div class="flex items-center">
+                    <div
+                      class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3"
+                    >
+                      <svg
+                        class="w-4 h-4 text-blue-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                        ></path>
+                      </svg>
+                    </div>
+                    <span
+                      class="font-medium text-gray-900"
+                      th:text="${schedule.hospital}"
+                      >Rumah Sakit</span
+                    >
+                  </div>
+                </td>
+                <td class="py-4 px-6">
+                  <span
+                    class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium"
+                    th:text="${schedule.day}"
+                    >Hari</span
+                  >
+                </td>
+                <td class="py-4 px-6">
+                  <span
+                    class="font-medium text-gray-900"
+                    th:text="${schedule.time}"
+                    >Jam</span
+                  >
+                </td>
+                <td class="py-4 px-6">
+                  <span
+                    class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium"
+                    th:text="${schedule.specialization}"
+                    >Spesialisasi</span
+                  >
+                </td>
+                <td class="py-4 px-6">
+                  <div class="flex items-center space-x-2">
+                    <button
+                      class="edit-schedule-btn inline-flex items-center px-3 py-1.5 rounded-md text-xs font-medium bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors"
+                      th:attr="data-id=${schedule.id},data-hospital=${schedule.hospital},data-day=${schedule.day},data-time=${schedule.time},data-specialization=${schedule.specialization}"
+                    >
+                      <svg
+                        class="w-3 h-3 mr-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                        ></path>
+                      </svg>
+                      Edit
+                    </button>
+                    <button
+                      class="delete-schedule-btn inline-flex items-center px-3 py-1.5 rounded-md text-xs font-medium bg-red-100 text-red-700 hover:bg-red-200 transition-colors"
+                      th:attr="data-id=${schedule.id}"
+                    >
+                      <svg
+                        class="w-3 h-3 mr-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        ></path>
+                      </svg>
+                      Hapus
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr th:if="${#lists.isEmpty(doctorSchedules)}">
+                <td colspan="5" class="py-8 px-6 text-center text-gray-500">
+                  <div class="flex flex-col items-center">
+                    <svg
+                      class="w-12 h-12 text-gray-300 mb-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      ></path>
+                    </svg>
+                    <p class="text-lg font-medium">Belum ada jadwal praktik</p>
+                    <p class="text-sm">
+                      Klik "Tambah Jadwal" untuk menambahkan jadwal praktik
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- Add/Edit Schedule Modal -->
+    <div
+      id="schedule-modal"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 hidden p-4"
+    >
+      <div
+        class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-left relative"
+      >
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-xl font-bold text-[#17695b]" id="modal-title">
+            Tambah Jadwal Praktik
+          </h3>
+          <button
+            id="close-modal"
+            class="text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <form id="schedule-form">
+          <input type="hidden" id="schedule-id" name="id" />
+          <input
+            type="hidden"
+            id="doctor-name"
+            name="name"
+            th:value="${doctor.name}"
+          />
+
+          <div class="space-y-4">
+            <div>
+              <label
+                for="hospital"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >Rumah Sakit</label
+              >
+              <input
+                type="text"
+                id="hospital"
+                name="hospital"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#17695b] focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label
+                for="day"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >Hari</label
+              >
+              <select
+                id="day"
+                name="day"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#17695b] focus:border-transparent"
+              >
+                <option value="">Pilih hari</option>
+                <option value="Senin">Senin</option>
+                <option value="Selasa">Selasa</option>
+                <option value="Rabu">Rabu</option>
+                <option value="Kamis">Kamis</option>
+                <option value="Jumat">Jumat</option>
+                <option value="Sabtu">Sabtu</option>
+                <option value="Minggu">Minggu</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                for="time"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >Jam Praktik</label
+              >
+              <input
+                type="text"
+                id="time"
+                name="time"
+                placeholder="08:00 - 16:00"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#17695b] focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label
+                for="specialization"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >Spesialisasi</label
+              >
+              <input
+                type="text"
+                id="specialization"
+                name="specialization"
+                th:value="${doctor.specialization}"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#17695b] focus:border-transparent"
+              />
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end space-x-3 mt-8">
+            <button
+              type="button"
+              id="cancel-btn"
+              class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+            >
+              Batal
+            </button>
+            <button
+              type="submit"
+              class="px-6 py-2 bg-[#17695b] text-white rounded-lg hover:bg-[#2d5a4f] transition-colors"
+            >
+              Simpan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Modal functionality
+      const modal = document.getElementById("schedule-modal");
+      const addBtn = document.getElementById("add-schedule-btn");
+      const closeBtn = document.getElementById("close-modal");
+      const cancelBtn = document.getElementById("cancel-btn");
+      const form = document.getElementById("schedule-form");
+      const modalTitle = document.getElementById("modal-title");
+
+      // Open modal for adding new schedule
+      addBtn.addEventListener("click", () => {
+        modalTitle.textContent = "Tambah Jadwal Praktik";
+        form.reset();
+        document.getElementById("schedule-id").value = "";
+        modal.classList.remove("hidden");
+      });
+
+      // Close modal
+      function closeModal() {
+        modal.classList.add("hidden");
+      }
+
+      closeBtn.addEventListener("click", closeModal);
+      cancelBtn.addEventListener("click", closeModal);
+
+      // Close modal when clicking outside
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Edit schedule functionality
+      document.querySelectorAll(".edit-schedule-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          modalTitle.textContent = "Edit Jadwal Praktik";
+          const id = btn.getAttribute("data-id");
+          const hospital = btn.getAttribute("data-hospital");
+          const day = btn.getAttribute("data-day");
+          const time = btn.getAttribute("data-time");
+          const specialization = btn.getAttribute("data-specialization");
+
+          document.getElementById("schedule-id").value = id;
+          document.getElementById("hospital").value = hospital;
+          document.getElementById("day").value = day;
+          document.getElementById("time").value = time;
+          document.getElementById("specialization").value = specialization;
+
+          modal.classList.remove("hidden");
+        });
+      });
+
+      // Delete schedule functionality
+      document.querySelectorAll(".delete-schedule-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (confirm("Apakah Anda yakin ingin menghapus jadwal ini?")) {
+            const id = btn.getAttribute("data-id");
+            // Here you would typically make an API call to delete the schedule
+            console.log("Delete schedule with ID:", id);
+            // For now, just remove the row from the table
+            btn.closest("tr").remove();
+          }
+        });
+      });
+
+      // Form submission
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+
+        console.log("Schedule data:", data);
+        // Here you would typically make an API call to save the schedule
+        // For now, just close the modal
+        closeModal();
+
+        // Reload the page to show updated data
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      });
+    </script>
+  </body>
+</html>

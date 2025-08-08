@@ -80,16 +80,16 @@
       </div>
 
       <!-- Include Dashboard Overview Fragment -->
-      <div th:replace="admin/fragments/dashboard-overview :: fragment"></div>
+      <div th:replace="~{admin/fragments/dashboard-overview :: fragment}"></div>
 
       <!-- Include Doctors Table Fragment -->
-      <div th:replace="admin/fragments/doctors-table :: fragment"></div>
+      <div th:replace="~{admin/fragments/doctors-table :: fragment}"></div>
 
       <!-- Include Modals Fragment -->
-      <div th:replace="admin/fragments/modals :: fragment"></div>
-    </div>
+      <div th:replace="~{admin/fragments/modals :: fragment}"></div>
 
-    <!-- Include Scripts Fragment -->
-    <div th:insert="admin/fragments/scripts :: fragment"></div>
+      <!-- Include Scripts Fragment -->
+      <div th:replace="~{admin/fragments/scripts :: fragment}"></div>
+    </div>
   </body>
 </html>

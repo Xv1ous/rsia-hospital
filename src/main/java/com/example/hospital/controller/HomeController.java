@@ -16,9 +16,11 @@ import com.example.hospital.repository.DoctorRepository;
 import com.example.hospital.repository.DoctorScheduleRepository;
 import com.example.hospital.repository.NewsRepository;
 import com.example.hospital.repository.ServiceRepository;
+import com.example.hospital.service.PageContentService;
 import com.example.hospital.entity.Appointment;
 import com.example.hospital.entity.DoctorSchedule;
 import com.example.hospital.entity.Doctor;
+import com.example.hospital.entity.PageContent;
 
 @Controller
 public class HomeController {
@@ -34,6 +36,8 @@ public class HomeController {
 
     @Autowired
     private DoctorScheduleRepository doctorScheduleRepository;
+    @Autowired
+    private PageContentService pageContentService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -175,11 +179,23 @@ public class HomeController {
 
     @GetMapping("/services")
     public String services(Model model) {
+        try {
+            List<PageContent> services = pageContentService.getContentsByPageType(PageContent.PageType.SERVICES);
+            model.addAttribute("services", services);
+        } catch (Exception e) {
+            model.addAttribute("services", new ArrayList<>());
+        }
         return "user/services";
     }
 
     @GetMapping("/fasilitas")
     public String fasilitas(Model model) {
+        try {
+            List<PageContent> facilities = pageContentService.getContentsByPageType(PageContent.PageType.FACILITIES);
+            model.addAttribute("facilities", facilities);
+        } catch (Exception e) {
+            model.addAttribute("facilities", new ArrayList<>());
+        }
         return "user/fasilitas";
     }
 
@@ -190,6 +206,13 @@ public class HomeController {
 
     @GetMapping("/homecare")
     public String homecare(Model model) {
+        try {
+            List<PageContent> homecareServices = pageContentService
+                    .getContentsByPageType(PageContent.PageType.HOMECARE);
+            model.addAttribute("homecareServices", homecareServices);
+        } catch (Exception e) {
+            model.addAttribute("homecareServices", new ArrayList<>());
+        }
         return "user/homecare";
     }
 

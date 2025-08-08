@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Konten Halaman - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#ff6b35",
+              "primary-dark": "#e55a2b",
+              "primary-light": "#ff8a5c",
+              "primary-orange": "#ff6b35",
+              "primary-orange-dark": "#e55a2b",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :root {
+        --primary-orange: #e6521f;
+        --primary-orange-light: #ff8000;
+        --primary-orange-dark: #cc4400;
+        --secondary-teal: #17695b;
+        --secondary-teal-light: #fb9e3a;
+      }
+      .text-primary-orange {
+        color: var(--primary-orange) !important;
+      }
+      .text-primary-orange-light {
+        color: var(--primary-orange-light) !important;
+      }
+      .bg-primary-orange {
+        background-color: var(--primary-orange) !important;
+      }
+      .bg-primary-orange-light {
+        background-color: var(--primary-orange-light) !important;
+      }
+      .bg-primary-orange-dark {
+        background-color: var(--primary-orange-dark) !important;
+      }
+      .font-sans {
+        font-family: "Inter", "Segoe UI", "Roboto", "Helvetica Neue", Arial,
+          "sans-serif";
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-primary text-white shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <h1 class="text-xl font-bold">RSIA Buah Hati Pamulang</h1>
+            </div>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a href="/admin" class="hover:text-gray-200 transition-colors"
+              >Dashboard</a
+            >
+            <a
+              href="/admin/doctors"
+              class="hover:text-gray-200 transition-colors"
+              >Dokter</a
+            >
+            <a
+              href="/admin/page-contents"
+              class="hover:text-gray-200 transition-colors"
+              >Konten Halaman</a
+            >
+            <a href="/" class="hover:text-gray-200 transition-colors"
+              >Kembali ke Website</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h2 class="text-3xl font-bold text-gray-900">Manajemen Konten Halaman</h2>
+        <p class="text-gray-600 mt-2">
+          Kelola konten untuk berbagai halaman website
+        </p>
+      </div>
+              <li><a href="/admin" class="hover:underline">Admin</a></li>
+              <li><span class="mx-2">/</span></li>
+              <li class="font-semibold">Konten Halaman</li>
+            </ol>
+          </nav>
+          <div class="flex items-center gap-4">
+            <span class="font-semibold text-white">Admin</span>
+            <img
+              src="/asset hospital/RSIA_BHP_LOGO5.png"
+              alt="Admin Avatar"
+              class="h-8 w-8 rounded-full border-2 border-white"
+            />
+          </div>
+        </header>
+
+        <!-- Page Content Management -->
+        <section class="p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h1 class="text-3xl font-bold text-primary">
+              Manajemen Konten Halaman
+            </h1>
+            <button
+              id="open-add-content-modal"
+              class="px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition flex items-center gap-2"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4v16m8-8H4"
+                ></path>
+              </svg>
+              Tambah Konten
+            </button>
+          </div>
+
+          <!-- Filter Tabs -->
+          <div class="mb-6">
+            <div class="flex space-x-1 bg-gray-200 p-1 rounded-lg">
+              <button
+                class="filter-tab px-4 py-2 rounded-md font-medium transition-all"
+                data-filter="all"
+              >
+                Semua
+              </button>
+              <button
+                class="filter-tab px-4 py-2 rounded-md font-medium transition-all"
+                data-filter="FACILITIES"
+              >
+                Fasilitas
+              </button>
+              <button
+                class="filter-tab px-4 py-2 rounded-md font-medium transition-all"
+                data-filter="SERVICES"
+              >
+                Layanan
+              </button>
+              <button
+                class="filter-tab px-4 py-2 rounded-md font-medium transition-all"
+                data-filter="HOMECARE"
+              >
+                Home Care
+              </button>
+            </div>
+          </div>
+
+          <!-- Content Grid -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            id="content-grid"
+          >
+            <!-- Content cards will be populated here -->
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Add/Edit Content Modal -->
+    <div
+      id="content-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden z-50"
+    >
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div
+          class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        >
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h2 id="modal-title" class="text-2xl font-bold text-primary">
+                Tambah Konten Baru
+              </h2>
+              <button
+                id="close-modal"
+                class="text-gray-500 hover:text-gray-700"
+              >
+                <svg
+                  class="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+
+            <form id="content-form">
+              <input type="hidden" id="content-id" name="id" />
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Tipe Halaman</label
+                  >
+                  <select
+                    id="page-type"
+                    name="pageType"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6521F]"
+                  >
+                    <option value="FACILITIES">Fasilitas</option>
+                    <option value="SERVICES">Layanan</option>
+                    <option value="HOMECARE">Home Care</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Urutan</label
+                  >
+                  <input
+                    type="number"
+                    id="sort-order"
+                    name="sortOrder"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6521F]"
+                    value="1"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Judul</label
+                >
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6521F]"
+                  required
+                />
+              </div>
+
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Deskripsi</label
+                >
+                <textarea
+                  id="description"
+                  name="description"
+                  rows="3"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6521F]"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Kategori</label
+                  >
+                  <input
+                    type="text"
+                    id="category"
+                    name="category"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6521F]"
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Status</label
+                  >
+                  <select
+                    id="is-active"
+                    name="isActive"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6521F]"
+                  >
+                    <option value="true">Aktif</option>
+                    <option value="false">Tidak Aktif</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Harga</label
+                  >
+                  <input
+                    type="text"
+                    id="price"
+                    name="price"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6521F]"
+                    placeholder="Rp 150.000"
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Harga Asli</label
+                  >
+                  <input
+                    type="text"
+                    id="original-price"
+                    name="originalPrice"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6521F]"
+                    placeholder="Rp 200.000"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Fitur (satu per baris)</label
+                >
+                <textarea
+                  id="features"
+                  name="features"
+                  rows="4"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6521F]"
+                  placeholder="• Perawatan luka pasca operasi&#10;• Pemasangan dan monitoring infus&#10;• Pengukuran tekanan darah"
+                ></textarea>
+              </div>
+
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Icon SVG</label
+                >
+                <textarea
+                  id="icon-svg"
+                  name="iconSvg"
+                  rows="3"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6521F]"
+                  placeholder="<svg class='h-10 w-10' fill='none' viewBox='0 0 24 24' stroke='currentColor'>...</svg>"
+                ></textarea>
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >URL Gambar</label
+                >
+                <input
+                  type="text"
+                  id="image-url"
+                  name="imageUrl"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6521F]"
+                  placeholder="https://example.com/image.jpg"
+                />
+              </div>
+
+              <div class="flex justify-end space-x-3">
+                <button
+                  type="button"
+                  id="cancel-btn"
+                  class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  class="px-6 py-2 bg-primary-orange text-white font-semibold rounded-md hover:bg-primary-orange-dark transition"
+                >
+                  Simpan
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div
+      id="delete-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden z-50"
+    >
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">
+              Konfirmasi Hapus
+            </h3>
+            <p class="text-gray-600 mb-6">
+              Apakah Anda yakin ingin menghapus konten ini? Tindakan ini tidak
+              dapat dibatalkan.
+            </p>
+            <div class="flex justify-end space-x-3">
+              <button
+                id="cancel-delete"
+                class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition"
+              >
+                Batal
+              </button>
+              <button
+                id="confirm-delete"
+                class="px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 transition"
+              >
+                Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script th:inline="javascript">
+      // Get page contents from Thymeleaf
+      const pageContents = /*[[${pageContents}]]*/ [];
+      let currentFilter = "all";
+      let contentToDelete = null;
+
+      // Initialize the page
+      document.addEventListener("DOMContentLoaded", function () {
+        renderContents();
+        setupEventListeners();
+        updateFilterTabs();
+      });
+
+      function renderContents() {
+        const grid = document.getElementById("content-grid");
+        const filteredContents =
+          currentFilter === "all"
+            ? pageContents
+            : pageContents.filter(
+                (content) => content.pageType === currentFilter
+              );
+
+        grid.innerHTML = filteredContents
+          .map(
+            (content) => `
+          <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-[#E6521F]">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <span class="px-2 py-1 text-xs font-semibold rounded-full ${
+                  content.pageType === "FACILITIES"
+                    ? "bg-red-100 text-red-800"
+                    : content.pageType === "SERVICES"
+                    ? "bg-blue-100 text-blue-800"
+                    : "bg-green-100 text-green-800"
+                }">
+                  ${
+                    content.pageType === "FACILITIES"
+                      ? "Fasilitas"
+                      : content.pageType === "SERVICES"
+                      ? "Layanan"
+                      : "Home Care"
+                  }
+                </span>
+                <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">
+                  Urutan: ${content.sortOrder || 1}
+                </span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full ${
+                  content.isActive ? "bg-green-500" : "bg-red-500"
+                }"></span>
+                <span class="text-xs text-gray-500">${
+                  content.isActive ? "Aktif" : "Tidak Aktif"
+                }</span>
+              </div>
+            </div>
+
+            <h3 class="font-bold text-lg text-[#17695b] mb-2">${
+              content.title
+            }</h3>
+            <p class="text-gray-600 text-sm mb-3 line-clamp-2">${
+              content.description
+            }</p>
+
+            ${
+              content.category
+                ? `<p class="text-xs text-gray-500 mb-2">Kategori: ${content.category}</p>`
+                : ""
+            }
+
+            ${
+              content.price
+                ? `<p class="text-sm font-semibold text-[#E6521F] mb-2">${content.price}</p>`
+                : ""
+            }
+
+            <div class="flex justify-end space-x-2 mt-4">
+              <button onclick="editContent(${
+                content.id
+              })" class="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                Edit
+              </button>
+              <button onclick="deleteContent(${
+                content.id
+              })" class="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 transition">
+                Hapus
+              </button>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function setupEventListeners() {
+        // Filter tabs
+        document.querySelectorAll(".filter-tab").forEach((tab) => {
+          tab.addEventListener("click", function () {
+            currentFilter = this.dataset.filter;
+            renderContents();
+            updateFilterTabs();
+          });
+        });
+
+        // Modal controls
+        document
+          .getElementById("open-add-content-modal")
+          .addEventListener("click", openAddModal);
+        document
+          .getElementById("close-modal")
+          .addEventListener("click", closeModal);
+        document
+          .getElementById("cancel-btn")
+          .addEventListener("click", closeModal);
+        document
+          .getElementById("content-form")
+          .addEventListener("submit", handleSubmit);
+
+        // Delete modal controls
+        document
+          .getElementById("cancel-delete")
+          .addEventListener("click", closeDeleteModal);
+        document
+          .getElementById("confirm-delete")
+          .addEventListener("click", confirmDelete);
+      }
+
+      function updateFilterTabs() {
+        document.querySelectorAll(".filter-tab").forEach((tab) => {
+          if (tab.dataset.filter === currentFilter) {
+            tab.classList.add("bg-white", "text-[#E6521F]", "shadow");
+          } else {
+            tab.classList.remove("bg-white", "text-[#E6521F]", "shadow");
+          }
+        });
+      }
+
+      function openAddModal() {
+        document.getElementById("modal-title").textContent =
+          "Tambah Konten Baru";
+        document.getElementById("content-form").reset();
+        document.getElementById("content-id").value = "";
+        document.getElementById("content-modal").classList.remove("hidden");
+      }
+
+      function editContent(id) {
+        const content = pageContents.find((c) => c.id === id);
+        if (!content) return;
+
+        document.getElementById("modal-title").textContent = "Edit Konten";
+        document.getElementById("content-id").value = content.id;
+        document.getElementById("page-type").value = content.pageType;
+        document.getElementById("title").value = content.title;
+        document.getElementById("description").value = content.description;
+        document.getElementById("category").value = content.category || "";
+        document.getElementById("price").value = content.price || "";
+        document.getElementById("original-price").value =
+          content.originalPrice || "";
+        document.getElementById("features").value = content.features || "";
+        document.getElementById("icon-svg").value = content.iconSvg || "";
+        document.getElementById("image-url").value = content.imageUrl || "";
+        document.getElementById("sort-order").value = content.sortOrder || 1;
+        document.getElementById("is-active").value = content.isActive
+          ? "true"
+          : "false";
+
+        document.getElementById("content-modal").classList.remove("hidden");
+      }
+
+      function closeModal() {
+        document.getElementById("content-modal").classList.add("hidden");
+      }
+
+      function deleteContent(id) {
+        contentToDelete = id;
+        document.getElementById("delete-modal").classList.remove("hidden");
+      }
+
+      function closeDeleteModal() {
+        document.getElementById("delete-modal").classList.add("hidden");
+        contentToDelete = null;
+      }
+
+      function confirmDelete() {
+        if (!contentToDelete) return;
+
+        fetch(`/admin/api/page-contents/${contentToDelete}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              // Remove from local array and re-render
+              const index = pageContents.findIndex(
+                (c) => c.id === contentToDelete
+              );
+              if (index > -1) {
+                pageContents.splice(index, 1);
+              }
+              renderContents();
+              closeDeleteModal();
+            } else {
+              alert("Gagal menghapus konten");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Terjadi kesalahan saat menghapus konten");
+          });
+      }
+
+      function handleSubmit(e) {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const contentData = {
+          id: formData.get("id") || null,
+          pageType: formData.get("pageType"),
+          title: formData.get("title"),
+          description: formData.get("description"),
+          category: formData.get("category"),
+          price: formData.get("price"),
+          originalPrice: formData.get("originalPrice"),
+          features: formData.get("features"),
+          iconSvg: formData.get("iconSvg"),
+          imageUrl: formData.get("imageUrl"),
+          sortOrder: parseInt(formData.get("sortOrder")) || 1,
+          isActive: formData.get("isActive") === "true",
+        };
+
+        const url = contentData.id
+          ? `/admin/api/page-contents/${contentData.id}`
+          : "/admin/api/page-contents";
+
+        const method = contentData.id ? "PUT" : "POST";
+
+        fetch(url, {
+          method: method,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(contentData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (contentData.id) {
+              // Update existing content
+              const index = pageContents.findIndex(
+                (c) => c.id === contentData.id
+              );
+              if (index > -1) {
+                pageContents[index] = data;
+              }
+            } else {
+              // Add new content
+              pageContents.push(data);
+            }
+            renderContents();
+            closeModal();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Terjadi kesalahan saat menyimpan konten");
+          });
+      }
+    </script>
+  </body>
+</html>

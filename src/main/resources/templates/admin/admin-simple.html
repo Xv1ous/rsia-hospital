@@ -20,22 +20,6 @@
         },
       };
     </script>
-    <style>
-      .modal-scroll {
-        scrollbar-width: thin;
-        scrollbar-color: #cbd5e0 #f7fafc;
-      }
-      .modal-scroll::-webkit-scrollbar {
-        width: 6px;
-      }
-      .modal-scroll::-webkit-scrollbar-track {
-        background: #f7fafc;
-      }
-      .modal-scroll::-webkit-scrollbar-thumb {
-        background-color: #cbd5e0;
-        border-radius: 3px;
-      }
-    </style>
   </head>
   <body class="bg-gray-50">
     <!-- Navigation -->
@@ -79,17 +63,20 @@
         </p>
       </div>
 
-      <!-- Include Dashboard Overview Fragment -->
-      <div th:replace="admin/fragments/dashboard-overview :: fragment"></div>
-
-      <!-- Include Doctors Table Fragment -->
-      <div th:replace="admin/fragments/doctors-table :: fragment"></div>
-
-      <!-- Include Modals Fragment -->
-      <div th:replace="admin/fragments/modals :: fragment"></div>
+      <!-- Simple Content -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h3 class="text-lg font-semibold text-primary mb-4">Test Content</h3>
+        <p class="text-gray-600">
+          This is a simple test page to verify the template is working.
+        </p>
+        <p class="text-gray-600 mt-2">
+          Total Appointments:
+          <span th:text="${#lists.size(appointments)}">0</span>
+        </p>
+        <p class="text-gray-600">
+          Total Doctors: <span th:text="${#lists.size(doctors)}">0</span>
+        </p>
+      </div>
     </div>
-
-    <!-- Include Scripts Fragment -->
-    <div th:insert="admin/fragments/scripts :: fragment"></div>
   </body>
 </html>

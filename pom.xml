@@ -113,10 +113,11 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>com.maciejwalkowiak.paseq</groupId>
 				<artifactId>paseq-maven-plugin</artifactId>
-				<version>0.1.1</version>
+				<version>0.1.0</version>
 				<executions>
 					<execution>
 						<phase>compile</phase>
@@ -128,13 +129,13 @@
 								<task>
 									<exec>
 										<directory>src/main/frontend</directory>
-										<command>npm install</command>
+										<command>${npm.executable} install</command>
 									</exec>
 								</task>
 								<task>
 									<exec>
 										<directory>src/main/frontend</directory>
-										<command>npm run build</command>
+										<command>${npm.executable} run build</command>
 									</exec>
 								</task>
 							</tasks>
@@ -147,24 +148,21 @@
 								<task>
 									<exec>
 										<directory>src/main/frontend</directory>
-										<command>npm install</command>
+										<command>${npm.executable} install</command>
 									</exec>
 								</task>
 								<task>
 									<async>true</async>
 									<exec>
 										<directory>src/main/frontend</directory>
-										<command>tailwindcss -i ./main.css -o
-											../resources/static/main.css --watch</command>
+										<command>${npm.executable} run watch -- -o ../resources/static/main.css</command>
 									</exec>
 								</task>
 								<task>
 									<async>true</async>
 									<exec>
 										<directory>src/main/frontend</directory>
-										<command>tailwindcss -i ./main.css -o
-											${project.build.directory}/classes/static/main.css
-											--watch</command>
+										<command>${npm.executable} run watch -- -o ${project.build.directory}/classes/static/main.css</command>
 									</exec>
 								</task>
 								<task>
@@ -177,5 +175,34 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<!-- Windows profile -->
+		<profile>
+			<id>windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<properties>
+				<npm.executable>npm.cmd</npm.executable>
+				<npx.executable>npx.cmd</npx.executable>
+			</properties>
+		</profile>
+		<!-- Unix profile (Linux/Mac) -->
+		<profile>
+			<id>unix</id>
+			<activation>
+				<os>
+					<family>unix</family>
+				</os>
+			</activation>
+			<properties>
+				<npm.executable>npm</npm.executable>
+				<npx.executable>npx</npx.executable>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>
